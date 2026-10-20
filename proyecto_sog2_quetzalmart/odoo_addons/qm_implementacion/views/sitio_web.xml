@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Página de inicio de la tienda. -->
+    <template id="qm_inicio" inherit_id="website.homepage" name="QuetzalMart: página de inicio">
+        <xpath expr="//div[@id='wrap']" position="replace">
+            <div id="wrap" class="qm_inicio">
+                <section class="pt-0 pb-0">
+                    <a href="/shop">
+                        <img src="/qm_implementacion/static/img/portada_inicio.jpg" class="img-fluid w-100 d-block"
+                             alt="QuetzalMart: lo de todos los días, más cerca de ti"/>
+                    </a>
+                </section>
+
+                <section class="py-4" style="background-color:#FFF8E7;">
+                    <div class="container">
+                        <div class="row text-center g-3">
+                            <div class="col-6 col-lg-3">
+                                <i class="fa fa-truck fa-2x" style="color:#0B6E4F;"/>
+                                <h6 class="mt-2 mb-0">Entrega a domicilio</h6>
+                                <small class="text-muted">Gratis en Guatemala desde Q350</small>
+                            </div>
+                            <div class="col-6 col-lg-3">
+                                <i class="fa fa-lock fa-2x" style="color:#0B6E4F;"/>
+                                <h6 class="mt-2 mb-0">Pago seguro</h6>
+                                <small class="text-muted">Tarjeta de crédito o débito</small>
+                            </div>
+                            <div class="col-6 col-lg-3">
+                                <i class="fa fa-file-text-o fa-2x" style="color:#0B6E4F;"/>
+                                <h6 class="mt-2 mb-0">Factura al instante</h6>
+                                <small class="text-muted">Te llega a tu correo</small>
+                            </div>
+                            <div class="col-6 col-lg-3">
+                                <i class="fa fa-map-marker fa-2x" style="color:#0B6E4F;"/>
+                                <h6 class="mt-2 mb-0">3 sucursales</h6>
+                                <small class="text-muted">Guatemala, México y El Salvador</small>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="py-5">
+                    <div class="container">
+                        <h2 class="text-center mb-1" style="color:#064635;">Compra por categoría</h2>
+                        <p class="text-center text-muted mb-4">Todo lo que tu casa necesita, en un solo lugar.</p>
+                        <div class="row g-4">
+                            <t t-foreach="request.env['product.public.category'].sudo().search([('parent_id', '=', False)], order='sequence, id')" t-as="categoria">
+                                <div class="col-6 col-lg-4">
+                                    <a t-attf-href="/shop/category/#{slug(categoria)}" class="d-block rounded-4 overflow-hidden shadow-sm">
+                                        <img t-attf-src="/web/image/product.public.category/#{categoria.id}/image_512"
+                                             class="img-fluid w-100" t-att-alt="categoria.name"/>
+                                    </a>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="py-5" style="background-color:#F3F7F4;">
+                    <div class="container">
+                        <h2 class="text-center mb-4" style="color:#064635;">Favoritos de la semana</h2>
+                        <div class="row g-4">
+                            <t t-foreach="request.env['product.template'].sudo().search([('is_published', '=', True), ('sale_ok', '=', True)], order='website_sequence, id', limit=8)" t-as="producto">
+                                <div class="col-6 col-lg-3">
+                                    <div class="card h-100 border-0 shadow-sm rounded-4">
+                                        <a t-att-href="producto.website_url">
+                                            <img t-attf-src="/web/image/product.template/#{producto.id}/image_512"
+                                                 class="card-img-top rounded-top-4" t-att-alt="producto.name"/>
+                                        </a>
+                                        <div class="card-body text-center">
+                                            <h6 class="card-title" t-out="producto.name"/>
+                                            <p class="fw-bold mb-2" style="color:#0B6E4F;">
+                                                <span t-field="producto.list_price"
+                                                      t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                                <small class="text-muted fw-normal">IVA incluido</small>
+                                            </p>
+                                            <a t-att-href="producto.website_url" class="btn btn-sm rounded-pill text-white"
+                                               style="background-color:#C8102E;">Ver producto</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                        <div class="text-center mt-4">
+                            <a href="/shop" class="btn btn-lg rounded-pill text-white px-5" style="background-color:#0B6E4F;">Ver todo el catálogo</a>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="py-5" id="sucursales">
+                    <div class="container">
+                        <h2 class="text-center mb-4" style="color:#064635;">Nuestras sucursales</h2>
+                        <div class="row g-4 text-center">
+                            <t t-foreach="request.env['stock.warehouse'].sudo().search([('company_id', '=', website.company_id.id)], order='sequence, id')" t-as="almacen">
+                                <div class="col-lg-4">
+                                    <div class="p-4 rounded-4 h-100" style="background-color:#EAF4EE;">
+                                        <i class="fa fa-shopping-basket fa-2x" style="color:#C8102E;"/>
+                                        <h5 class="mt-3" t-out="almacen.name"/>
+                                        <p class="mb-1" t-out="almacen.partner_id.street"/>
+                                        <p class="mb-1">
+                                            <t t-out="almacen.partner_id.city"/>, <t t-out="almacen.partner_id.country_id.name"/>
+                                        </p>
+                                        <p class="mb-0 text-muted" t-out="almacen.partner_id.phone"/>
+                                        <small class="text-muted">Lunes a domingo, 7:00 a 21:00</small>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </xpath>
+    </template>
+
+    <!-- Pie de página con la información de la empresa. -->
+    <template id="qm_pie_pagina" inherit_id="website.footer_custom" name="QuetzalMart: pie de página">
+        <xpath expr="//div[@id='footer']" position="replace">
+            <div id="footer" class="oe_structure oe_structure_solo" t-ignore="true" t-if="not no_footer">
+                <section class="pt-5 pb-3" style="background-color:#064635;color:#cfe3d8;">
+                    <div class="container">
+                        <div class="row g-4">
+                            <div class="col-lg-4">
+                                <img src="/qm_implementacion/static/img/icono_quetzalmart.png" alt="QuetzalMart" style="height:64px;"/>
+                                <h5 class="mt-2 text-white">QuetzalMart</h5>
+                                <p>Productos de calidad a precios accesibles para el día a día de tu familia.</p>
+                            </div>
+                            <div class="col-lg-4">
+                                <h6 class="text-white">Compra en línea</h6>
+                                <ul class="list-unstyled">
+                                    <li><a href="/shop" style="color:#F2B705;">Catálogo</a></li>
+                                    <li><a href="/shop/cart" style="color:#F2B705;">Mi carrito</a></li>
+                                    <li><a href="/my" style="color:#F2B705;">Mi cuenta y facturas</a></li>
+                                    <li><a href="/contactus" style="color:#F2B705;">Contáctanos</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-4">
+                                <h6 class="text-white">Atención al cliente</h6>
+                                <p class="mb-1"><i class="fa fa-phone me-2"/><t t-out="res_company.phone"/></p>
+                                <p class="mb-1"><i class="fa fa-envelope me-2"/><t t-out="res_company.email"/></p>
+                                <p class="mb-0"><i class="fa fa-map-marker me-2"/>Guatemala · México · El Salvador</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </xpath>
+    </template>
+</odoo>

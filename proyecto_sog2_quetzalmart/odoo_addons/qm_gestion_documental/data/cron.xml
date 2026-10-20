@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Se dispara al publicar facturas; también corre cada hora como respaldo. -->
+    <record id="cron_archivar_facturas" model="ir.cron">
+        <field name="name">QuetzalMart: archivar PDF de facturas en Documentos</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="state">code</field>
+        <field name="code">model._qm_cron_archivar_facturas()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">hours</field>
+        <field name="active" eval="True"/>
+    </record>
+</odoo>

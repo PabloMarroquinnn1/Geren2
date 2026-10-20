@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Límite de subida de OCA DMS (MB). set_param no falla si el parámetro ya existe. -->
+    <function model="ir.config_parameter" name="set_param" eval="('dms.binary_max_size', '50')"/>
+</odoo>

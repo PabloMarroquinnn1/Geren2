@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Correo 1: comprobante de compra. Odoo adjunta el PDF de la factura. -->
+    <record id="plantilla_factura" model="mail.template">
+        <field name="name">QuetzalMart: comprobante de compra</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="email_from">{{ object.company_id.email_formatted }}</field>
+        <field name="partner_to">{{ object.partner_id.id }}</field>
+        <field name="subject">QuetzalMart · Comprobante de compra {{ object.name }}</field>
+        <field name="description">Factura de las compras de la tienda en línea, con el PDF adjunto.</field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="auto_delete" eval="False"/>
+        <field name="body_html" type="html">
+<div style="margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;color:#1f2a24;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;margin:0 auto;border-collapse:collapse;">
+        <tr>
+            <td style="background-color:#0B6E4F;padding:22px 28px;border-radius:12px 12px 0 0;">
+                <span style="font-size:22px;font-weight:bold;color:#ffffff;">QuetzalMart</span>
+                <span style="float:right;font-size:13px;color:#F2B705;padding-top:6px;">Comprobante de compra</span>
+            </td>
+        </tr>
+        <tr>
+            <td style="background-color:#ffffff;padding:26px 28px;border:1px solid #e3ebe6;border-top:none;">
+                <p style="font-size:16px;margin:0 0 12px 0;">Hola <strong t-out="object.partner_id.name or ''">Cliente</strong>,</p>
+                <p style="font-size:14px;line-height:21px;margin:0 0 18px 0;">
+                    ¡Gracias por comprar en QuetzalMart! Tu pago fue recibido y tu factura
+                    <strong t-out="object.name or ''">INV/2026/00001</strong>
+                    <t t-if="object.invoice_origin">del pedido <strong t-out="object.invoice_origin">S00001</strong></t>
+                    ya está lista. La encontrarás adjunta en PDF.
+                </p>
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;font-size:13px;">
+                    <tr style="background-color:#FFF8E7;">
+                        <th align="left" style="padding:8px;border-bottom:2px solid #F2B705;">Producto</th>
+                        <th align="center" style="padding:8px;border-bottom:2px solid #F2B705;">Cant.</th>
+                        <th align="right" style="padding:8px;border-bottom:2px solid #F2B705;">Subtotal</th>
+                    </tr>
+                    <t t-foreach="object.invoice_line_ids" t-as="linea">
+                        <tr t-if="linea.display_type == 'product'">
+                            <td style="padding:8px;border-bottom:1px solid #eef2ef;" t-out="linea.product_id.name or linea.name">Producto</td>
+                            <td align="center" style="padding:8px;border-bottom:1px solid #eef2ef;" t-out="'%g' % linea.quantity">1</td>
+                            <td align="right" style="padding:8px;border-bottom:1px solid #eef2ef;" t-out="format_amount(linea.price_subtotal, object.currency_id)">Q 10.00</td>
+                        </tr>
+                    </t>
+                    <tr>
+                        <td colspan="2" align="right" style="padding:6px 8px;color:#5b6b62;">Subtotal</td>
+                        <td align="right" style="padding:6px 8px;" t-out="format_amount(object.amount_untaxed, object.currency_id)">Q 10.00</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="right" style="padding:6px 8px;color:#5b6b62;">IVA</td>
+                        <td align="right" style="padding:6px 8px;" t-out="format_amount(object.amount_tax, object.currency_id)">Q 1.20</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="right" style="padding:8px;font-weight:bold;color:#0B6E4F;font-size:15px;">Total pagado</td>
+                        <td align="right" style="padding:8px;font-weight:bold;color:#0B6E4F;font-size:15px;" t-out="format_amount(object.amount_total, object.currency_id)">Q 11.20</td>
+                    </tr>
+                </table>
+                <p style="text-align:center;margin:26px 0 8px 0;">
+                    <a t-att-href="object.get_base_url() + object.get_portal_url()"
+                       style="background-color:#0B6E4F;color:#ffffff;text-decoration:none;padding:12px 26px;border-radius:24px;font-weight:bold;font-size:14px;display:inline-block;">
+                        Ver mi factura en línea
+                    </a>
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td style="background-color:#064635;color:#cfe3d8;padding:16px 28px;font-size:12px;line-height:18px;border-radius:0 0 12px 12px;">
+                QuetzalMart · Guatemala · México · El Salvador<br/>
+                Este correo es tu comprobante de compra. En unos momentos te enviaremos una sorpresa para tu próxima visita.
+            </td>
+        </tr>
+    </table>
+</div>
+        </field>
+    </record>
+</odoo>

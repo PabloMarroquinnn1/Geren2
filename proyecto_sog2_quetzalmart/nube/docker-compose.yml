@@ -1,0 +1,66 @@
+# QuetzalMart - Odoo 18 Community + PostgreSQL 16 + Caddy (HTTPS automático)
+#
+# Se ejecuta en cualquier VM Linux de la nube (Azure, GCP, AWS...) con Docker.
+# Las variables salen de nube/.env (ver .env.ejemplo); instalar.sh las genera.
+
+name: quetzalmart
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Falta POSTGRES_PASSWORD en .env}
+    volumes:
+      - bd_datos:/var/lib/postgresql/data
+    # Solo escucha en la VM: DBeaver se conecta con un túnel SSH (docs/01).
+    ports:
+      - "127.0.0.1:5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U odoo -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  odoo:
+    image: odoo:18.0
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      HOST: db
+      PORT: "5432"
+      USER: odoo
+      PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - odoo_archivos:/var/lib/odoo
+      - ./generado/odoo.conf:/etc/odoo/odoo.conf:ro
+      - ../odoo_addons:/mnt/extra-addons/quetzalmart:ro
+      - ./oca/dms:/mnt/extra-addons/oca-dms:ro
+      - ./scripts:/mnt/scripts:ro
+    ports:
+      - "127.0.0.1:8069:8069"
+
+  caddy:
+    image: caddy:2.8-alpine
+    restart: unless-stopped
+    depends_on:
+      - odoo
+    environment:
+      DOMINIO: ${DOMINIO:?Falta DOMINIO en .env}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_datos:/data
+      - caddy_config:/config
+
+volumes:
+  bd_datos:
+  odoo_archivos:
+  caddy_datos:
+  caddy_config:

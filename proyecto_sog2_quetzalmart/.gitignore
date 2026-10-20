@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+# Generados en cada ejecución
+rpa/pruebas_vb/bin/
+rpa/pruebas_vb/obj/
+rpa/pruebas_vb/salida/
+gestion_documental/vista_previa/
+gestion_documental/documentos/
+manuales/**/build/
+# Secretos y datos locales del servidor (ver nube/.gitignore)
+nube/.env
+nube/credenciales.txt
