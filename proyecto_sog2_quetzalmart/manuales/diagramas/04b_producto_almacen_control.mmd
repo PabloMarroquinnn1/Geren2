@@ -1,0 +1,24 @@
+flowchart TD
+    subgraph ALM["2. Almacenamiento según su sector"]
+        S0([Producto recibido conforme]) --> S1{Categoría del producto}
+        S1 -- Despensa, bebidas, snacks --> S2[Abarrotes secos]
+        S1 -- Lácteos y refrigerados --> S3[Cámara de refrigeración]
+        S1 -- Limpieza --> S4[Químicos y limpieza<br/>separado de alimentos]
+        S1 -- Cuidado personal --> S5[Bazar y cuidado personal]
+        S1 -- Materiales --> S6[Materiales operativos]
+    end
+    subgraph CTL["4. Control de inventario"]
+        C1[Rotación PEPS:<br/>primero en vencer, primero en salir] --> C2[Conteo cíclico semanal<br/>Inventario físico]
+        C2 --> C3{¿Diferencias?}
+        C3 -- Sí --> C4[Ajuste de inventario con motivo] --> C5
+        C3 -- No --> C5{¿Bajo el mínimo?}
+        C5 -- Sí --> C6[Reabastecer: compra · diagrama 2]
+        C5 -- No --> C7{¿Próximo a vencer<br/>o dañado?}
+        C7 -- Sí --> C8([Cuarentena · 4a])
+        C7 -- No --> C9([Listo para empaque · 4c])
+    end
+    S2 --> C1
+    S3 --> C1
+    S4 --> C1
+    S5 --> C1
+    S6 --> C1

@@ -1,0 +1,12 @@
+flowchart TD
+    T1([Llega a la sucursal]) --> T2[Toma canasta o carrito]
+    T2 --> T3[Recorre los pasillos por sector:<br/>secos, refrigerados, limpieza, bazar]
+    T3 --> T4[Pide ayuda o precio a un empleado]
+    T4 --> T5[Pasa a caja]
+    T5 --> T6{¿Trae un pedido<br/>en línea para recoger?}
+    T6 -- Sí --> T7[Entregar el pedido ya pagado<br/>con su número S000…]
+    T6 -- No --> T8[Escanear, cobrar y emitir factura]
+    T7 --> T9[Sale con su compra]
+    T8 --> T9
+    T9 --> T10[Se le invita a registrarse en la tienda en línea<br/>y a usar QUETZAL10]
+    T10 --> T11([Vuelve a comprar en tienda o en línea])

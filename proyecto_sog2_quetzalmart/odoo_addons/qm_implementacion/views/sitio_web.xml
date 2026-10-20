@@ -111,6 +111,27 @@
         </xpath>
     </template>
 
+    <!-- Encabezado: teléfono real de la empresa en lugar del de ejemplo. -->
+    <template id="qm_encabezado_telefono" inherit_id="website.placeholder_header_text_element"
+              name="QuetzalMart: teléfono en el encabezado">
+        <xpath expr="//li" position="replace">
+            <li t-attf-class="#{_item_class}">
+                <div t-attf-class="s_text_block #{_div_class}" data-name="Text">
+                    <a t-attf-href="tel:#{res_company.phone}" class="nav-link o_nav-link_secondary p-2">
+                        <i class="fa fa-1x fa-fw fa-phone me-1"/>
+                        <span class="o_force_ltr"><small t-out="res_company.phone"/></span>
+                    </a>
+                </div>
+            </li>
+        </xpath>
+    </template>
+
+    <template id="qm_copyright" inherit_id="website.layout" name="QuetzalMart: derechos de autor">
+        <xpath expr="//footer//span[hasclass('o_footer_copyright_name')]" position="replace">
+            <span class="o_footer_copyright_name me-2">© 2026 QuetzalMart · Guatemala · México · El Salvador</span>
+        </xpath>
+    </template>
+
     <!-- Pie de página con la información de la empresa. -->
     <template id="qm_pie_pagina" inherit_id="website.footer_custom" name="QuetzalMart: pie de página">
         <xpath expr="//div[@id='footer']" position="replace">

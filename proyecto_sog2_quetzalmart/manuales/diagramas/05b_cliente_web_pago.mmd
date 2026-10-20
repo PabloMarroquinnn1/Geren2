@@ -1,0 +1,22 @@
+flowchart TD
+    subgraph CLI["Cliente en la tienda en línea"]
+        P1([Finalizar compra]) --> P2{¿Tiene cuenta?}
+        P2 -- Crea cuenta --> P3[Registro en la tienda]
+        P2 -- Invitado --> P4
+        P3 --> P4[Dirección y método de entrega<br/>GA4: add_shipping_info]
+        P4 --> P5[Pago con tarjeta<br/>GA4: add_payment_info]
+        P5 --> P6{¿Pago aprobado?}
+        P6 -- No --> P5
+        P6 -- Sí --> P7[Confirmación del pedido<br/>GA4: purchase]
+    end
+    subgraph ERP["Odoo · automático"]
+        O1[Lead en el CRM y lista Registros web]
+        O2[Pedido confirmado, factura publicada<br/>y oportunidad ganada] --> O3[PDF en Documentos ► Facturas de venta]
+        O3 --> O4[Correo 1: comprobante de compra]
+        O4 --> O5[45 s después · correo 2:<br/>campaña con QUETZAL10]
+        O5 --> O6{¿Entrega?}
+        O6 -- A domicilio --> O7([Bodega prepara y envía])
+        O6 -- Recoger en sucursal --> O8([Lo recoge en la tienda · 5c])
+    end
+    P3 --> O1
+    P7 --> O2

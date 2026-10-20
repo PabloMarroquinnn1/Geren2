@@ -1,0 +1,17 @@
+flowchart TD
+    subgraph BOD["Bodega · sucursal"]
+        B0([Pedido confirmado]) --> B1{¿Hay existencias?}
+        B1 -- No --> B2[Compra urgente<br/>diagrama 2] --> B1
+        B1 -- Sí --> B3[Preparar: tomar del sector correspondiente]
+        B3 --> B4[Empacar y etiquetar]
+        B4 --> B5[Validar la entrega:<br/>el inventario disminuye]
+    end
+    subgraph CAJ["Caja y facturación"]
+        F1[Crear factura desde el pedido] --> F2[Publicar factura con IVA 12 %]
+        F2 --> F3[PDF archivado automáticamente<br/>Documentos ► Facturas de venta]
+        F3 --> F4{¿Forma de pago?}
+        F4 -- Contado --> F5[Registrar el pago]
+        F4 -- Crédito --> F6[Cuenta por cobrar y seguimiento] --> F5
+        F5 --> F7([Venta cobrada · el cliente recibe<br/>productos y factura])
+    end
+    B5 --> F1

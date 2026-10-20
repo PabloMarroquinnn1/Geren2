@@ -1,0 +1,16 @@
+flowchart TD
+    C0([Consolidados listos]) --> C1["Escribir consolidado_clientes.xlsx<br/>y consolidado_productos.xlsx"]
+    C1 --> C2[Abrir en Chrome: Importar registros<br/>de Contactos o de Productos]
+    C2 --> C3{¿Odoo pide<br/>iniciar sesión?}
+    C3 -- Sí --> C4[/Pedir usuario y clave e ingresar/]
+    C3 -- No --> C5
+    C4 --> C5["Subir archivo de datos:<br/>escribir la ruta en la ventana Abrir"]
+    C5 --> C6[Clic en Probar]
+    C6 --> C7{¿Todo parece correcto?}
+    C7 -- No --> C8[[Detener y mostrar los errores de Odoo]]
+    C7 -- Sí --> C9[Clic en Importar]
+    C9 --> C10["Odoo resuelve país, estado, empresa y etiquetas<br/>y registra la cantidad a la mano"]
+    C10 --> C11{¿Faltan productos<br/>por importar?}
+    C11 -- Sí --> C2
+    C11 -- No --> C12[Guardar reporte_robot.xlsx<br/>y mostrar el resumen]
+    C12 --> C13([Fin: datos visibles en Odoo,<br/>en la tienda y en SQL])

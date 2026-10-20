@@ -76,6 +76,9 @@ def _configurar_empresa(env):
         "secondary_color": "#C8102E",
         "font": "Montserrat",
         "report_footer": "QuetzalMart · Guatemala · México · El Salvador · Gracias por su compra",
+        # Compras mayores a Q 10,000 requieren aprobación de un gerente (Manual 2).
+        "po_double_validation": "two_step",
+        "po_double_validation_amount": 10000,
     })
     estado_gt = env["res.country.state"].search(
         [("country_id.code", "=", "GT"), ("name", "=", "Guatemala")], limit=1)
@@ -211,12 +214,18 @@ def _configurar_tienda(env, empresa, equipo_web):
         "cookies_bar": False,
         "auth_signup_uninvited": "b2c",
         "account_on_checkout": "optional",
-        "show_line_subtotals_tax_selection": "tax_excluded",
+        "show_line_subtotals_tax_selection": "tax_included",
         "salesteam_id": equipo_web.id,
         "shop_ppg": 24,
         "shop_ppr": 4,
     })
     env["ir.config_parameter"].sudo().set_param("auth_signup.invitation_scope", "b2c")
+    # Paleta de la tienda con los colores de la marca (botones verdes, acentos rojos).
+    env["web_editor.assets"].make_scss_customization(
+        "/website/static/src/scss/options/colors/user_color_palette.scss",
+        {"o-color-1": "#0B6E4F", "o-color-2": "#C8102E", "o-color-3": "#F3F7F4",
+         "o-color-4": "#FFFFFF", "o-color-5": "#064635"},
+    )
 
 
 def _producto_envio(env, nombre, precio):

@@ -8,7 +8,7 @@ set -a
 source .env
 set +a
 
-modulos=${1:-qm_implementacion,qm_puente_rpa,qm_ga4_ecommerce,qm_crm_postventa,qm_archivo_facturas}
+modulos=${1:-qm_implementacion,qm_puente_rpa,qm_ga4_ecommerce,qm_crm_postventa,qm_gestion_documental}
 docker compose stop odoo
 docker compose run --rm odoo odoo -d "${BD_NOMBRE}" -u "${modulos}" --stop-after-init
 docker compose up -d

@@ -1,0 +1,18 @@
+flowchart TD
+    subgraph BOD["Encargado de bodega · sucursal"]
+        I1([Inicio]) --> I2[Revisar existencias y mínimos<br/>Inventario ► Reabastecimiento]
+        I2 --> I3{¿Producto o material<br/>bajo el mínimo?}
+        I3 -- No --> I1b([Fin: no se compra])
+        I3 -- Sí --> I4[Registrar la necesidad: producto,<br/>cantidad y sucursal que recibe]
+    end
+    subgraph COM["Compras · Finanzas y Administración"]
+        P1[Crear solicitud de cotización SDC<br/>a 2 o 3 proveedores del rubro] --> P2[Enviar la SDC por correo desde Odoo]
+        P2 --> P3[Registrar precios y tiempos de entrega]
+        P3 --> P4[Comparar precio, calidad,<br/>tiempo de entrega y crédito]
+        P4 --> P5[Confirmar la mejor SDC:<br/>se convierte en orden de compra]
+        P5 --> P6{¿Monto mayor<br/>a Q 10,000?}
+        P6 -- Sí --> P7[Aprobación de un gerente en Odoo]
+        P6 -- No --> P8([Enviar orden de compra al proveedor])
+        P7 --> P8
+    end
+    I4 --> P1

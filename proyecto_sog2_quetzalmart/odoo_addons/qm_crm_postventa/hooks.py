@@ -18,6 +18,9 @@ def post_init_hook(env):
     env.ref("qm_crm_postventa.correo_masivo_temporada").write({
         "body_arch": cuerpo,
         "body_html": cuerpo,
+        # Responsable visible: si queda a nombre del usuario del sistema, el
+        # filtro "Mis correos" de Marketing por correo lo oculta.
+        "user_id": env.ref("base.user_admin").id,
     })
 
     _crear_codigo_promocional(env)

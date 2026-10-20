@@ -1,0 +1,20 @@
+flowchart TD
+    A0([Inicio: ejecutar el robot en UiPath Studio]) --> A1[/Elegir la carpeta raíz entregada por el auxiliar/]
+    A1 --> B1["Buscar *.xlsx en la carpeta y todas sus subcarpetas<br/>(omitir archivos temporales ~$)"]
+    B1 --> B3[Tomar el siguiente archivo]
+    B3 --> B4["Listar las hojas en el orden de sus pestañas<br/>(xl/workbook.xml, sin abrir Excel)"]
+    B4 --> B5{¿La 5.ª hoja se llama<br/>clientes o productos?}
+    B5 -- Sí --> B7[Leer la hoja con encabezados]
+    B5 -- No --> B6{¿Existe la hoja con ese<br/>nombre en otra posición?}
+    B6 -- Sí --> B7
+    B6 -- No --> B13[Archivo sin hojas de interés: se ignora]
+    B7 --> B8["Reconocer columnas en inglés o español<br/>Name*, Nombre, Tax ID, NIT, Está publicado…"]
+    B8 --> B9["Normalizar valores: tipo de contacto y de producto,<br/>publicado, código de barras, precios"]
+    B9 --> B10{¿Fila vacía o<br/>registro repetido?}
+    B10 -- Sí --> B11[Omitir y contar en el reporte]
+    B10 -- No --> B12["Agregar al consolidado con ID externo<br/>y archivo de origen"]
+    B11 --> B15{¿Quedan archivos?}
+    B12 --> B15
+    B13 --> B15
+    B15 -- Sí --> B3
+    B15 -- No --> B16([Continúa en la importación a Odoo])
