@@ -1,10 +1,7 @@
 {
-  "grupo": "Grupo __ (COMPLETAR)",
   "integrantes": [
-    {"nombre": "Nombre Apellido (COMPLETAR)", "carne": "20XXXXXXX"},
-    {"nombre": "Nombre Apellido (COMPLETAR)", "carne": "20XXXXXXX"},
-    {"nombre": "Nombre Apellido (COMPLETAR)", "carne": "20XXXXXXX"}
+    {"nombre": "Pablo Alejandro Marroquin Cutz", "carne": "202200214"},
+    {"nombre": "María de los Angeles Paz de León", "carne": "201602619"}
   ],
-  "auxiliar": "(COMPLETAR)",
   "fecha": ""
 }
