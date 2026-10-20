@@ -2,6 +2,15 @@
 Imports System.Data
 
 Module Fragmentos
+    Sub CrearReporte(ByRef dtReporte As DataTable)
+        ' Tabla con el resultado de cada hoja procesada (se guarda en reporte_robot.xlsx).
+        ' Salida: dtReporte (DataTable)
+        dtReporte = New System.Data.DataTable("reporte")
+        For Each columna As String In {"archivo", "hoja", "posicion", "tipo", "agregados", "omitidos", "estado"}
+            dtReporte.Columns.Add(columna, GetType(String))
+        Next
+    End Sub
+
     Sub ListarHojas(rutaArchivo As String, ByRef hojas As String())
         ' Devuelve los nombres de las hojas de un .xlsx en el orden de sus pestañas.
         ' Lee xl/workbook.xml dentro del archivo (un .xlsx es un ZIP): no necesita Excel

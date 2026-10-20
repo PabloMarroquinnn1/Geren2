@@ -34,6 +34,12 @@ def registrar_xmlid(env, nombre, registro):
     }])
 
 
+def nombre_traducido(registro, nombre):
+    """Escribe un nombre traducible en inglés y en español (si no, se ve la traducción vieja)."""
+    for idioma in ("en_US", "es_419"):
+        registro.with_context(lang=idioma).name = nombre
+
+
 def leer_imagen(ruta):
     with file_open(ruta, "rb") as archivo:
         return base64.b64encode(archivo.read())
@@ -115,9 +121,9 @@ def _crear_equipos(env):
         equipo = Equipo.search([("name", "=", nombre)], limit=1)
         if not equipo and codigo == "GUA" and principal:
             equipo = principal
-            equipo.name = nombre
         if not equipo:
             equipo = Equipo.create({"name": nombre})
+        nombre_traducido(equipo, nombre)
         equipo.write({"use_leads": True, "use_opportunities": True})
         equipos[codigo] = equipo
         registrar_xmlid(env, "equipo_%s" % codigo.lower(), equipo)
@@ -151,7 +157,6 @@ def _crear_sucursales(env, empresa, equipos):
         else:
             almacen = Almacen.create(dict(valores, company_id=empresa.id))
         almacenes[codigo] = almacen
-        equipos[codigo].write({"name": nombre})
         registrar_xmlid(env, "almacen_%s" % codigo.lower(), almacen)
         registrar_xmlid(env, "direccion_%s" % codigo.lower(), direccion)
     return almacenes
@@ -258,8 +263,5 @@ def _configurar_envios(env, empresa):
 def _configurar_pagos(env):
     demo = env.ref("payment.payment_provider_demo", raise_if_not_found=False)
     if demo:
-        demo.write({
-            "name": "Tarjeta de crédito o débito (modo de prueba)",
-            "state": "test",
-            "is_published": True,
-        })
+        nombre_traducido(demo, "Tarjeta de crédito o débito (modo de prueba)")
+        demo.write({"state": "test", "is_published": True})

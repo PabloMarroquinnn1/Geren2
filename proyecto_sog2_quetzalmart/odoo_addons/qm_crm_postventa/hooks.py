@@ -1,3 +1,4 @@
+from odoo import Command
 from odoo.tools import file_open
 
 CODIGO_PROMOCIONAL = "QUETZAL10"
@@ -23,19 +24,28 @@ def post_init_hook(env):
 
 
 def _crear_codigo_promocional(env):
-    Programa = env["loyalty.program"]
+    """Código QUETZAL10: 10 % de descuento en el pedido (tienda en línea y ventas)."""
     if env["loyalty.rule"].search_count([("code", "=", CODIGO_PROMOCIONAL)]):
         return
-    programa = Programa.create({
+    # La regla y la recompensa se crean explícitamente: Odoo solo las propone
+    # por defecto en el formulario, no al crear el programa por código.
+    env["loyalty.program"].create({
         "name": "Campaña postcompra: 10% con QUETZAL10",
         "program_type": "promo_code",
         "trigger": "with_code",
         "applies_on": "current",
-    })
-    programa.rule_ids.write({"code": CODIGO_PROMOCIONAL, "minimum_amount": 0})
-    programa.reward_ids.write({
-        "reward_type": "discount",
-        "discount": 10,
-        "discount_mode": "percent",
-        "discount_applicability": "order",
+        "rule_ids": [Command.create({
+            "mode": "with_code",
+            "code": CODIGO_PROMOCIONAL,
+            "minimum_amount": 0,
+            "reward_point_amount": 1,
+            "reward_point_mode": "order",
+        })],
+        "reward_ids": [Command.create({
+            "reward_type": "discount",
+            "discount": 10,
+            "discount_mode": "percent",
+            "discount_applicability": "order",
+            "required_points": 1,
+        })],
     })

@@ -1,0 +1,6 @@
+{
+  "Name": "QuetzalMart_Robot",
+  "ProjectType": "Process",
+  "Description": "Robot de carga de clientes y productos de QuetzalMart",
+  "MainFile": "Main.xaml"
+}
