@@ -6,7 +6,7 @@
     python manuales/construir_manuales.py 3          # solo el Manual 3
 
 * Portada con los datos de datos_grupo.json.
-* Diagramas: diagramas/*.mmd -> .svg y .png (requiere mermaid en node_modules; si no
+* Diagramas: diagramas/*.mmd -> .svg (requiere mermaid en node_modules; si no
   está, se usan los .svg ya generados).
 * Manual 3: gráficas y cifras desde manual_3/datos_ga4.json. Mientras ese archivo tenga
   "ejemplo": true, el PDF sale marcado como BORRADOR.
@@ -132,8 +132,6 @@ def renderizar_diagramas(navegador):
             "async ([id, codigo]) => (await mermaid.render(id, codigo)).svg",
             ["diagrama" + fuente.stem.replace("_", ""), fuente.read_text(encoding="utf-8")])
         fuente.with_suffix(".svg").write_text(svg, encoding="utf-8")
-        pagina.evaluate("svg => { document.getElementById('d').innerHTML = svg; }", svg)
-        pagina.locator("#d svg").screenshot(path=str(fuente.with_suffix(".png")))
         print("  diagrama", fuente.stem)
     pagina.close()
 

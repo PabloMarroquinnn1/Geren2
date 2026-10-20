@@ -37,12 +37,10 @@ CAPTURAS_ODOO = [
     ("15_crm_flujo", "/odoo/crm", "kanban", False),
     ("16_contactos", "/odoo/contacts", "kanban", False),
     ("17_productos", "/odoo/products", "kanban", False),
-    ("18_producto_detalle", "/odoo/products", "list", True),
     ("19_inventario_por_ubicacion", "/odoo/action-stock.dashboard_open_quants", "list", False),
     ("20_almacenes", "/odoo/action-stock.action_warehouse_form", "list", False),
     ("21_documentos_carpetas", "/odoo/action-dms.action_dms_directory", "kanban", False),
     ("22_documentos_archivos", "/odoo/action-dms.action_dms_file", "list", False),
-    ("23_marketing_campanas", "/odoo/email-marketing", "list", False),
     ("24_marketing_campana_detalle", "/odoo/email-marketing", "kanban", True),
 ]
 
@@ -106,11 +104,9 @@ def capturar_tienda(navegador, url, sin_verificar_ssl=False):
     pagina.goto(url + "/", wait_until="networkidle")
     pagina.screenshot(path=str(SALIDA / "30_tienda_inicio.png"), full_page=True)
     pagina.goto(url + "/shop", wait_until="networkidle")
-    pagina.screenshot(path=str(SALIDA / "31_tienda_catalogo.png"))
     pagina.locator(".oe_product a.oe_product_image_link").first.click()
     pagina.wait_for_selector("#add_to_cart")
     pagina.wait_for_timeout(800)
-    pagina.screenshot(path=str(SALIDA / "32_tienda_producto.png"))
     pagina.click("#add_to_cart")
     pagina.wait_for_timeout(1500)
     pagina.goto(url + "/shop/cart", wait_until="networkidle")

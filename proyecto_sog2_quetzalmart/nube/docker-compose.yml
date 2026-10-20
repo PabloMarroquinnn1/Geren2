@@ -1,7 +1,7 @@
 # QuetzalMart - Odoo 18 Community + PostgreSQL 16 + Caddy (HTTPS automático)
 #
 # Se ejecuta en cualquier VM Linux de la nube (Azure, GCP, AWS...) con Docker.
-# Las variables salen de nube/.env (ver .env.ejemplo); instalar.sh las genera.
+# Las variables salen de nube/.env, que instalar.sh genera con claves aleatorias.
 
 name: quetzalmart
 
