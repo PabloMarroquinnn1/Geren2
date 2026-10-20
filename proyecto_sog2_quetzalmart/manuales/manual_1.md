@@ -66,7 +66,7 @@ El script `instalar.sh` realiza ocho pasos y puede repetirse sin perder datos:
 | 3 | Descarga el módulo OCA DMS (gestión documental) en una versión fija. |
 | 4 | Genera `odoo.conf`: una sola base `quetzalmart`, sin administrador público de bases, 2 workers y 2 hilos de tareas programadas. |
 | 5 | Inicia PostgreSQL y espera a que esté listo. |
-| 6 | Crea la base en **español latinoamericano**, prepara la compañía en Guatemala con quetzales (para cargar el plan contable e IVA de `l10n_gt`) e instala `qm_implementacion`, que instala y configura todo lo demás. |
+| 6 | Crea la base en **español latinoamericano**, prepara la compañía en Guatemala con quetzales, instala la contabilidad de Guatemala (`l10n_gt`: plan contable e IVA) y luego `qm_implementacion`, que instala y configura todo lo demás. |
 | 7 | Crea el usuario de PostgreSQL `consulta` de **solo lectura** para la calificación. |
 | 8 | Inicia Odoo y Caddy y espera el certificado HTTPS. Muestra la URL y las credenciales. |
 

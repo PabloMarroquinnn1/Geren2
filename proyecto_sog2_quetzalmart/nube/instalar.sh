@@ -79,6 +79,10 @@ if [[ ${existe} != "1" ]]; then
     --without-demo=all --load-language=es_419 --stop-after-init
   docker compose run --rm -T -e ODOO_ADMIN_LOGIN -e ODOO_ADMIN_PASSWORD odoo \
     odoo shell -d "${BD_NOMBRE}" --no-http < scripts/preparar_compania.py
+  # Odoo carga el plan de cuentas y el IVA al terminar la instalación: se instala
+  # aparte para que la configuración de QuetzalMart (envíos, impuestos) ya los encuentre.
+  docker compose run --rm odoo odoo -d "${BD_NOMBRE}" -i l10n_gt \
+    --without-demo=all --stop-after-init
   docker compose run --rm odoo odoo -d "${BD_NOMBRE}" -i "${MODULO_PRINCIPAL}" \
     --without-demo=all --stop-after-init
 else
