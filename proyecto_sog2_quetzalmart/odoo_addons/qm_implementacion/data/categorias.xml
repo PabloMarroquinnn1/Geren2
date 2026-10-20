@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Categorías internas (contabilidad, inventario y reglas de ubicación). -->
+    <record id="cat_venta" model="product.category">
+        <field name="name">Productos de venta</field>
+        <field name="parent_id" ref="product.product_category_all"/>
+    </record>
+    <record id="cat_despensa" model="product.category">
+        <field name="name">Despensa</field>
+        <field name="parent_id" ref="cat_venta"/>
+    </record>
+    <record id="cat_lacteos" model="product.category">
+        <field name="name">Lácteos y refrigerados</field>
+        <field name="parent_id" ref="cat_venta"/>
+    </record>
+    <record id="cat_bebidas" model="product.category">
+        <field name="name">Bebidas</field>
+        <field name="parent_id" ref="cat_venta"/>
+    </record>
+    <record id="cat_snacks" model="product.category">
+        <field name="name">Snacks y dulces</field>
+        <field name="parent_id" ref="cat_venta"/>
+    </record>
+    <record id="cat_limpieza" model="product.category">
+        <field name="name">Limpieza del hogar</field>
+        <field name="parent_id" ref="cat_venta"/>
+    </record>
+    <record id="cat_cuidado" model="product.category">
+        <field name="name">Cuidado personal</field>
+        <field name="parent_id" ref="cat_venta"/>
+    </record>
+    <record id="cat_materiales" model="product.category">
+        <field name="name">Materiales operativos</field>
+        <field name="parent_id" ref="product.product_category_all"/>
+    </record>
+    <record id="cat_mat_empaque" model="product.category">
+        <field name="name">Empaque y bolsas</field>
+        <field name="parent_id" ref="cat_materiales"/>
+    </record>
+    <record id="cat_mat_punto_venta" model="product.category">
+        <field name="name">Punto de venta y papelería</field>
+        <field name="parent_id" ref="cat_materiales"/>
+    </record>
+    <record id="cat_mat_higiene_tienda" model="product.category">
+        <field name="name">Limpieza e higiene de tienda</field>
+        <field name="parent_id" ref="cat_materiales"/>
+    </record>
+    <record id="cat_mat_seguridad" model="product.category">
+        <field name="name">Seguridad industrial y uniformes</field>
+        <field name="parent_id" ref="cat_materiales"/>
+    </record>
+    <record id="cat_mat_bodega" model="product.category">
+        <field name="name">Bodega y exhibición</field>
+        <field name="parent_id" ref="cat_materiales"/>
+    </record>
+    <record id="cat_mat_mantenimiento" model="product.category">
+        <field name="name">Mantenimiento y energía</field>
+        <field name="parent_id" ref="cat_materiales"/>
+    </record>
+
+    <!-- Categorías públicas de la tienda en línea. -->
+    <record id="web_despensa" model="product.public.category">
+        <field name="name">Despensa</field>
+        <field name="sequence">1</field>
+        <field name="image_1920" type="base64" file="qm_implementacion/static/img/categorias/despensa.png"/>
+    </record>
+    <record id="web_lacteos" model="product.public.category">
+        <field name="name">Lácteos y refrigerados</field>
+        <field name="sequence">2</field>
+        <field name="image_1920" type="base64" file="qm_implementacion/static/img/categorias/lacteos.png"/>
+    </record>
+    <record id="web_bebidas" model="product.public.category">
+        <field name="name">Bebidas</field>
+        <field name="sequence">3</field>
+        <field name="image_1920" type="base64" file="qm_implementacion/static/img/categorias/bebidas.png"/>
+    </record>
+    <record id="web_snacks" model="product.public.category">
+        <field name="name">Snacks y dulces</field>
+        <field name="sequence">4</field>
+        <field name="image_1920" type="base64" file="qm_implementacion/static/img/categorias/snacks.png"/>
+    </record>
+    <record id="web_limpieza" model="product.public.category">
+        <field name="name">Limpieza del hogar</field>
+        <field name="sequence">5</field>
+        <field name="image_1920" type="base64" file="qm_implementacion/static/img/categorias/limpieza.png"/>
+    </record>
+    <record id="web_cuidado" model="product.public.category">
+        <field name="name">Cuidado personal</field>
+        <field name="sequence">6</field>
+        <field name="image_1920" type="base64" file="qm_implementacion/static/img/categorias/cuidado.png"/>
+    </record>
+</odoo>

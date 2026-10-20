@@ -1,0 +1,17 @@
+[options]
+; instalar.sh copia esta plantilla a generado/odoo.conf y reemplaza __CLAVE_MAESTRA__.
+admin_passwd = __CLAVE_MAESTRA__
+data_dir = /var/lib/odoo
+addons_path = /mnt/extra-addons/quetzalmart,/mnt/extra-addons/oca-dms,/usr/lib/python3/dist-packages/odoo/addons
+proxy_mode = True
+; Una sola base de datos y sin administrador público de bases.
+dbfilter = ^__BD_NOMBRE__$
+list_db = False
+workers = 2
+max_cron_threads = 2
+gevent_port = 8072
+limit_memory_soft = 1073741824
+limit_memory_hard = 1610612736
+limit_time_cpu = 300
+limit_time_real = 600
+log_level = info

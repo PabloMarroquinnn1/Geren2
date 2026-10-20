@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Campaña masiva para la lista "Clientes QuetzalMart" (el cuerpo lo pone el hook). -->
+    <record id="correo_masivo_temporada" model="mailing.mailing">
+        <field name="subject">QuetzalMart llegó a tu casa: 10% de bienvenida en la tienda en línea</field>
+        <field name="preview">Compra en línea en Guatemala, México y El Salvador con el código QUETZAL10.</field>
+        <field name="mailing_type">mail</field>
+        <field name="mailing_model_id" ref="mass_mailing.model_mailing_list"/>
+        <field name="contact_list_ids" eval="[Command.link(ref('lista_clientes'))]"/>
+        <field name="campaign_id" ref="campana_temporada"/>
+        <field name="medium_id" ref="utm.utm_medium_email"/>
+    </record>
+</odoo>

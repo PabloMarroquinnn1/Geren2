@@ -1,0 +1,11 @@
+flowchart TD
+    W1([Ve un anuncio, una publicación<br/>o el correo de campaña]) --> W2[Entra a la tienda<br/>GA4: page_view con origen UTM]
+    W2 --> W3[Explora categorías y productos<br/>GA4: view_item]
+    W3 --> W4{¿Le interesa?}
+    W4 -- No --> W5([Se va · rebote])
+    W4 -- Sí --> W6[Agrega al carrito<br/>GA4: add_to_cart]
+    W6 --> W7[Revisa el carrito: subtotal, IVA y envío<br/>aplica QUETZAL10 · GA4: view_cart]
+    W7 --> W8{¿Continúa?}
+    W8 -- Quita un producto --> W9[GA4: remove_from_cart] --> W7
+    W8 -- No --> W10([Carrito abandonado:<br/>audiencia de remarketing])
+    W8 -- Sí --> W11([Finalizar compra · GA4: begin_checkout · 5b])

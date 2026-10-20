@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="qm_factura_form_documentos" model="ir.ui.view">
+        <field name="name">account.move.form.qm.documentos</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_qm_ver_documento" type="object" class="oe_stat_button"
+                        icon="fa-file-pdf-o" invisible="not qm_documento_id">
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">PDF en</span>
+                        <span class="o_stat_text">Documentos</span>
+                    </div>
+                </button>
+            </div>
+            <xpath expr="//header" position="inside">
+                <button name="action_qm_archivar_ahora" type="object" string="Archivar PDF en Documentos"
+                        invisible="state != 'posted' or move_type not in ('out_invoice', 'out_refund', 'in_invoice', 'in_refund')"
+                        groups="account.group_account_invoice"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="qm_accion_archivar_facturas" model="ir.actions.server">
+        <field name="name">Archivar PDF en Documentos</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">records.action_qm_archivar_ahora()</field>
+    </record>
+</odoo>

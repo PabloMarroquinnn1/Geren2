@@ -1,0 +1,20 @@
+flowchart TD
+    subgraph PRO["Proveedor"]
+        V1([Orden de compra recibida]) --> V2[Entregar en el andén de la sucursal<br/>con factura FEL]
+    end
+    subgraph REC["Recepción · sucursal"]
+        R1[Recibir contra la orden<br/>Inventario ► Recepciones] --> R2[Contar y revisar vencimiento,<br/>empaque y temperatura]
+        R2 --> R3{¿Conforme?}
+        R3 -- No --> R4[Separar en Cuarentena y pedir<br/>devolución o nota de crédito]
+        R3 -- Sí --> R5[Validar la recepción: Odoo ubica cada<br/>categoría en su sector]
+    end
+    subgraph CON["Contabilidad"]
+        C1[Crear factura de proveedor desde la orden] --> C2[Conciliar orden, recepción<br/>y factura]
+        C2 --> C3{¿Coinciden?}
+        C3 -- No --> C4[Aclarar con el proveedor] --> C2
+        C3 -- Sí --> C5[Publicar factura y archivar PDF<br/>Documentos ► Facturas de proveedores]
+        C5 --> C6([Programar y registrar el pago])
+    end
+    V2 --> R1
+    R4 --> C1
+    R5 --> C1

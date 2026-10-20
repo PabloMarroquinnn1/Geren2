@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Quién puede ver y editar el archivo: todos los usuarios internos. -->
+    <record id="grupo_acceso_equipo" model="dms.access.group">
+        <field name="name">Equipo QuetzalMart</field>
+        <field name="group_ids" eval="[Command.link(ref('base.group_user'))]"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="almacenamiento" model="dms.storage">
+        <field name="name">Archivo QuetzalMart</field>
+        <field name="save_type">database</field>
+    </record>
+
+    <record id="carpeta_raiz" model="dms.directory">
+        <field name="name">Archivo QuetzalMart</field>
+        <field name="is_root_directory" eval="True"/>
+        <field name="storage_id" ref="almacenamiento"/>
+        <field name="group_ids" eval="[Command.link(ref('grupo_acceso_equipo'))]"/>
+    </record>
+
+    <record id="carpeta_facturas_venta" model="dms.directory">
+        <field name="name">Facturas de venta</field>
+        <field name="parent_id" ref="carpeta_raiz"/>
+    </record>
+    <record id="carpeta_facturas_proveedor" model="dms.directory">
+        <field name="name">Facturas de proveedores</field>
+        <field name="parent_id" ref="carpeta_raiz"/>
+    </record>
+    <record id="carpeta_contratos_outsourcing" model="dms.directory">
+        <field name="name">Contratos de outsourcing</field>
+        <field name="parent_id" ref="carpeta_raiz"/>
+    </record>
+    <record id="carpeta_contratos_empleados" model="dms.directory">
+        <field name="name">Contratos de empleados</field>
+        <field name="parent_id" ref="carpeta_raiz"/>
+    </record>
+    <record id="carpeta_reportes" model="dms.directory">
+        <field name="name">Reportes gerenciales</field>
+        <field name="parent_id" ref="carpeta_raiz"/>
+    </record>
+
+    <!-- Categorías: el tipo de documento. -->
+    <record id="categoria_factura_venta" model="dms.category">
+        <field name="name">Factura de venta</field>
+    </record>
+    <record id="categoria_factura_proveedor" model="dms.category">
+        <field name="name">Factura de proveedor</field>
+    </record>
+    <record id="categoria_contrato_outsourcing" model="dms.category">
+        <field name="name">Contrato de outsourcing</field>
+    </record>
+    <record id="categoria_contrato_laboral" model="dms.category">
+        <field name="name">Contrato laboral</field>
+    </record>
+    <record id="categoria_reporte" model="dms.category">
+        <field name="name">Reporte gerencial</field>
+    </record>
+
+    <!-- Etiquetas para filtrar (se combinan con la categoría). -->
+    <record id="etiqueta_erp" model="dms.tag">
+        <field name="name">Generado por el ERP</field>
+        <field name="color">10</field>
+    </record>
+    <record id="etiqueta_venta" model="dms.tag">
+        <field name="name">Venta</field>
+        <field name="color">4</field>
+    </record>
+    <record id="etiqueta_proveedor" model="dms.tag">
+        <field name="name">Proveedor</field>
+        <field name="color">2</field>
+    </record>
+    <record id="etiqueta_outsourcing" model="dms.tag">
+        <field name="name">Outsourcing</field>
+        <field name="color">5</field>
+    </record>
+    <record id="etiqueta_laboral" model="dms.tag">
+        <field name="name">Recursos humanos</field>
+        <field name="color">7</field>
+    </record>
+    <record id="etiqueta_confidencial" model="dms.tag">
+        <field name="name">Confidencial</field>
+        <field name="color">1</field>
+    </record>
+    <record id="etiqueta_vigente" model="dms.tag">
+        <field name="name">Vigente</field>
+        <field name="color">8</field>
+    </record>
+    <record id="etiqueta_pagada" model="dms.tag">
+        <field name="name">Pagada</field>
+        <field name="color">11</field>
+    </record>
+</odoo>

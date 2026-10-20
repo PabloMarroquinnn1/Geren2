@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Datos del carrito disponibles en el carrito y en cada paso del pago. -->
+    <template id="qm_ga4_datos_checkout" inherit_id="website_sale.checkout_layout"
+              name="QuetzalMart GA4: datos del carrito">
+        <xpath expr="//div[hasclass('oe_website_sale')]" position="inside">
+            <div t-if="website_sale_order and website_sale_order.website_order_line"
+                 id="qm_ga4_carrito" class="d-none"
+                 t-att-data-carrito="website_sale_order._qm_ga4_datos_json()"/>
+        </xpath>
+    </template>
+
+    <!-- Propiedad de usuario para segmentar (registrado vs. invitado). -->
+    <template id="qm_ga4_propiedades_usuario" inherit_id="website.layout"
+              name="QuetzalMart GA4: propiedades de usuario">
+        <xpath expr="//script[@id='tracking_code_config']" position="after">
+            <script id="qm_ga4_propiedades">
+                gtag('set', 'user_properties', {
+                    cliente_registrado: '<t t-out="'no' if request.env.user._is_public() else 'si'"/>',
+                    tienda: 'QuetzalMart en linea'
+                });
+            </script>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="qm_producto_form_rpa" model="ir.ui.view">
+        <field name="name">product.template.form.qm.rpa</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='general_information']" position="inside">
+                <group string="Carga automática (RPA)" invisible="not qm_origen_rpa and not qm_valores_producto">
+                    <field name="qm_origen_rpa" readonly="1"/>
+                    <field name="qm_cantidad_inicial" readonly="1"/>
+                    <field name="qm_valores_producto"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="qm_producto_buscar_rpa" model="ir.ui.view">
+        <field name="name">product.template.search.qm.rpa</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_search_view"/>
+        <field name="arch" type="xml">
+            <filter name="filter_to_purchase" position="after">
+                <filter string="Cargados por el RPA" name="qm_cargados_rpa" domain="[('qm_origen_rpa', '!=', False)]"/>
+            </filter>
+        </field>
+    </record>
+
+    <record id="qm_contacto_form_rpa" model="ir.ui.view">
+        <field name="name">res.partner.form.qm.rpa</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='internal_notes']" position="inside">
+                <group string="Carga automática (RPA)" invisible="not qm_origen_rpa">
+                    <field name="qm_origen_rpa" readonly="1"/>
+                    <field name="qm_pais_texto" readonly="1"/>
+                    <field name="qm_estado_texto" readonly="1"/>
+                    <field name="qm_empresa_relacionada" readonly="1"/>
+                    <field name="qm_etiquetas_texto" readonly="1"/>
+                    <field name="qm_sitio_web" readonly="1"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="qm_contacto_buscar_rpa" model="ir.ui.view">
+        <field name="name">res.partner.search.qm.rpa</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='inactive']" position="before">
+                <filter string="Cargados por el RPA" name="qm_cargados_rpa" domain="[('qm_origen_rpa', '!=', False)]"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

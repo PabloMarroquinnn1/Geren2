@@ -1,0 +1,18 @@
+flowchart TD
+    subgraph CLI["Cliente"]
+        K1([Necesita productos]) --> K2{¿Canal?}
+        K2 -- Empresa con pedido grande --> K3[Solicita cotización por<br/>teléfono, correo o formulario web]
+        K2 -- Tienda en línea --> K4([Compra en el sitio web<br/>diagrama 5])
+        K2 -- Tienda física --> K5([Lleva los productos a caja<br/>diagrama 3b])
+    end
+    subgraph VEN["Ventas · equipo de la sucursal"]
+        S1[Registrar o actualizar el cliente<br/>Contactos y CRM] --> S2[Crear oportunidad en el CRM]
+        S2 --> S3[Preparar cotización COT: productos,<br/>cantidades, precios e IVA 12 %]
+        S3 --> S4[Enviar la cotización]
+        S4 --> S5{¿El cliente acepta?}
+        S5 -- Pide ajustes --> S3
+        S5 -- No --> S6([Oportunidad perdida con su motivo])
+        S5 -- Sí --> S7[Confirmar: pedido de venta<br/>y reserva de inventario]
+        S7 --> S8([Oportunidad ganada · pasa a despacho])
+    end
+    K3 --> S1

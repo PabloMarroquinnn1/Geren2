@@ -1,0 +1,229 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Text</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>UiPath.Excel</x:String>
+      <x:String>UiPath.Excel.Activities</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.Common</AssemblyReference>
+      <AssemblyReference>System.Linq</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>System.Collections</AssemblyReference>
+      <AssemblyReference>System.IO.Compression</AssemblyReference>
+      <AssemblyReference>System.IO.Compression.ZipFile</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>System.Private.Xml.Linq</AssemblyReference>
+      <AssemblyReference>System.Text.RegularExpressions</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="QuetzalMart - Robot de carga de clientes y productos">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Default="https://CAMBIAR-POR-EL-DOMINIO-DE-ODOO" Name="urlOdoo" />
+      <Variable x:TypeArguments="x:String" Name="carpetaRaiz" />
+      <Variable x:TypeArguments="x:String" Name="carpetaSalida" />
+      <Variable x:TypeArguments="s:String[]" Name="archivos" />
+      <Variable x:TypeArguments="sd:DataTable" Name="dtClientes" />
+      <Variable x:TypeArguments="sd:DataTable" Name="dtProductos" />
+      <Variable x:TypeArguments="sd:DataTable" Name="dtReporte" />
+      <Variable x:TypeArguments="x:String" Name="archivoClientes" />
+      <Variable x:TypeArguments="x:String" Name="archivoProductos" />
+      <Variable x:TypeArguments="x:Int32" Name="hojasProcesadas" />
+    </Sequence.Variables>
+    <ui:LogMessage DisplayName="Inicio del robot" Level="Info" Message="[&quot;QuetzalMart RPA: inicio &quot; + Now.ToString(&quot;yyyy-MM-dd HH:mm:ss&quot;)]" />
+    <ui:SelectFolder DisplayName="1. Pedir la carpeta raíz entregada por el auxiliar" SelectedFolder="[carpetaRaiz]" />
+    <Assign DisplayName="Carpeta de salida (Documentos\QuetzalMart_RPA\fecha)">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[carpetaSalida]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">[Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "QuetzalMart_RPA", Now.ToString("yyyyMMdd_HHmmss"))).FullName]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign DisplayName="2. Buscar todos los Excel en la carpeta y subcarpetas">
+      <Assign.To>
+        <OutArgument x:TypeArguments="s:String[]">[archivos]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="s:String[]">[Directory.GetFiles(carpetaRaiz, "*.xls*", SearchOption.AllDirectories).Where(Function(ruta) Not Path.GetFileName(ruta).StartsWith("~$")).OrderBy(Function(ruta) ruta).ToArray()]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <ui:LogMessage DisplayName="Cantidad de archivos" Level="Info" Message="[&quot;Archivos de Excel encontrados: &quot; + archivos.Length.ToString]" />
+    <ui:InvokeCode ContinueOnError="{x:Null}" DisplayName="Crear tabla de reporte" Language="VBNet" Code="' Tabla con el resultado de cada hoja procesada (se guarda en reporte_robot.xlsx).&#xA;' Salida: dtReporte (DataTable)&#xA;dtReporte = New System.Data.DataTable(&quot;reporte&quot;)&#xA;For Each columna As String In {&quot;archivo&quot;, &quot;hoja&quot;, &quot;posicion&quot;, &quot;tipo&quot;, &quot;agregados&quot;, &quot;omitidos&quot;, &quot;estado&quot;}&#xA;    dtReporte.Columns.Add(columna, GetType(String))&#xA;Next&#xA;">
+      <ui:InvokeCode.Arguments>
+        <OutArgument x:TypeArguments="sd:DataTable" x:Key="dtReporte">[dtReporte]</OutArgument>
+      </ui:InvokeCode.Arguments>
+    </ui:InvokeCode>
+    <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="3. Recorrer cada archivo de Excel" Values="[archivos]">
+      <ui:ForEach.Body>
+        <ActivityAction x:TypeArguments="x:String">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="x:String" Name="archivo" />
+          </ActivityAction.Argument>
+          <TryCatch DisplayName="Procesar archivo (si falla, se registra y sigue con el siguiente)">
+            <TryCatch.Try>
+              <Sequence DisplayName="Procesar archivo">
+                <Sequence.Variables>
+                  <Variable x:TypeArguments="s:String[]" Name="hojas" />
+                </Sequence.Variables>
+                <ui:InvokeCode ContinueOnError="{x:Null}" DisplayName="4. Listar las hojas del libro en orden" Language="VBNet" Code="' Devuelve los nombres de las hojas de un .xlsx en el orden de sus pestañas.&#xA;' Lee xl/workbook.xml dentro del archivo (un .xlsx es un ZIP): no necesita Excel&#xA;' instalado y funciona aunque el libro esté abierto por otra persona.&#xA;' Entrada: rutaArchivo (String)   Salida: hojas (String())&#xA;Dim nombres As New System.Collections.Generic.List(Of String)&#xA;Using flujo As New System.IO.FileStream(rutaArchivo, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.ReadWrite)&#xA;    Using zip As New System.IO.Compression.ZipArchive(flujo, System.IO.Compression.ZipArchiveMode.Read)&#xA;        Dim libro As System.IO.Compression.ZipArchiveEntry = zip.GetEntry(&quot;xl/workbook.xml&quot;)&#xA;        If libro IsNot Nothing Then&#xA;            Using contenido As System.IO.Stream = libro.Open()&#xA;                Dim documento As System.Xml.Linq.XDocument = System.Xml.Linq.XDocument.Load(contenido)&#xA;                Dim ns As System.Xml.Linq.XNamespace = &quot;http://schemas.openxmlformats.org/spreadsheetml/2006/main&quot;&#xA;                For Each hoja As System.Xml.Linq.XElement In documento.Descendants(ns + &quot;sheet&quot;)&#xA;                    nombres.Add(hoja.Attribute(&quot;name&quot;).Value)&#xA;                Next&#xA;            End Using&#xA;        End If&#xA;    End Using&#xA;End Using&#xA;hojas = nombres.ToArray()&#xA;">
+                  <ui:InvokeCode.Arguments>
+                    <InArgument x:TypeArguments="x:String" x:Key="rutaArchivo">[archivo]</InArgument>
+                    <OutArgument x:TypeArguments="s:String[]" x:Key="hojas">[hojas]</OutArgument>
+                  </ui:InvokeCode.Arguments>
+                </ui:InvokeCode>
+                <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="Buscar hojas clientes y productos" Values="[{&quot;clientes&quot;, &quot;productos&quot;}]">
+                  <ui:ForEach.Body>
+                    <ActivityAction x:TypeArguments="x:String">
+                      <ActivityAction.Argument>
+                        <DelegateInArgument x:TypeArguments="x:String" Name="tipo" />
+                      </ActivityAction.Argument>
+                      <Sequence DisplayName="Procesar hoja">
+                        <Sequence.Variables>
+                          <Variable x:TypeArguments="x:String" Name="hoja" />
+                          <Variable x:TypeArguments="x:Int32" Name="posicion" />
+                          <Variable x:TypeArguments="sd:DataTable" Name="dtHoja" />
+                          <Variable x:TypeArguments="x:Int32" Name="agregados" />
+                          <Variable x:TypeArguments="x:Int32" Name="omitidos" />
+                        </Sequence.Variables>
+                        <ui:InvokeCode ContinueOnError="{x:Null}" DisplayName="5. Elegir la hoja (5.a posición o por nombre)" Language="VBNet" Code="' Regla del enunciado: la hoja &quot;clientes&quot; o &quot;productos&quot; viene en la 5.a posición.&#xA;' Si en la 5.a posición no está, se busca por nombre en el resto del libro&#xA;' (sin distinguir mayúsculas, tildes ni espacios) para no perder información.&#xA;' Entrada: hojas (String()), tipo (String: &quot;clientes&quot; o &quot;productos&quot;)&#xA;' Salida: hoja (String, vacío si no existe), posicion (Int32, base 1)&#xA;Dim normalizar As System.Func(Of String, String) = Function(texto As String)&#xA;    Dim limpio As String = texto.Trim().ToLowerInvariant().Replace(&quot;á&quot;, &quot;a&quot;).Replace(&quot;é&quot;, &quot;e&quot;).Replace(&quot;í&quot;, &quot;i&quot;).Replace(&quot;ó&quot;, &quot;o&quot;).Replace(&quot;ú&quot;, &quot;u&quot;).Replace(&quot;ü&quot;, &quot;u&quot;).Replace(&quot;ñ&quot;, &quot;n&quot;).Normalize(System.Text.NormalizationForm.FormD)&#xA;    Dim sb As New System.Text.StringBuilder()&#xA;    For Each c As Char In limpio&#xA;        If System.Globalization.CharUnicodeInfo.GetUnicodeCategory(c) &lt;&gt; System.Globalization.UnicodeCategory.NonSpacingMark AndAlso Not Char.IsWhiteSpace(c) Then sb.Append(c)&#xA;    Next&#xA;    Return sb.ToString()&#xA;End Function&#xA;hoja = &quot;&quot;&#xA;posicion = 0&#xA;Dim buscado As String = normalizar(tipo)&#xA;If hojas.Length &gt;= 5 AndAlso normalizar(hojas(4)) = buscado Then&#xA;    hoja = hojas(4)&#xA;    posicion = 5&#xA;Else&#xA;    For i As Integer = 0 To hojas.Length - 1&#xA;        If normalizar(hojas(i)) = buscado Then&#xA;            hoja = hojas(i)&#xA;            posicion = i + 1&#xA;            Exit For&#xA;        End If&#xA;    Next&#xA;End If&#xA;">
+                          <ui:InvokeCode.Arguments>
+                            <InArgument x:TypeArguments="s:String[]" x:Key="hojas">[hojas]</InArgument>
+                            <InArgument x:TypeArguments="x:String" x:Key="tipo">[tipo]</InArgument>
+                            <OutArgument x:TypeArguments="x:String" x:Key="hoja">[hoja]</OutArgument>
+                            <OutArgument x:TypeArguments="x:Int32" x:Key="posicion">[posicion]</OutArgument>
+                          </ui:InvokeCode.Arguments>
+                        </ui:InvokeCode>
+                        <If Condition="[hoja &lt;&gt; &quot;&quot;]" DisplayName="¿El libro tiene esta hoja?">
+                          <If.Then>
+                            <Sequence DisplayName="Leer y normalizar la hoja">
+                              <ui:ReadRange AddHeaders="True" DataTable="[dtHoja]" DisplayName="6. Leer la hoja (sin abrir Excel)" SheetName="[hoja]" WorkbookPath="[archivo]">
+                                <ui:ReadRange.Range>
+                                  <InArgument x:TypeArguments="x:String">
+                                    <Literal x:TypeArguments="x:String" Value="" />
+                                  </InArgument>
+                                </ui:ReadRange.Range>
+                              </ui:ReadRange>
+                              <If Condition="[tipo = &quot;clientes&quot;]" DisplayName="¿Clientes o productos?">
+                                <If.Then>
+                                  <ui:InvokeCode ContinueOnError="{x:Null}" DisplayName="7a. Normalizar clientes y agregar al consolidado" Language="VBNet" Code="' Convierte la hoja &quot;clientes&quot; al formato de importación de Odoo y la agrega al&#xA;' consolidado. Los encabezados del Excel se reconocen en inglés o español; las&#xA;' columnas de salida usan los nombres técnicos de Odoo para que &quot;Importar&#xA;' registros&quot; las relacione solas.&#xA;' Entrada: dtEntrada (DataTable), archivoOrigen (String)&#xA;' Entrada/Salida: dtConsolidado (DataTable)   Salida: agregados, omitidos (Int32)&#xA;Dim columnas As String() = {&quot;id&quot;, &quot;name&quot;, &quot;company_type&quot;, &quot;qm_empresa_relacionada&quot;, &quot;email&quot;, &quot;phone&quot;, &quot;street&quot;, &quot;street2&quot;, &quot;city&quot;, &quot;qm_estado_texto&quot;, &quot;zip&quot;, &quot;qm_pais_texto&quot;, &quot;vat&quot;, &quot;qm_sitio_web&quot;, &quot;qm_etiquetas_texto&quot;, &quot;ref&quot;, &quot;comment&quot;, &quot;qm_origen_rpa&quot;}&#xA;Dim sinonimos As New System.Collections.Generic.Dictionary(Of String, String) From {&#xA;    {&quot;name&quot;, &quot;name&quot;}, {&quot;nombre&quot;, &quot;name&quot;}, {&quot;nombrecompleto&quot;, &quot;name&quot;}, {&quot;cliente&quot;, &quot;name&quot;},&#xA;    {&quot;companytype&quot;, &quot;company_type&quot;}, {&quot;tipodecompania&quot;, &quot;company_type&quot;}, {&quot;tipodeempresa&quot;, &quot;company_type&quot;}, {&quot;tipo&quot;, &quot;company_type&quot;}, {&quot;tipodecontacto&quot;, &quot;company_type&quot;},&#xA;    {&quot;relatedcompany&quot;, &quot;qm_empresa_relacionada&quot;}, {&quot;empresarelacionada&quot;, &quot;qm_empresa_relacionada&quot;}, {&quot;companiarelacionada&quot;, &quot;qm_empresa_relacionada&quot;}, {&quot;empresa&quot;, &quot;qm_empresa_relacionada&quot;},&#xA;    {&quot;email&quot;, &quot;email&quot;}, {&quot;e-mail&quot;, &quot;email&quot;}, {&quot;correo&quot;, &quot;email&quot;}, {&quot;correoelectronico&quot;, &quot;email&quot;},&#xA;    {&quot;phone&quot;, &quot;phone&quot;}, {&quot;telefono&quot;, &quot;phone&quot;}, {&quot;celular&quot;, &quot;phone&quot;},&#xA;    {&quot;street&quot;, &quot;street&quot;}, {&quot;calle&quot;, &quot;street&quot;}, {&quot;direccion&quot;, &quot;street&quot;},&#xA;    {&quot;street2&quot;, &quot;street2&quot;}, {&quot;calle2&quot;, &quot;street2&quot;}, {&quot;direccion2&quot;, &quot;street2&quot;},&#xA;    {&quot;city&quot;, &quot;city&quot;}, {&quot;ciudad&quot;, &quot;city&quot;}, {&quot;municipio&quot;, &quot;city&quot;},&#xA;    {&quot;state&quot;, &quot;qm_estado_texto&quot;}, {&quot;estado&quot;, &quot;qm_estado_texto&quot;}, {&quot;departamento&quot;, &quot;qm_estado_texto&quot;}, {&quot;provincia&quot;, &quot;qm_estado_texto&quot;},&#xA;    {&quot;zip&quot;, &quot;zip&quot;}, {&quot;codigopostal&quot;, &quot;zip&quot;}, {&quot;cp&quot;, &quot;zip&quot;},&#xA;    {&quot;country&quot;, &quot;qm_pais_texto&quot;}, {&quot;pais&quot;, &quot;qm_pais_texto&quot;},&#xA;    {&quot;taxid&quot;, &quot;vat&quot;}, {&quot;nit&quot;, &quot;vat&quot;}, {&quot;rfc&quot;, &quot;vat&quot;}, {&quot;numerodeidentificacionfiscal&quot;, &quot;vat&quot;}, {&quot;vat&quot;, &quot;vat&quot;},&#xA;    {&quot;website&quot;, &quot;qm_sitio_web&quot;}, {&quot;sitioweb&quot;, &quot;qm_sitio_web&quot;}, {&quot;web&quot;, &quot;qm_sitio_web&quot;},&#xA;    {&quot;tags&quot;, &quot;qm_etiquetas_texto&quot;}, {&quot;etiquetas&quot;, &quot;qm_etiquetas_texto&quot;},&#xA;    {&quot;reference&quot;, &quot;ref&quot;}, {&quot;referencia&quot;, &quot;ref&quot;}, {&quot;ref&quot;, &quot;ref&quot;},&#xA;    {&quot;notes&quot;, &quot;comment&quot;}, {&quot;notas&quot;, &quot;comment&quot;}, {&quot;comentarios&quot;, &quot;comment&quot;}, {&quot;observaciones&quot;, &quot;comment&quot;}}&#xA;&#xA;Dim clave As System.Func(Of String, String) = Function(entrada As String)&#xA;    Dim limpio As String = If(entrada, &quot;&quot;).Replace(&quot;*&quot;, &quot;&quot;).Trim().ToLowerInvariant().Replace(&quot;á&quot;, &quot;a&quot;).Replace(&quot;é&quot;, &quot;e&quot;).Replace(&quot;í&quot;, &quot;i&quot;).Replace(&quot;ó&quot;, &quot;o&quot;).Replace(&quot;ú&quot;, &quot;u&quot;).Replace(&quot;ü&quot;, &quot;u&quot;).Replace(&quot;ñ&quot;, &quot;n&quot;).Normalize(System.Text.NormalizationForm.FormD)&#xA;    Dim sb As New System.Text.StringBuilder()&#xA;    For Each c As Char In limpio&#xA;        If System.Globalization.CharUnicodeInfo.GetUnicodeCategory(c) &lt;&gt; System.Globalization.UnicodeCategory.NonSpacingMark AndAlso Not Char.IsWhiteSpace(c) AndAlso c &lt;&gt; &quot;_&quot;c Then sb.Append(c)&#xA;    Next&#xA;    Return sb.ToString()&#xA;End Function&#xA;Dim texto As System.Func(Of Object, String) = Function(valor As Object)&#xA;    If valor Is Nothing OrElse TypeOf valor Is System.DBNull Then Return &quot;&quot;&#xA;    If TypeOf valor Is Double Then&#xA;        Dim numero As Double = CDbl(valor)&#xA;        If Math.Abs(numero - Math.Round(numero)) &lt; 0.0001 Then Return Math.Round(numero).ToString(&quot;0&quot;, System.Globalization.CultureInfo.InvariantCulture)&#xA;        Return numero.ToString(System.Globalization.CultureInfo.InvariantCulture)&#xA;    End If&#xA;    If TypeOf valor Is DateTime Then Return CDate(valor).ToString(&quot;yyyy-MM-dd&quot;)&#xA;    Return valor.ToString().Trim()&#xA;End Function&#xA;Dim identificador As System.Func(Of String, String) = Function(base As String)&#xA;    Return System.Text.RegularExpressions.Regex.Replace(clave(base), &quot;[^a-z0-9.@-]&quot;, &quot;&quot;).Replace(&quot;@&quot;, &quot;_&quot;).Replace(&quot;.&quot;, &quot;_&quot;)&#xA;End Function&#xA;&#xA;If dtConsolidado Is Nothing Then&#xA;    dtConsolidado = New System.Data.DataTable(&quot;clientes&quot;)&#xA;    For Each nombreColumna As String In columnas&#xA;        dtConsolidado.Columns.Add(nombreColumna, GetType(String))&#xA;    Next&#xA;End If&#xA;&#xA;' Qué columna del Excel corresponde a cada campo de Odoo.&#xA;Dim mapa As New System.Collections.Generic.Dictionary(Of String, System.Data.DataColumn)&#xA;For Each columna As System.Data.DataColumn In dtEntrada.Columns&#xA;    Dim campo As String = Nothing&#xA;    If sinonimos.TryGetValue(clave(columna.ColumnName), campo) AndAlso Not mapa.ContainsKey(campo) Then mapa(campo) = columna&#xA;Next&#xA;&#xA;agregados = 0&#xA;omitidos = 0&#xA;Dim existentes As New System.Collections.Generic.HashSet(Of String)&#xA;For Each filaExistente As System.Data.DataRow In dtConsolidado.Rows&#xA;    existentes.Add(filaExistente(&quot;id&quot;).ToString())&#xA;Next&#xA;For Each fila As System.Data.DataRow In dtEntrada.Rows&#xA;    Dim valores As New System.Collections.Generic.Dictionary(Of String, String)&#xA;    For Each par As System.Collections.Generic.KeyValuePair(Of String, System.Data.DataColumn) In mapa&#xA;        valores(par.Key) = texto(fila(par.Value))&#xA;    Next&#xA;    Dim nombre As String = If(valores.ContainsKey(&quot;name&quot;), valores(&quot;name&quot;), &quot;&quot;)&#xA;    If nombre = &quot;&quot; Then&#xA;        omitidos += 1&#xA;        Continue For&#xA;    End If&#xA;    Dim tipoContacto As String = clave(If(valores.ContainsKey(&quot;company_type&quot;), valores(&quot;company_type&quot;), &quot;&quot;))&#xA;    valores(&quot;company_type&quot;) = If(tipoContacto.StartsWith(&quot;compan&quot;) OrElse tipoContacto.StartsWith(&quot;empresa&quot;) OrElse tipoContacto.StartsWith(&quot;juridic&quot;), &quot;company&quot;, &quot;person&quot;)&#xA;    Dim baseId As String = If(valores.ContainsKey(&quot;ref&quot;) AndAlso valores(&quot;ref&quot;) &lt;&gt; &quot;&quot;, valores(&quot;ref&quot;), If(valores.ContainsKey(&quot;email&quot;) AndAlso valores(&quot;email&quot;) &lt;&gt; &quot;&quot;, valores(&quot;email&quot;), nombre))&#xA;    valores(&quot;id&quot;) = &quot;rpa_cliente_&quot; &amp; identificador(baseId)&#xA;    valores(&quot;qm_origen_rpa&quot;) = archivoOrigen&#xA;    If existentes.Contains(valores(&quot;id&quot;)) Then&#xA;        omitidos += 1&#xA;        Continue For&#xA;    End If&#xA;    Dim nueva As System.Data.DataRow = dtConsolidado.NewRow()&#xA;    For Each nombreColumna As String In columnas&#xA;        nueva(nombreColumna) = If(valores.ContainsKey(nombreColumna), valores(nombreColumna), &quot;&quot;)&#xA;    Next&#xA;    dtConsolidado.Rows.Add(nueva)&#xA;    existentes.Add(valores(&quot;id&quot;))&#xA;    agregados += 1&#xA;Next&#xA;">
+                                    <ui:InvokeCode.Arguments>
+                                      <InArgument x:TypeArguments="sd:DataTable" x:Key="dtEntrada">[dtHoja]</InArgument>
+                                      <InArgument x:TypeArguments="x:String" x:Key="archivoOrigen">[archivo]</InArgument>
+                                      <InOutArgument x:TypeArguments="sd:DataTable" x:Key="dtConsolidado">[dtClientes]</InOutArgument>
+                                      <OutArgument x:TypeArguments="x:Int32" x:Key="agregados">[agregados]</OutArgument>
+                                      <OutArgument x:TypeArguments="x:Int32" x:Key="omitidos">[omitidos]</OutArgument>
+                                    </ui:InvokeCode.Arguments>
+                                  </ui:InvokeCode>
+                                </If.Then>
+                                <If.Else>
+                                  <ui:InvokeCode ContinueOnError="{x:Null}" DisplayName="7b. Normalizar productos y agregar al consolidado" Language="VBNet" Code="' Convierte la hoja &quot;productos&quot; al formato de importación de Odoo y la agrega al&#xA;' consolidado. &quot;Cantidad a la mano&quot; va al campo puente qm_cantidad_inicial, que&#xA;' registra el ajuste de inventario al importar.&#xA;' Entrada: dtEntrada (DataTable), archivoOrigen (String)&#xA;' Entrada/Salida: dtConsolidado (DataTable)   Salida: agregados, omitidos (Int32)&#xA;Dim columnas As String() = {&quot;id&quot;, &quot;name&quot;, &quot;type&quot;, &quot;default_code&quot;, &quot;barcode&quot;, &quot;list_price&quot;, &quot;standard_price&quot;, &quot;weight&quot;, &quot;description_sale&quot;, &quot;qm_valores_producto&quot;, &quot;qm_cantidad_inicial&quot;, &quot;is_published&quot;, &quot;qm_origen_rpa&quot;}&#xA;Dim sinonimos As New System.Collections.Generic.Dictionary(Of String, String) From {&#xA;    {&quot;idexterno&quot;, &quot;id&quot;}, {&quot;externalid&quot;, &quot;id&quot;}, {&quot;id&quot;, &quot;id&quot;},&#xA;    {&quot;name&quot;, &quot;name&quot;}, {&quot;nombre&quot;, &quot;name&quot;}, {&quot;producto&quot;, &quot;name&quot;}, {&quot;nombredelproducto&quot;, &quot;name&quot;},&#xA;    {&quot;producttype&quot;, &quot;type&quot;}, {&quot;tipodeproducto&quot;, &quot;type&quot;}, {&quot;tipo&quot;, &quot;type&quot;},&#xA;    {&quot;internalreference&quot;, &quot;default_code&quot;}, {&quot;referenciainterna&quot;, &quot;default_code&quot;}, {&quot;codigo&quot;, &quot;default_code&quot;}, {&quot;sku&quot;, &quot;default_code&quot;},&#xA;    {&quot;barcode&quot;, &quot;barcode&quot;}, {&quot;codigodebarras&quot;, &quot;barcode&quot;},&#xA;    {&quot;salesprice&quot;, &quot;list_price&quot;}, {&quot;preciodeventa&quot;, &quot;list_price&quot;}, {&quot;precio&quot;, &quot;list_price&quot;},&#xA;    {&quot;cost&quot;, &quot;standard_price&quot;}, {&quot;costo&quot;, &quot;standard_price&quot;},&#xA;    {&quot;weight&quot;, &quot;weight&quot;}, {&quot;peso&quot;, &quot;weight&quot;},&#xA;    {&quot;salesdescription&quot;, &quot;description_sale&quot;}, {&quot;descripciondeventa&quot;, &quot;description_sale&quot;}, {&quot;descripcion&quot;, &quot;description_sale&quot;},&#xA;    {&quot;productvalues&quot;, &quot;qm_valores_producto&quot;}, {&quot;valoresdelproducto&quot;, &quot;qm_valores_producto&quot;}, {&quot;valores&quot;, &quot;qm_valores_producto&quot;},&#xA;    {&quot;cantidadalamano&quot;, &quot;qm_cantidad_inicial&quot;}, {&quot;quantityonhand&quot;, &quot;qm_cantidad_inicial&quot;}, {&quot;cantidad&quot;, &quot;qm_cantidad_inicial&quot;}, {&quot;existencias&quot;, &quot;qm_cantidad_inicial&quot;},&#xA;    {&quot;estapublicado&quot;, &quot;is_published&quot;}, {&quot;ispublished&quot;, &quot;is_published&quot;}, {&quot;publicado&quot;, &quot;is_published&quot;}}&#xA;&#xA;Dim clave As System.Func(Of String, String) = Function(entrada As String)&#xA;    Dim limpio As String = If(entrada, &quot;&quot;).Replace(&quot;*&quot;, &quot;&quot;).Trim().ToLowerInvariant().Replace(&quot;á&quot;, &quot;a&quot;).Replace(&quot;é&quot;, &quot;e&quot;).Replace(&quot;í&quot;, &quot;i&quot;).Replace(&quot;ó&quot;, &quot;o&quot;).Replace(&quot;ú&quot;, &quot;u&quot;).Replace(&quot;ü&quot;, &quot;u&quot;).Replace(&quot;ñ&quot;, &quot;n&quot;).Normalize(System.Text.NormalizationForm.FormD)&#xA;    Dim sb As New System.Text.StringBuilder()&#xA;    For Each c As Char In limpio&#xA;        If System.Globalization.CharUnicodeInfo.GetUnicodeCategory(c) &lt;&gt; System.Globalization.UnicodeCategory.NonSpacingMark AndAlso Not Char.IsWhiteSpace(c) AndAlso c &lt;&gt; &quot;_&quot;c Then sb.Append(c)&#xA;    Next&#xA;    Return sb.ToString()&#xA;End Function&#xA;Dim texto As System.Func(Of Object, String) = Function(valor As Object)&#xA;    If valor Is Nothing OrElse TypeOf valor Is System.DBNull Then Return &quot;&quot;&#xA;    If TypeOf valor Is Double Then&#xA;        Dim numero As Double = CDbl(valor)&#xA;        If Math.Abs(numero - Math.Round(numero)) &lt; 0.0001 Then Return Math.Round(numero).ToString(&quot;0&quot;, System.Globalization.CultureInfo.InvariantCulture)&#xA;        Return numero.ToString(System.Globalization.CultureInfo.InvariantCulture)&#xA;    End If&#xA;    If TypeOf valor Is DateTime Then Return CDate(valor).ToString(&quot;yyyy-MM-dd&quot;)&#xA;    Return valor.ToString().Trim()&#xA;End Function&#xA;' &quot;Q 1,250.50&quot;, &quot;9,99&quot; o &quot;9.99&quot; -&gt; &quot;1250.5&quot; / &quot;9.99&quot; (formato que entiende Odoo).&#xA;Dim numeroOdoo As System.Func(Of String, String) = Function(valor As String)&#xA;    Dim limpio As String = System.Text.RegularExpressions.Regex.Replace(valor, &quot;[^0-9,.\-]&quot;, &quot;&quot;)&#xA;    If limpio = &quot;&quot; Then Return &quot;&quot;&#xA;    If limpio.Contains(&quot;,&quot;) AndAlso limpio.Contains(&quot;.&quot;) Then&#xA;        limpio = limpio.Replace(&quot;,&quot;, &quot;&quot;)&#xA;    ElseIf limpio.Contains(&quot;,&quot;) Then&#xA;        limpio = limpio.Replace(&quot;,&quot;, &quot;.&quot;)&#xA;    End If&#xA;    Dim numero As Double&#xA;    If Double.TryParse(limpio, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, numero) Then Return numero.ToString(System.Globalization.CultureInfo.InvariantCulture)&#xA;    Return &quot;&quot;&#xA;End Function&#xA;Dim identificador As System.Func(Of String, String) = Function(base As String)&#xA;    Return System.Text.RegularExpressions.Regex.Replace(base.Trim(), &quot;[^A-Za-z0-9_\-]&quot;, &quot;_&quot;)&#xA;End Function&#xA;&#xA;If dtConsolidado Is Nothing Then&#xA;    dtConsolidado = New System.Data.DataTable(&quot;productos&quot;)&#xA;    For Each nombreColumna As String In columnas&#xA;        dtConsolidado.Columns.Add(nombreColumna, GetType(String))&#xA;    Next&#xA;End If&#xA;&#xA;Dim mapa As New System.Collections.Generic.Dictionary(Of String, System.Data.DataColumn)&#xA;For Each columna As System.Data.DataColumn In dtEntrada.Columns&#xA;    Dim campo As String = Nothing&#xA;    If sinonimos.TryGetValue(clave(columna.ColumnName), campo) AndAlso Not mapa.ContainsKey(campo) Then mapa(campo) = columna&#xA;Next&#xA;&#xA;agregados = 0&#xA;omitidos = 0&#xA;Dim existentes As New System.Collections.Generic.HashSet(Of String)&#xA;For Each filaExistente As System.Data.DataRow In dtConsolidado.Rows&#xA;    existentes.Add(filaExistente(&quot;id&quot;).ToString())&#xA;Next&#xA;For Each fila As System.Data.DataRow In dtEntrada.Rows&#xA;    Dim valores As New System.Collections.Generic.Dictionary(Of String, String)&#xA;    For Each par As System.Collections.Generic.KeyValuePair(Of String, System.Data.DataColumn) In mapa&#xA;        valores(par.Key) = texto(fila(par.Value))&#xA;    Next&#xA;    Dim nombre As String = If(valores.ContainsKey(&quot;name&quot;), valores(&quot;name&quot;), &quot;&quot;)&#xA;    If nombre = &quot;&quot; Then&#xA;        omitidos += 1&#xA;        Continue For&#xA;    End If&#xA;    ' Tipo de producto: Goods/Bien -&gt; consu, Service/Servicio -&gt; service.&#xA;    Dim tipoProducto As String = clave(If(valores.ContainsKey(&quot;type&quot;), valores(&quot;type&quot;), &quot;&quot;))&#xA;    If tipoProducto.StartsWith(&quot;serv&quot;) Then&#xA;        valores(&quot;type&quot;) = &quot;service&quot;&#xA;    ElseIf tipoProducto.StartsWith(&quot;combo&quot;) Then&#xA;        valores(&quot;type&quot;) = &quot;combo&quot;&#xA;    Else&#xA;        valores(&quot;type&quot;) = &quot;consu&quot;&#xA;    End If&#xA;    For Each campoNumerico As String In {&quot;list_price&quot;, &quot;standard_price&quot;, &quot;weight&quot;, &quot;qm_cantidad_inicial&quot;}&#xA;        If valores.ContainsKey(campoNumerico) Then valores(campoNumerico) = numeroOdoo(valores(campoNumerico))&#xA;    Next&#xA;    ' Un servicio no tiene existencias.&#xA;    If valores(&quot;type&quot;) &lt;&gt; &quot;consu&quot; Then valores(&quot;qm_cantidad_inicial&quot;) = &quot;&quot;&#xA;    ' Código de barras: Excel lo guarda como número (54398267125.00001).&#xA;    If valores.ContainsKey(&quot;barcode&quot;) AndAlso System.Text.RegularExpressions.Regex.IsMatch(valores(&quot;barcode&quot;), &quot;^[0-9]+([.,][0-9]+)?(E\+?[0-9]+)?$&quot;, System.Text.RegularExpressions.RegexOptions.IgnoreCase) Then&#xA;        Dim codigo As Double&#xA;        If Double.TryParse(valores(&quot;barcode&quot;).Replace(&quot;,&quot;, &quot;.&quot;), System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, codigo) Then valores(&quot;barcode&quot;) = Math.Round(codigo).ToString(&quot;0&quot;, System.Globalization.CultureInfo.InvariantCulture)&#xA;    End If&#xA;    Dim publicado As String = clave(If(valores.ContainsKey(&quot;is_published&quot;), valores(&quot;is_published&quot;), &quot;&quot;))&#xA;    valores(&quot;is_published&quot;) = If({&quot;true&quot;, &quot;verdadero&quot;, &quot;1&quot;, &quot;si&quot;, &quot;yes&quot;, &quot;x&quot;}.Contains(publicado), &quot;1&quot;, &quot;0&quot;)&#xA;    Dim externo As String = If(valores.ContainsKey(&quot;id&quot;), valores(&quot;id&quot;), &quot;&quot;)&#xA;    If externo = &quot;&quot; Then externo = &quot;rpa_producto_&quot; &amp; If(valores.ContainsKey(&quot;default_code&quot;) AndAlso valores(&quot;default_code&quot;) &lt;&gt; &quot;&quot;, valores(&quot;default_code&quot;), nombre)&#xA;    valores(&quot;id&quot;) = identificador(externo)&#xA;    valores(&quot;qm_origen_rpa&quot;) = archivoOrigen&#xA;    If existentes.Contains(valores(&quot;id&quot;)) Then&#xA;        omitidos += 1&#xA;        Continue For&#xA;    End If&#xA;    Dim nueva As System.Data.DataRow = dtConsolidado.NewRow()&#xA;    For Each nombreColumna As String In columnas&#xA;        nueva(nombreColumna) = If(valores.ContainsKey(nombreColumna), valores(nombreColumna), &quot;&quot;)&#xA;    Next&#xA;    dtConsolidado.Rows.Add(nueva)&#xA;    existentes.Add(valores(&quot;id&quot;))&#xA;    agregados += 1&#xA;Next&#xA;">
+                                    <ui:InvokeCode.Arguments>
+                                      <InArgument x:TypeArguments="sd:DataTable" x:Key="dtEntrada">[dtHoja]</InArgument>
+                                      <InArgument x:TypeArguments="x:String" x:Key="archivoOrigen">[archivo]</InArgument>
+                                      <InOutArgument x:TypeArguments="sd:DataTable" x:Key="dtConsolidado">[dtProductos]</InOutArgument>
+                                      <OutArgument x:TypeArguments="x:Int32" x:Key="agregados">[agregados]</OutArgument>
+                                      <OutArgument x:TypeArguments="x:Int32" x:Key="omitidos">[omitidos]</OutArgument>
+                                    </ui:InvokeCode.Arguments>
+                                  </ui:InvokeCode>
+                                </If.Else>
+                              </If>
+                              <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{archivo, hoja, posicion.ToString, tipo, agregados.ToString, omitidos.ToString, &quot;procesada&quot;}]" DataTable="[dtReporte]" DisplayName="Anotar en el reporte" />
+                              <Assign DisplayName="Contar hojas procesadas">
+                                <Assign.To>
+                                  <OutArgument x:TypeArguments="x:Int32">[hojasProcesadas]</OutArgument>
+                                </Assign.To>
+                                <Assign.Value>
+                                  <InArgument x:TypeArguments="x:Int32">[hojasProcesadas + 1]</InArgument>
+                                </Assign.Value>
+                              </Assign>
+                              <ui:LogMessage DisplayName="Hoja procesada" Level="Info" Message="[Path.GetFileName(archivo) + &quot; -&gt; hoja '&quot; + hoja + &quot;' (posición &quot; + posicion.ToString + &quot;): &quot; + agregados.ToString + &quot; agregados, &quot; + omitidos.ToString + &quot; omitidos&quot;]" />
+                            </Sequence>
+                          </If.Then>
+                        </If>
+                      </Sequence>
+                    </ActivityAction>
+                  </ui:ForEach.Body>
+                </ui:ForEach>
+              </Sequence>
+            </TryCatch.Try>
+            <TryCatch.Catches>
+              <Catch x:TypeArguments="s:Exception">
+                <ActivityAction x:TypeArguments="s:Exception">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="s:Exception" Name="excepcion" />
+                  </ActivityAction.Argument>
+                  <Sequence DisplayName="Registrar archivo con error">
+                    <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{archivo, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;0&quot;, &quot;0&quot;, &quot;error: &quot; + excepcion.Message}]" DataTable="[dtReporte]" DisplayName="Anotar el error en el reporte" />
+                    <ui:LogMessage DisplayName="Aviso de archivo omitido" Level="Warn" Message="[&quot;Se omitió &quot; + archivo + &quot;: &quot; + excepcion.Message]" />
+                  </Sequence>
+                </ActivityAction>
+              </Catch>
+            </TryCatch.Catches>
+          </TryCatch>
+        </ActivityAction>
+      </ui:ForEach.Body>
+    </ui:ForEach>
+    <If Condition="[dtClientes IsNot Nothing AndAlso dtClientes.Rows.Count &gt; 0]" DisplayName="¿Hay clientes para cargar?">
+      <If.Then>
+        <Sequence DisplayName="Cargar clientes en Odoo">
+          <Assign DisplayName="Ruta del consolidado de clientes">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[archivoClientes]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[Path.Combine(carpetaSalida, "consolidado_clientes.xlsx")]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <ui:WriteRange AddHeaders="True" DataTable="[dtClientes]" DisplayName="8a. Escribir consolidado_clientes.xlsx" SheetName="clientes" StartingCell="A1" WorkbookPath="[archivoClientes]" />
+          <ui:InvokeWorkflowFile DisplayName="9a. Importar clientes con la interfaz de Odoo" WorkflowFileName="ImportarEnOdoo.xaml">
+            <ui:InvokeWorkflowFile.Arguments>
+              <InArgument x:TypeArguments="x:String" x:Key="in_Url">[urlOdoo + "/odoo/contacts/import?active_model=res.partner"]</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="in_Archivo">[archivoClientes]</InArgument>
+            </ui:InvokeWorkflowFile.Arguments>
+          </ui:InvokeWorkflowFile>
+        </Sequence>
+      </If.Then>
+    </If>
+    <If Condition="[dtProductos IsNot Nothing AndAlso dtProductos.Rows.Count &gt; 0]" DisplayName="¿Hay productos para cargar?">
+      <If.Then>
+        <Sequence DisplayName="Cargar productos en Odoo">
+          <Assign DisplayName="Ruta del consolidado de productos">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[archivoProductos]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[Path.Combine(carpetaSalida, "consolidado_productos.xlsx")]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <ui:WriteRange AddHeaders="True" DataTable="[dtProductos]" DisplayName="8b. Escribir consolidado_productos.xlsx" SheetName="productos" StartingCell="A1" WorkbookPath="[archivoProductos]" />
+          <ui:InvokeWorkflowFile DisplayName="9b. Importar productos con la interfaz de Odoo" WorkflowFileName="ImportarEnOdoo.xaml">
+            <ui:InvokeWorkflowFile.Arguments>
+              <InArgument x:TypeArguments="x:String" x:Key="in_Url">[urlOdoo + "/odoo/action-sale.product_template_action/import?active_model=product.template"]</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="in_Archivo">[archivoProductos]</InArgument>
+            </ui:InvokeWorkflowFile.Arguments>
+          </ui:InvokeWorkflowFile>
+        </Sequence>
+      </If.Then>
+    </If>
+    <ui:WriteRange AddHeaders="True" DataTable="[dtReporte]" DisplayName="10. Guardar reporte_robot.xlsx" SheetName="reporte" StartingCell="A1" WorkbookPath="[Path.Combine(carpetaSalida, &quot;reporte_robot.xlsx&quot;)]" />
+    <ui:MessageBox Caption="QuetzalMart RPA" ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" DisplayName="Resumen final" Text="[&quot;Robot terminado.&quot; + vbCrLf + &quot;Archivos revisados: &quot; + archivos.Length.ToString + vbCrLf + &quot;Hojas cargadas: &quot; + hojasProcesadas.ToString + vbCrLf + &quot;Clientes: &quot; + If(dtClientes Is Nothing, &quot;0&quot;, dtClientes.Rows.Count.ToString) + vbCrLf + &quot;Productos: &quot; + If(dtProductos Is Nothing, &quot;0&quot;, dtProductos.Rows.Count.ToString) + vbCrLf + &quot;Reporte y consolidados en: &quot; + carpetaSalida]" />
+  </Sequence>
+</Activity>

@@ -1,0 +1,14 @@
+flowchart TD
+    subgraph EMP["5. Empaque"]
+        E0([Producto listo para la venta]) --> E1[Fraccionar, empacar y etiquetar<br/>precio con IVA incluido]
+        E1 --> E2{¿Es un pedido en línea?}
+        E2 -- Sí --> E3[Armar paquete con etiqueta de envío<br/>y bolsa reutilizable]
+        E2 -- No --> Q1
+        E3 --> Q1
+    end
+    subgraph QC["6. Control de calidad para ponerlo a la venta"]
+        Q1[Revisar empaque, etiqueta, precio,<br/>vencimiento y código de barras] --> Q2{¿Aprobado?}
+        Q2 -- No --> Q3([Regresa a Cuarentena · 4a])
+        Q2 -- Sí --> Q4[Exhibir en góndola y<br/>publicar en la tienda en línea]
+        Q4 --> Q5([Disponible para la venta · diagramas 3 y 5])
+    end

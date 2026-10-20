@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="origen_tienda" model="utm.source">
+        <field name="name">Tienda en línea QuetzalMart</field>
+    </record>
+    <record id="origen_correo_postcompra" model="utm.source">
+        <field name="name">correo_postcompra</field>
+    </record>
+    <record id="campana_temporada" model="utm.campaign">
+        <field name="name">temporada_quetzalmart</field>
+        <field name="title">Temporada QuetzalMart 2026</field>
+    </record>
+
+    <record id="etiqueta_registro_web" model="crm.tag">
+        <field name="name">Registro web</field>
+        <field name="color">4</field>
+    </record>
+    <record id="etiqueta_cliente_web" model="crm.tag">
+        <field name="name">Cliente tienda en línea</field>
+        <field name="color">10</field>
+    </record>
+
+    <record id="lista_clientes" model="mailing.list">
+        <field name="name">Clientes QuetzalMart</field>
+        <field name="is_public" eval="True"/>
+    </record>
+    <record id="lista_clientes_web" model="mailing.list">
+        <field name="name">Clientes tienda en línea</field>
+        <field name="is_public" eval="True"/>
+    </record>
+    <record id="lista_registros_web" model="mailing.list">
+        <field name="name">Registros web</field>
+        <field name="is_public" eval="True"/>
+    </record>
+</odoo>

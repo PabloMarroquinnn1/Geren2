@@ -1,0 +1,16 @@
+flowchart TD
+    subgraph REC["1. Recepción del producto"]
+        A1([Llega el producto del proveedor]) --> A2[Verificar contra la orden de compra:<br/>producto, cantidad, lote y vencimiento]
+        A2 --> A3{¿Cadena de frío?}
+        A3 -- Sí --> A4[Medir temperatura<br/>lácteos máx. 4 °C] --> A5
+        A3 -- No --> A5{¿Producto conforme?}
+        A5 -- Sí --> A6([Pasa a almacenamiento por sector · 4b])
+    end
+    subgraph DEF["3. Productos defectuosos o en mal estado"]
+        D1[Mover a Cuarentena<br/>producto no conforme] --> D2{¿Causa?}
+        D2 -- Error del proveedor --> D3[Devolución y nota de crédito]
+        D2 -- Daño interno o vencido --> D4[Registrar merma<br/>Inventario ► Desechar]
+        D3 --> D5([Constancia en Documentos<br/>y reporte de calidad])
+        D4 --> D5
+    end
+    A5 -- No --> D1
