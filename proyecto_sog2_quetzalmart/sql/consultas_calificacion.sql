@@ -290,7 +290,9 @@ ORDER BY p.create_date DESC, p.name;
 SELECT pt.default_code AS referencia,
        COALESCE(pt.name->>'es_419', pt.name->>'en_US') AS producto,
        CASE pt.type WHEN 'consu' THEN 'Bien' WHEN 'service' THEN 'Servicio' ELSE pt.type END AS tipo,
-       pp.barcode AS codigo_barras, pt.list_price AS precio, pp.standard_price AS costo, pt.weight AS peso,
+       pp.barcode AS codigo_barras, pt.list_price AS precio,
+       (pp.standard_price->>'1')::numeric AS costo,  -- Odoo 18 guarda el costo por compañía (id 1)
+       pt.weight AS peso,
        pt.qm_cantidad_inicial AS cantidad_excel,
        (SELECT SUM(sq.quantity) FROM stock_quant sq JOIN stock_location sl ON sl.id = sq.location_id
          WHERE sq.product_id = pp.id AND sl.usage = 'internal') AS cantidad_a_la_mano,

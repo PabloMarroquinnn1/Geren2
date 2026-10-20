@@ -41,9 +41,10 @@ class AccountMove(models.Model):
 
     @api.model
     def _qm_cron_archivar_facturas(self):
+        # Las más recientes primero: una compra en la tienda no espera a la carga masiva.
         pendientes = self.search(
             [("qm_archivo_pendiente", "=", True), ("state", "=", "posted")],
-            order="id", limit=LOTE_ARCHIVO,
+            order="id desc", limit=LOTE_ARCHIVO,
         )
         archivadas = 0
         for factura in pendientes:
@@ -51,6 +52,8 @@ class AccountMove(models.Model):
                 with self.env.cr.savepoint():
                     factura._qm_archivar_pdf()
                 archivadas += 1
+                # Cada PDF queda visible en Documentos apenas se genera, sin esperar el lote.
+                self.env.cr.commit()
             except Exception:
                 # Queda pendiente: el cron horario lo vuelve a intentar.
                 _logger.exception("No se pudo archivar el PDF de %s", factura.name)
