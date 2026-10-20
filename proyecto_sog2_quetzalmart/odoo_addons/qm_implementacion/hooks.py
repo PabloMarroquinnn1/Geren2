@@ -118,12 +118,14 @@ def _activar_ajustes(env):
 def _crear_equipos(env):
     Equipo = env["crm.team"]
     equipos = {}
-    principal = env.ref("sales_team.team_sales_department", raise_if_not_found=False)
+    # Los equipos que Odoo crea por defecto se reutilizan para no dejar equipos vacíos.
+    predeterminados = {"GUA": "sales_team.team_sales_department",
+                       "web": "sales_team.salesteam_website_sales"}
     for codigo, nombre in (("GUA", "Sucursal Guatemala"), ("MEX", "Sucursal México"),
                            ("SAL", "Sucursal El Salvador"), ("web", "Tienda en línea")):
         equipo = Equipo.search([("name", "=", nombre)], limit=1)
-        if not equipo and codigo == "GUA" and principal:
-            equipo = principal
+        if not equipo and codigo in predeterminados:
+            equipo = env.ref(predeterminados[codigo], raise_if_not_found=False) or Equipo
         if not equipo:
             equipo = Equipo.create({"name": nombre})
         nombre_traducido(equipo, nombre)
