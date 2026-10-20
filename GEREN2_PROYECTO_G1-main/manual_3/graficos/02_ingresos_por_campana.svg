@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 390" role="img" aria-labelledby="title desc">
+<title id="title">Ingresos totales por canal principal de la sesión</title>
+<desc id="desc">GA4 · 4 sept–1 oct 2026 · total Q404,91. La dimensión es grupo de canales; Email no identifica por sí sola una campaña.</desc>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#252b36}.title{font-size:24px;font-weight:700}.sub{font-size:15px;fill:#687181}.label{font-size:16px}.tick{font-size:13px;fill:#687181}.value{font-size:15px;font-weight:700}.grid{stroke:#dee2eb;stroke-width:1}.axis{stroke:#8991a2;stroke-width:1.2}</style>
+<text class="title" x="30" y="36">Ingresos totales por canal principal de la sesión</text>
+<text class="sub" x="30" y="62">GA4 · 4 sept–1 oct 2026 · total Q404,91</text>
+<line class="grid" x1="345.0" y1="90" x2="345.0" y2="329"/>
+<text class="tick" x="345.0" y="351" text-anchor="middle">Q0</text>
+<line class="grid" x1="488.8" y1="90" x2="488.8" y2="329"/>
+<text class="tick" x="488.8" y="351" text-anchor="middle">Q90</text>
+<line class="grid" x1="632.5" y1="90" x2="632.5" y2="329"/>
+<text class="tick" x="632.5" y="351" text-anchor="middle">Q180</text>
+<line class="grid" x1="776.2" y1="90" x2="776.2" y2="329"/>
+<text class="tick" x="776.2" y="351" text-anchor="middle">Q270</text>
+<line class="grid" x1="920.0" y1="90" x2="920.0" y2="329"/>
+<text class="tick" x="920.0" y="351" text-anchor="middle">Q360</text>
+<text class="label" x="330" y="143.6" text-anchor="end">Email</text>
+<rect x="345" y="125.6" width="438.0" height="26.0" rx="4" fill="#19866d"/>
+<text class="value" x="793.0" y="143.6" text-anchor="start">Q274,22</text>
+<text class="label" x="330" y="220.3" text-anchor="end">Unassigned</text>
+<rect x="345" y="202.3" width="121.2" height="26.0" rx="4" fill="#f14924"/>
+<text class="value" x="476.2" y="220.3" text-anchor="start">Q75,89</text>
+<text class="label" x="330" y="297.0" text-anchor="end">Direct</text>
+<rect x="345" y="279.0" width="87.5" height="26.0" rx="4" fill="#11196f"/>
+<text class="value" x="442.5" y="297.0" text-anchor="start">Q54,80</text>
+<line class="axis" x1="345" y1="329" x2="920" y2="329"/>
+<text class="sub" x="30" y="378">La dimensión es grupo de canales; Email no identifica por sí sola una campaña.</text>
+</svg>

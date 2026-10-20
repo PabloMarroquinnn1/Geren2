@@ -1,0 +1,6 @@
+{
+  "Name": "QuetzalMart_RPA",
+  "ProjectType": "Process",
+  "Description": "TIENDA DE VENTA DE PRODUCTOS",
+  "MainFile": "Main.xaml"
+}

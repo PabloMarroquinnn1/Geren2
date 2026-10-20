@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 390" role="img" aria-labelledby="title desc">
+<title id="title">Eventos del recorrido de comercio electrónico</title>
+<desc id="desc">GA4 · 4 sept–1 oct 2026 · eventos y usuarios por evento. Son cantidades de eventos, no pasos de un embudo secuencial.</desc>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#252b36}.title{font-size:24px;font-weight:700}.sub{font-size:15px;fill:#687181}.label{font-size:16px}.tick{font-size:13px;fill:#687181}.value{font-size:15px;font-weight:700}.grid{stroke:#dee2eb;stroke-width:1}.axis{stroke:#8991a2;stroke-width:1.2}</style>
+<text class="title" x="30" y="36">Eventos del recorrido de comercio electrónico</text>
+<text class="sub" x="30" y="62">GA4 · 4 sept–1 oct 2026 · eventos y usuarios por evento</text>
+<line class="grid" x1="345.0" y1="90" x2="345.0" y2="329"/>
+<text class="tick" x="345.0" y="351" text-anchor="middle">0</text>
+<line class="grid" x1="488.8" y1="90" x2="488.8" y2="329"/>
+<text class="tick" x="488.8" y="351" text-anchor="middle">10</text>
+<line class="grid" x1="632.5" y1="90" x2="632.5" y2="329"/>
+<text class="tick" x="632.5" y="351" text-anchor="middle">20</text>
+<line class="grid" x1="776.2" y1="90" x2="776.2" y2="329"/>
+<text class="tick" x="776.2" y="351" text-anchor="middle">30</text>
+<line class="grid" x1="920.0" y1="90" x2="920.0" y2="329"/>
+<text class="tick" x="920.0" y="351" text-anchor="middle">40</text>
+<text class="label" x="330" y="133.5" text-anchor="end">view_item</text>
+<rect x="345" y="115.5" width="359.4" height="26.0" rx="4" fill="#11196f"/>
+<text class="value" x="714.4" y="133.5" text-anchor="start">25 · 7 usuarios</text>
+<text class="label" x="330" y="191.0" text-anchor="end">add_to_cart</text>
+<rect x="345" y="173.0" width="258.8" height="26.0" rx="4" fill="#19866d"/>
+<text class="value" x="613.8" y="191.0" text-anchor="start">18 · 5 usuarios</text>
+<text class="label" x="330" y="248.5" text-anchor="end">begin_checkout</text>
+<rect x="345" y="230.5" width="402.5" height="26.0" rx="4" fill="#f14924"/>
+<text class="value" x="757.5" y="248.5" text-anchor="start">28 · 5 usuarios</text>
+<text class="label" x="330" y="306.0" text-anchor="end">purchase</text>
+<rect x="345" y="288.0" width="143.8" height="26.0" rx="4" fill="#C2522D"/>
+<text class="value" x="498.8" y="306.0" text-anchor="start">10 · 4 usuarios</text>
+<line class="axis" x1="345" y1="329" x2="920" y2="329"/>
+<text class="sub" x="30" y="378">Son cantidades de eventos, no pasos de un embudo secuencial.</text>
+</svg>

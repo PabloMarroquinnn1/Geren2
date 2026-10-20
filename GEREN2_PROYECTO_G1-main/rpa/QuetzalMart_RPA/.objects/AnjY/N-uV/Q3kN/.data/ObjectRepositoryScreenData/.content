@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-16"?>
+<ObjectRepositoryScreenData ContentHash="UgAiUM3SDk6lYdGJHYUS-A" xmlns="http://schemas.uipath.com/workflow/activities/uix" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <ObjectRepositoryScreenData.Data>
+    <TargetApp x:Key="TargetApp" Area="1912, -8, 1936, 1048" BrowserType="Chrome" IconBase64="iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAFiUAABYlAUlSJPAAAAD6SURBVDhPrVLBjcIwEKSElHAlUALPO69PSgfkAWuHD+OI/9EJdJISUkJKSAmgBbSsfTnpJBjJn4xnPJndxeLdQI2qc/yTXBgThcvjDB2FE+r4Ud7PkKhdJ+LJCMsz4YtR6m5IPux/C8RszrBdZ2KJZi/Chx4+rpR322Wi0GdJVqjUIBGfrViJAtak83x8Ep4HNXC7ZaYykFQmxaiEjZYpZmB/1Xx83UBnfvAbLa8E6p2UeX/M8fAkfDyaFP8qERROSqBuqmLevYxOeb+R8swYecJnsZVwsTEGenFukUB/bCOoxZwge/k7NqUug0QD8RlmN6Rk6SnbvnfhCuLC9xMqQhrAAAAAAElFTkSuQmCC" Selector="&lt;html app='chrome.exe' title='Contactos' /&gt;" Url="https://quetzalmart.34-9-149-41.sslip.io/odoo/contacts#model=res.partner&amp;view_type=list" Version="V3">
+      <imageRef attrName="InformativeScreenshot" originalValue="ba7ebcb8a4ac830f3cdab6fd3f973971.jpg" xmlns="">0M7jvS2m33kyq79bQ-4A6Bw</imageRef>
+    </TargetApp>
+    <NInteractionMode x:Key="InteractionMode">DebuggerApi</NInteractionMode>
+  </ObjectRepositoryScreenData.Data>
+</ObjectRepositoryScreenData>

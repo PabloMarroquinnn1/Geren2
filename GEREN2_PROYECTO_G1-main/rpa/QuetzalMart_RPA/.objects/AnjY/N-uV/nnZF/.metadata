@@ -1,0 +1,13 @@
+﻿{
+  "Name": "Chrome Ajustes de inventario",
+  "Type": "Screen",
+  "Id": "nnZFut9sV0K0ioKYamiCAA",
+  "Reference": "q2X5eulakUSPUMYMHhw1uQ/nnZFut9sV0K0ioKYamiCAA",
+  "ParentRef": "q2X5eulakUSPUMYMHhw1uQ/N-uVnmBaLUupcU1NFEF4EQ",
+  "Created": "2026-09-28T22:23:38.5813508Z",
+  "Updated": "2026-09-28T22:23:38.5813508Z",
+  "CreatedBy": [
+    "UiPath.UIAutomationCore, Version=26.10.4.0, Culture=neutral, PublicKeyToken=null",
+    "UiPath.Platform, Version=26.4.0.0, Culture=neutral, PublicKeyToken=null"
+  ]
+}

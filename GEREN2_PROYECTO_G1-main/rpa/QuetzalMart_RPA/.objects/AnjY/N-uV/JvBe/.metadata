@@ -1,0 +1,13 @@
+﻿{
+  "Name": "Chrome Productos",
+  "Type": "Screen",
+  "Id": "JvBeJhv_-UC9PH2jcxsbmg",
+  "Reference": "q2X5eulakUSPUMYMHhw1uQ/JvBeJhv_-UC9PH2jcxsbmg",
+  "ParentRef": "q2X5eulakUSPUMYMHhw1uQ/N-uVnmBaLUupcU1NFEF4EQ",
+  "Created": "2026-09-25T20:07:08.6728989Z",
+  "Updated": "2026-09-25T20:07:08.6728989Z",
+  "CreatedBy": [
+    "UiPath.UIAutomationCore, Version=26.10.4.0, Culture=neutral, PublicKeyToken=null",
+    "UiPath.Platform, Version=26.4.0.0, Culture=neutral, PublicKeyToken=null"
+  ]
+}

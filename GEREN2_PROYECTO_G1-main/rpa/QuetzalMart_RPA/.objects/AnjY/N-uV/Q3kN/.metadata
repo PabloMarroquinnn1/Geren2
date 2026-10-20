@@ -1,0 +1,13 @@
+﻿{
+  "Name": "Chrome Contactos",
+  "Type": "Screen",
+  "Id": "Q3kNp9A_-0OlMiK5NjJqUw",
+  "Reference": "q2X5eulakUSPUMYMHhw1uQ/Q3kNp9A_-0OlMiK5NjJqUw",
+  "ParentRef": "q2X5eulakUSPUMYMHhw1uQ/N-uVnmBaLUupcU1NFEF4EQ",
+  "Created": "2026-09-25T19:53:21.1565182Z",
+  "Updated": "2026-09-25T19:53:21.1565182Z",
+  "CreatedBy": [
+    "UiPath.UIAutomationCore, Version=26.10.4.0, Culture=neutral, PublicKeyToken=null",
+    "UiPath.Platform, Version=26.4.0.0, Culture=neutral, PublicKeyToken=null"
+  ]
+}

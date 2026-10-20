@@ -1,0 +1,32 @@
+<div style="margin:0;padding:0;background:#f3f6ef;font-family:Arial,Helvetica,sans-serif;color:#18372b;">
+  <div style="display:none;font-size:1px;line-height:1px;color:#f3f6ef;max-height:0;max-width:0;opacity:0;overflow:hidden;">Tu factura de QuetzalMart ya está lista y va adjunta en PDF.</div>
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;background:#f3f6ef;"><tr><td align="center" style="padding:30px 12px;">
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" style="width:100%;max-width:600px;border-collapse:collapse;background:#ffffff;border:1px solid #e2ebdf;border-radius:18px;overflow:hidden;">
+      <tr><td style="height:7px;background:#0b6b46;font-size:0;line-height:0;">&nbsp;</td></tr>
+      <tr><td align="center" style="padding:24px 28px;background:#fffdf8;border-bottom:1px solid #edf0e9;">
+        <img src="https://quetzalmart.34-9-149-41.sslip.io/web/image/website/1/logo" width="190" alt="QuetzalMart" style="display:block;width:190px;max-width:70%;height:auto;border:0;">
+      </td></tr>
+      <tr><td style="padding:32px 38px 12px;">
+        <div style="display:inline-block;background:#e8f4ea;color:#0b6b46;border-radius:30px;padding:8px 13px;font-size:11px;font-weight:700;letter-spacing:1.2px;">COMPRA CONFIRMADA</div>
+        <h1 style="font-family:Arial,Helvetica,sans-serif;font-size:31px;line-height:1.17;letter-spacing:-.8px;color:#123f2d;margin:17px 0 12px;">¡Gracias por comprar<br><span style="color:#eb7426;">en QuetzalMart!</span></h1>
+        <p style="font-size:16px;line-height:1.6;color:#44594c;margin:0;">Hola <strong style="color:#164c34;"><t t-out="object.partner_id.name or 'Cliente'"></t></strong>, tu factura ya está lista. Encontrarás el comprobante en PDF adjunto a este correo.</p>
+      </td></tr>
+      <tr><td style="padding:20px 38px 0;">
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:separate;border-spacing:0;background:#f7f9f4;border:1px solid #e1ebdf;border-radius:13px;">
+          <tr><td style="padding:17px 20px 9px;font-size:13px;color:#63796a;">Número de factura</td><td align="right" style="padding:17px 20px 9px;font-size:14px;font-weight:700;color:#164c34;"><t t-out="object.name or ''"></t></td></tr>
+          <tr><td style="padding:9px 20px;font-size:13px;color:#63796a;">Referencia de compra</td><td align="right" style="padding:9px 20px;font-size:14px;font-weight:700;color:#164c34;"><t t-out="object.invoice_origin or ''"></t></td></tr>
+          <tr><td colspan="2" style="padding:0 20px;"><div style="height:1px;background:#dce7da;font-size:0;line-height:0;">&nbsp;</div></td></tr>
+          <tr><td style="padding:15px 20px 19px;font-size:15px;font-weight:700;color:#164c34;">Total de la factura</td><td align="right" style="padding:15px 20px 19px;font-size:20px;font-weight:700;color:#e77528;"><t t-out="format_amount(object.amount_total, object.currency_id) or ''"></t></td></tr>
+        </table>
+      </td></tr>
+      <tr><td style="padding:23px 38px 30px;">
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;background:#fff4e8;border-left:4px solid #ef7c28;border-radius:6px;"><tr><td style="padding:14px 17px;font-size:13px;line-height:1.55;color:#664c35;">&#128206; <strong>Tu PDF está adjunto.</strong> Guárdalo para consultar los detalles de tu compra cuando lo necesites.</td></tr></table>
+      </td></tr>
+      <tr><td style="padding:21px 38px;background:#0d5137;color:#eaf5ec;text-align:center;">
+        <div style="font-size:14px;font-weight:700;">QuetzalMart</div>
+        <div style="font-size:12px;line-height:1.6;margin-top:6px;color:#cce5d4;">Calidad cercana para cada día<br>Guatemala &middot; México &middot; El Salvador</div>
+      </td></tr>
+    </table>
+    <p style="font-size:11px;color:#8b9b8e;line-height:1.5;margin:15px 0 0;">Este correo fue generado automáticamente por QuetzalMart.</p>
+  </td></tr></table>
+</div>

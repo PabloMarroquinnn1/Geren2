@@ -1,0 +1,12 @@
+﻿{
+  "Name": "Chrome Contactos",
+  "Type": "App",
+  "Id": "AnjYmInZoESs3HHl0womNQ",
+  "Reference": "q2X5eulakUSPUMYMHhw1uQ/AnjYmInZoESs3HHl0womNQ",
+  "Created": "2026-09-25T19:53:20.9118273Z",
+  "Updated": "2026-09-25T19:53:20.9118273Z",
+  "CreatedBy": [
+    "UiPath.UIAutomationCore, Version=26.10.4.0, Culture=neutral, PublicKeyToken=null",
+    "UiPath.Platform, Version=26.4.0.0, Culture=neutral, PublicKeyToken=null"
+  ]
+}

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 390" role="img" aria-labelledby="title desc">
+<title id="title">Artículos comprados por producto</title>
+<desc id="desc">GA4 · 4 sept–1 oct 2026 · unidades compradas e ingresos del artículo. El importe junto a cada barra es el ingreso del artículo informado por GA4.</desc>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#252b36}.title{font-size:24px;font-weight:700}.sub{font-size:15px;fill:#687181}.label{font-size:16px}.tick{font-size:13px;fill:#687181}.value{font-size:15px;font-weight:700}.grid{stroke:#dee2eb;stroke-width:1}.axis{stroke:#8991a2;stroke-width:1.2}</style>
+<text class="title" x="30" y="36">Artículos comprados por producto</text>
+<text class="sub" x="30" y="62">GA4 · 4 sept–1 oct 2026 · unidades compradas e ingresos del artículo</text>
+<line class="grid" x1="345.0" y1="90" x2="345.0" y2="329"/>
+<text class="tick" x="345.0" y="351" text-anchor="middle">0</text>
+<line class="grid" x1="488.8" y1="90" x2="488.8" y2="329"/>
+<text class="tick" x="488.8" y="351" text-anchor="middle">4</text>
+<line class="grid" x1="632.5" y1="90" x2="632.5" y2="329"/>
+<text class="tick" x="632.5" y="351" text-anchor="middle">8</text>
+<line class="grid" x1="776.2" y1="90" x2="776.2" y2="329"/>
+<text class="tick" x="776.2" y="351" text-anchor="middle">12</text>
+<line class="grid" x1="920.0" y1="90" x2="920.0" y2="329"/>
+<text class="tick" x="920.0" y="351" text-anchor="middle">16</text>
+<text class="label" x="330" y="133.5" text-anchor="end">Arroz premium 1 kg</text>
+<rect x="345" y="115.5" width="395.3" height="26.0" rx="4" fill="#19866d"/>
+<text class="value" x="750.3" y="133.5" text-anchor="start">11 unidades · Q149,16</text>
+<text class="label" x="330" y="191.0" text-anchor="end">Azúcar blanca 1 kg</text>
+<rect x="345" y="173.0" width="107.8" height="26.0" rx="4" fill="#11196f"/>
+<text class="value" x="462.8" y="191.0" text-anchor="start">3 unidades · Q61,11</text>
+<text class="label" x="330" y="248.5" text-anchor="end">Frijol negro 1 kg</text>
+<rect x="345" y="230.5" width="35.9" height="26.0" rx="4" fill="#f14924"/>
+<text class="value" x="390.9" y="248.5" text-anchor="start">1 unidad · Q16,96</text>
+<text class="label" x="330" y="306.0" text-anchor="end">Atún en agua 140 g</text>
+<rect x="345" y="288.0" width="2.0" height="26.0" rx="4" fill="#778199"/>
+<text class="value" x="357.0" y="306.0" text-anchor="start">0 unidades · Q0,00</text>
+<line class="axis" x1="345" y1="329" x2="920" y2="329"/>
+<text class="sub" x="30" y="378">El importe junto a cada barra es el ingreso del artículo informado por GA4.</text>
+</svg>
