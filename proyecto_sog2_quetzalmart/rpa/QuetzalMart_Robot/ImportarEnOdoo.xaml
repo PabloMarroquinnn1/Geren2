@@ -50,8 +50,16 @@
             <If Condition="[pideInicioSesion]" DisplayName="Iniciar sesión si hace falta">
               <If.Then>
                 <Sequence DisplayName="Iniciar sesión">
-                  <ui:InputDialog DisplayName="Pedir usuario de Odoo" IsPassword="False" Label="Usuario (correo) de Odoo" Options="{x:Null}" OptionsString="{x:Null}" Title="QuetzalMart RPA" Result="[usuario]" />
-                  <ui:InputDialog DisplayName="Pedir clave de Odoo" IsPassword="True" Label="Clave de Odoo" Options="{x:Null}" OptionsString="{x:Null}" Title="QuetzalMart RPA" Result="[clave]" />
+                  <ui:InputDialog DisplayName="Pedir usuario de Odoo" IsPassword="False" Label="Usuario (correo) de Odoo" Options="{x:Null}" OptionsString="{x:Null}" Title="QuetzalMart RPA">
+                    <ui:InputDialog.Result>
+                      <OutArgument x:TypeArguments="x:String">[usuario]</OutArgument>
+                    </ui:InputDialog.Result>
+                  </ui:InputDialog>
+                  <ui:InputDialog DisplayName="Pedir clave de Odoo" IsPassword="True" Label="Clave de Odoo" Options="{x:Null}" OptionsString="{x:Null}" Title="QuetzalMart RPA">
+                    <ui:InputDialog.Result>
+                      <OutArgument x:TypeArguments="x:String">[clave]</OutArgument>
+                    </ui:InputDialog.Result>
+                  </ui:InputDialog>
                   <ui:TypeInto ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" EmptyField="True" DisplayName="Escribir usuario" Text="[usuario]">
                     <ui:TypeInto.Target>
                       <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="&lt;webctrl tag='INPUT' name='login' /&gt;">
