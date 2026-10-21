@@ -9,38 +9,43 @@ en cualquier nube.
 | CPU / RAM | 2 vCPU / 4 GB |
 | Disco | 30 GB |
 | Puertos abiertos | 22 (SSH), 80 y 443 (web) |
-| Costo aprox. | 25-35 USD/mes (cubierto por los créditos de estudiante) |
+| Costo aprox. | ~68 USD/mes encendida en AWS c7i-flex.large (cubierto por los créditos) |
 
 > **Base de datos:** Odoo solo funciona con PostgreSQL. El enunciado menciona MySQL, Oracle o
 > SQL Server como ejemplos de bases relacionales; confirme con el auxiliar que PostgreSQL es
 > aceptado (es la base relacional que exige Odoo).
 
-## Opción A: Azure for Students (sin tarjeta de crédito)
+## Opción usada: AWS EC2 (capa gratuita)
 
-1. Activar <https://azure.microsoft.com/es-es/free/students> con el correo de la universidad
-   (100 USD de crédito).
-2. **Máquinas virtuales ► Crear**: imagen *Ubuntu Server 24.04 LTS*, tamaño **B2s** (2 vCPU, 4 GB),
-   autenticación con **clave SSH** (descargue el `.pem`), puertos de entrada **SSH, HTTP, HTTPS**.
-3. Al terminar: VM ► **Dirección IP pública** ► *Configuración*: asignación **Estática** y
-   **Etiqueta de nombre DNS** (por ejemplo `quetzalmart-g1`). El dominio queda como
-   `quetzalmart-g1.eastus.cloudapp.azure.com`.
+1. Región **us-east-2 (Ohio)** ► EC2 ► **Lanzar instancia**:
+   * AMI **Ubuntu Server 24.04 LTS**, 64 bits (x86).
+   * Tipo **c7i-flex.large** (2 vCPU, 4 GiB; apto para la capa gratuita). Con 1 o 2 GiB Odoo no funciona.
+   * Par de claves nuevo (guardar el `.pem`).
+   * Grupo de seguridad: **SSH (22)**, **HTTP (80)** y **HTTPS (443)**.
+   * Almacenamiento **30 GiB gp3** (con 8 GiB el disco se llena durante la instalación).
+2. EC2 ► **Direcciones IP elásticas** ► Asignar ► Asociar a la instancia (la IP no cambia al
+   detenerla). Hacerlo antes de `instalar.sh`, porque el dominio se arma con esa IP.
+3. Billing ► **Budgets**: alerta al 80 % de los créditos. En la capa gratuita, si se acaban los
+   créditos AWS cierra la cuenta: **detener la instancia** cuando no se use (detenida solo cobra
+   disco e IP, unos 6 USD/mes; encendida unos 68 USD/mes).
+4. Conectarse con **Conectar ► Conexión de la instancia EC2** (usuario `ubuntu`) o por SSH.
 
-## Opción B: Google Cloud (300 USD de prueba)
+Si el disco quedó en 8 GiB: Volúmenes ► **Modificar** ► 30, y en la VM
+`sudo growpart /dev/nvme0n1 1 && sudo resize2fs /dev/nvme0n1p1`.
 
-1. Compute Engine ► **Crear instancia**: `e2-medium` (2 vCPU, 4 GB), Ubuntu 24.04 LTS, disco 30 GB,
-   marcar **Permitir tráfico HTTP y HTTPS**.
-2. Red de VPC ► **Direcciones IP** ► reservar como estática la IP externa de la VM.
-3. Dominio gratuito: `quetzalmart.<IP-con-guiones>.sslip.io` (el instalador lo arma solo).
+## Otras nubes
+
+El instalador funciona igual en cualquier VM Ubuntu 24.04 de 2 vCPU y 4 GB: Azure (tamaño B2s,
+IP pública estática) o Google Cloud (`e2-medium`, IP externa reservada), abriendo 22, 80 y 443.
 
 ## Instalación (igual en cualquier nube)
 
 ```bash
-ssh -i clave.pem azureuser@IP_DE_LA_VM          # en GCP: botón SSH de la consola
+ssh -i clave.pem ubuntu@IP_ELASTICA             # o Conectar desde la consola de AWS
 sudo apt-get update && sudo apt-get install -y git
-git clone https://github.com/pablomarroquinnn1/geren2.git    # repositorio privado: use un token de GitHub como clave
-cd geren2/proyecto_sog2_quetzalmart/nube
+git clone -b claude/clever-turing-8emaf6 https://github.com/PabloMarroquinnn1/Geren2.git
+cd Geren2/proyecto_sog2_quetzalmart/nube
 sudo ./instalar.sh                               # dominio <ip>.sslip.io automático
-# o: sudo ./instalar.sh quetzalmart-g1.eastus.cloudapp.azure.com
 ```
 
 El instalador (5-10 minutos) instala Docker, crea contraseñas aleatorias en `nube/.env`, descarga
