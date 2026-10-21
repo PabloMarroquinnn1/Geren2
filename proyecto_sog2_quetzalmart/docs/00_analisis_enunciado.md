@@ -10,7 +10,7 @@ tienda en línea, analítica, gestión documental, RPA y marketing digital.
 |---|---|
 | Entregar los 3 manuales en PDF | Generados por `manuales/construir_manuales.py`. Falta: datos del grupo, capturas de la nube, de UiPath y de GA4, y cifras reales de GA4 (Manual 3). |
 | Entrega en UEDI a tiempo | Responsabilidad del grupo. |
-| ERP implementado en la nube | `nube/instalar.sh` en una VM de Azure o Google Cloud. |
+| ERP implementado en la nube | `nube/instalar.sh` en una instancia EC2 de AWS (c7i-flex.large). |
 | Consultas SQL preparadas y base en la nube | `sql/consultas_calificacion.sql` (probadas) y PostgreSQL en la VM. |
 | Sin copias parciales ni totales | Todo el código, datos, diseño e imágenes de esta carpeta son propios; el proyecto de referencia no se reutilizó. |
 
@@ -47,11 +47,10 @@ tienda en línea, analítica, gestión documental, RPA y marketing digital.
 
 ## Lo que falta hacer al grupo
 
-- [ ] Crear la VM y ejecutar `nube/instalar.sh` (`docs/01_despliegue_nube.md`).
+- [x] Crear la instancia EC2, ejecutar `nube/instalar.sh` y cargar los datos.
 - [ ] Crear el correo de la empresa y la clave de aplicación (`docs/04_correo_y_marketing.md`).
 - [ ] Crear la propiedad GA4, conectarla, generar tráfico y configurar segmentos, exploraciones y
       audiencias (`docs/03_google_analytics.md`).
-- [ ] Cargar los datos (`cargar_quetzalmart.py`).
 - [ ] Abrir el robot en UiPath Studio, cambiar `urlOdoo` y probarlo (`rpa/README.md`).
 - [x] Datos de los integrantes en `manuales/datos_grupo.json` (portada de los manuales).
 - [ ] Tomar capturas (`manuales/tomar_capturas.py`, más las de la nube, UiPath y GA4), poner las

@@ -19,28 +19,35 @@ empresa para los envíos.
 
 | Requisito del enunciado | Implementación |
 |---|---|
-| Odoo Community en la nube | Odoo 18 Community en la VM (Azure o Google Cloud) |
+| Odoo Community en la nube | Odoo 18 Community en una instancia EC2 de AWS |
 | Base de datos relacional en la nube | PostgreSQL 16 en la misma VM (Odoo solo admite PostgreSQL) |
-| Plataforma en la nube | Microsoft Azure for Students o Google Cloud |
+| Plataforma en la nube | Amazon Web Services (EC2, región Ohio) |
 | UiPath para RPA | Proyecto `rpa/QuetzalMart_Robot` |
 | Google Analytics | GA4 con comercio electrónico (módulo `qm_ga4_ecommerce`) |
 | Gestor documental integrado a Odoo | OCA DMS 18 + módulo `qm_gestion_documental` |
 
 ## 1.2 Requisitos
 
-* Cuenta de Azure for Students (100 USD, sin tarjeta) o Google Cloud (300 USD de prueba).
-* VM de 2 vCPU, 4 GB de RAM y 30 GB de disco con puertos 22, 80 y 443 abiertos.
+* Cuenta de AWS (capa gratuita con créditos).
+* Instancia EC2 de 2 vCPU, 4 GiB de RAM y 30 GiB de disco con puertos 22, 80 y 443 abiertos.
 * El repositorio del proyecto (carpeta `proyecto_sog2_quetzalmart`).
 * En la PC: Python 3.10+ (para la carga de datos), UiPath Studio y DBeaver.
 
 ## 1.3 Crear la máquina virtual
 
-**Azure:** Máquinas virtuales ► Crear ► imagen *Ubuntu Server 24.04 LTS*, tamaño **B2s**,
-autenticación con clave SSH, puertos de entrada SSH, HTTP y HTTPS. Luego, en la IP pública de la
-VM, asignación **Estática** y **etiqueta de nombre DNS** (por ejemplo `quetzalmart-g1`).
+En la consola de AWS (región Ohio) ► EC2 ► **Lanzar instancia**:
 
-**Google Cloud:** Compute Engine ► Crear instancia ► `e2-medium`, Ubuntu 24.04, disco de 30 GB,
-*Permitir tráfico HTTP y HTTPS*; reservar la IP externa como estática.
+| Opción | Valor |
+|---|---|
+| AMI | Ubuntu Server 24.04 LTS, 64 bits (x86) |
+| Tipo de instancia | `c7i-flex.large` (2 vCPU, 4 GiB) |
+| Par de claves | `Geren2` (archivo `.pem`) |
+| Grupo de seguridad | SSH 22, HTTP 80 y HTTPS 443 |
+| Almacenamiento | 30 GiB gp3 |
+| IP | IP elástica asociada a la instancia (`3.132.57.160`) |
+
+El dominio público es `quetzalmart.3-132-57-160.sslip.io` (sslip.io resuelve la IP sin comprar
+un dominio) y Caddy obtiene el certificado HTTPS de Let's Encrypt.
 
 <div class="pendiente">Agregar aquí las capturas de la consola de la nube: creación de la VM,
 tamaño, reglas de red y la IP pública estática.</div>
@@ -51,10 +58,9 @@ Desde la VM (conexión SSH):
 
 ```bash
 sudo apt-get update && sudo apt-get install -y git
-git clone https://github.com/pablomarroquinnn1/geren2.git
-cd geren2/proyecto_sog2_quetzalmart/nube
+git clone -b claude/clever-turing-8emaf6 https://github.com/PabloMarroquinnn1/Geren2.git
+cd Geren2/proyecto_sog2_quetzalmart/nube
 sudo ./instalar.sh                 # usa <ip>.sslip.io como dominio
-# o con dominio propio: sudo ./instalar.sh quetzalmart-g1.eastus.cloudapp.azure.com
 ```
 
 El script `instalar.sh` realiza ocho pasos y puede repetirse sin perder datos:
@@ -75,7 +81,7 @@ que no se sube al repositorio):
 
 ```text
 ==> Listo
-URL:            https://quetzalmart.20-55-10-7.sslip.io
+URL:            https://quetzalmart.3-132-57-160.sslip.io
 Base de datos:  quetzalmart
 Usuario Odoo:   admin@quetzalmart.com
 Clave Odoo:     ********************

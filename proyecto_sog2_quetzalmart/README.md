@@ -24,12 +24,12 @@ El análisis del enunciado, la matriz de cumplimiento y la lista de lo que falta
 
 ## Puesta en marcha (resumen)
 
-1. **Nube** ([`docs/01_despliegue_nube.md`](docs/01_despliegue_nube.md)): crear una VM Ubuntu 24.04
-   (2 vCPU, 4 GB), copiar esta carpeta y ejecutar:
+1. **Nube** ([`docs/01_despliegue_nube.md`](docs/01_despliegue_nube.md)): crear una instancia EC2 de AWS con Ubuntu 24.04
+   (c7i-flex.large, 4 GiB, 30 GiB de disco), copiar esta carpeta y ejecutar:
 
    ```bash
    cd nube
-   sudo ./instalar.sh        # o: sudo ./instalar.sh quetzalmart-g1.eastus.cloudapp.azure.com
+   sudo ./instalar.sh
    ```
 
    Sin argumento usa `quetzalmart.<ip-pública>.sslip.io`. Crea `.env` con claves aleatorias,
