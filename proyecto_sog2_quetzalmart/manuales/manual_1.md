@@ -224,13 +224,21 @@ masiva de temporada y las plantillas del comprobante y de la campaña postcompra
 ![Campaña de correo](capturas/24_marketing_campana_detalle.png)
 <p class="pie">Figura 17. Campaña masiva lista para enviarse a la lista de clientes.</p>
 
+Al comprar en la tienda el cliente recibe, desde `ventasquetzalmart@gmail.com`, primero la
+confirmación del pedido y el **comprobante de compra** con la factura en PDF, y menos de un minuto
+después el correo de la **campaña** con el código QUETZAL10 y productos recomendados; cada uno con
+un asunto distinto.
+
+![Correos recibidos por el cliente](capturas/25_correos_recibidos.png)
+<p class="pie">Figura 18. Bandeja del cliente, confirmación del pedido (con IVA y envío) y correo de la campaña QUETZAL10.</p>
+
 ## 2.9 Documentos (gestión documental)
 
 Repositorio centralizado con carpetas, categorías y etiquetas: facturas de venta (automáticas),
 facturas de proveedores, contratos de outsourcing, contratos de empleados y reportes.
 
 ![Archivos del gestor documental](capturas/22_documentos_archivos.png)
-<p class="pie">Figura 18. Documentos con categoría y etiquetas para filtrarlos.</p>
+<p class="pie">Figura 19. Documentos con categoría y etiquetas para filtrarlos.</p>
 
 ## 2.10 Módulos propios
 
@@ -252,13 +260,13 @@ facturas de proveedores, contratos de outsourcing, contratos de empleados y repo
 4. **Probar**. Si dice *Todo parece correcto*, pulsar **Importar**.
 
 ![Importar registros](capturas/25_importar_inicio.png)
-<p class="pie">Figura 19. Pantalla de importación.</p>
+<p class="pie">Figura 20. Pantalla de importación.</p>
 
 ![Columnas relacionadas](capturas/26_importar_columnas.png)
-<p class="pie">Figura 20. Cada columna de la plantilla relacionada con su campo de Odoo.</p>
+<p class="pie">Figura 21. Cada columna de la plantilla relacionada con su campo de Odoo.</p>
 
 ![Resultado de la prueba](capturas/27_importar_prueba.png)
-<p class="pie">Figura 21. Resultado de Probar antes de importar.</p>
+<p class="pie">Figura 22. Resultado de Probar antes de importar.</p>
 
 ## 3.2 Plantillas por módulo
 
@@ -281,13 +289,13 @@ recepción y factura, 150 ventas con entrega, factura y pago) se generan con
 a continuación.
 
 ![Departamentos](capturas/12_departamentos.png)
-<p class="pie">Figura 22. Departamentos cargados.</p>
+<p class="pie">Figura 23. Departamentos cargados.</p>
 
 ![Puestos](capturas/13_puestos.png)
-<p class="pie">Figura 23. Puestos de trabajo.</p>
+<p class="pie">Figura 24. Puestos de trabajo.</p>
 
 ![Productos](capturas/17_productos.png)
-<p class="pie">Figura 24. Productos con imagen, precio y categoría.</p>
+<p class="pie">Figura 25. Productos con imagen, precio y categoría.</p>
 
 ## 3.3 Órdenes de compra
 
@@ -298,10 +306,10 @@ a continuación.
 5. **Crear factura** ► fecha de factura y número FEL del proveedor ► **Confirmar** ► **Registrar pago**.
 
 ![Detalle de compra](capturas/06_compra_detalle.png)
-<p class="pie">Figura 25. Orden de compra confirmada con su recepción y factura.</p>
+<p class="pie">Figura 26. Orden de compra confirmada con su recepción y factura.</p>
 
 ![Facturas de proveedor](capturas/09_facturas_proveedor.png)
-<p class="pie">Figura 26. Facturas de proveedor publicadas.</p>
+<p class="pie">Figura 27. Facturas de proveedor publicadas.</p>
 
 ## 3.4 Ventas y cotizaciones
 
@@ -311,7 +319,7 @@ a continuación.
 4. **Crear factura** ► **Confirmar** ► **Registrar pago**.
 
 ![Cotizaciones](capturas/04_ventas_cotizaciones.png)
-<p class="pie">Figura 27. Cotizaciones de venta (borrador y enviadas).</p>
+<p class="pie">Figura 28. Cotizaciones de venta (borrador y enviadas).</p>
 
 ## 3.5 Clientes en el CRM
 
@@ -320,7 +328,7 @@ se siguen en el embudo del CRM: *Nuevo ► Calificado ► Propuesta ► Ganado*.
 crea automáticamente una oportunidad ganada ligada al pedido.
 
 ![Contactos](capturas/16_contactos.png)
-<p class="pie">Figura 28. Contactos de clientes y proveedores.</p>
+<p class="pie">Figura 29. Contactos de clientes y proveedores.</p>
 
 ## 3.6 Administración de empleados
 
@@ -328,10 +336,10 @@ Cada empleado tiene puesto, departamento, ubicación de trabajo (sucursal), jefe
 correo y contrato. Los contratos vigentes se consultan en *Empleados ► Contratos*.
 
 ![Ficha de empleado](capturas/11_empleado_detalle.png)
-<p class="pie">Figura 29. Ficha de un empleado.</p>
+<p class="pie">Figura 30. Ficha de un empleado.</p>
 
 ![Contratos](capturas/14_contratos.png)
-<p class="pie">Figura 30. Contratos de trabajo vigentes.</p>
+<p class="pie">Figura 31. Contratos de trabajo vigentes.</p>
 
 ## 3.7 Generación de facturas
 
@@ -341,10 +349,10 @@ y lo guarda en *Documentos ► Archivo QuetzalMart ► Facturas de venta* con la
 sucursal; las facturas de la calificación aparecen allí al momento.
 
 ![Factura de cliente](capturas/08_factura_detalle.png)
-<p class="pie">Figura 31. Factura de cliente publicada con el botón «PDF en Documentos».</p>
+<p class="pie">Figura 32. Factura de cliente publicada con el botón «PDF en Documentos».</p>
 
 ![Carpetas del gestor documental](capturas/21_documentos_carpetas.png)
-<p class="pie">Figura 32. Carpetas del archivo de QuetzalMart.</p>
+<p class="pie">Figura 33. Carpetas del archivo de QuetzalMart.</p>
 
 # 4. RPA con UiPath
 
@@ -388,19 +396,19 @@ correcto» (si no lo lee, deja un aviso en el registro) ► *Hacer clic* en «Im
 tuviera errores, Odoo no importa nada y los muestra en la misma pantalla.
 
 ![UiPath Studio Community 2026 listo para abrir el proyecto local.](capturas/50_uipath_studio.png)
-<p class="pie">Figura 33. UiPath Studio Community 2026 listo para abrir el proyecto local.</p>
+<p class="pie">Figura 34. UiPath Studio Community 2026 listo para abrir el proyecto local.</p>
 
 ![Main.xaml en ejecución: inicio, selección de la carpeta raíz y búsqueda de los Excel.](capturas/51_uipath_ejecucion.png)
-<p class="pie">Figura 34. Main.xaml en ejecución: inicio, selección de la carpeta raíz y búsqueda de los Excel.</p>
+<p class="pie">Figura 35. Main.xaml en ejecución: inicio, selección de la carpeta raíz y búsqueda de los Excel.</p>
 
 
 ## 4.4 Ejecución y resultado
 
 ![El robot sube consolidado_clientes.xlsx a Odoo y pulsa Probar: «Todo parece correcto».](capturas/52_uipath_odoo_probar.png)
-<p class="pie">Figura 35. El robot sube consolidado_clientes.xlsx a Odoo y pulsa Probar: «Todo parece correcto».</p>
+<p class="pie">Figura 36. El robot sube consolidado_clientes.xlsx a Odoo y pulsa Probar: «Todo parece correcto».</p>
 
 ![Resumen final del robot: 10 archivos, 7 hojas, 6 clientes y 5 productos importados.](capturas/53_uipath_resumen.png)
-<p class="pie">Figura 36. Resumen final del robot: 10 archivos, 7 hojas, 6 clientes y 5 productos importados.</p>
+<p class="pie">Figura 37. Resumen final del robot: 10 archivos, 7 hojas, 6 clientes y 5 productos importados.</p>
 
 Con la carpeta de prueba `rpa/carpeta_prueba` (10 libros en 5 carpetas de primer nivel y una
 subcarpeta) el resultado fue:
@@ -418,6 +426,12 @@ subcarpeta) el resultado fue:
 
 En Odoo quedaron 6 clientes (con país, estado, empresa relacionada y etiquetas resueltos) y 5
 productos (4 bienes con su cantidad a la mano registrada y publicados en la tienda, y 1 servicio).
+![Clientes cargados por el RPA](capturas/54_rpa_contactos.png)
+<p class="pie">Figura 38. Contactos con el filtro «Cargados por el RPA»: país, estado, empresa y etiquetas resueltos.</p>
+
+![Productos cargados por el RPA](capturas/55_rpa_productos.png)
+<p class="pie">Figura 39. Productos con el filtro «Cargados por el RPA», con precio y cantidad a la mano.</p>
+
 Con los archivos de ejemplo del auxiliar: 4 clientes y 7 productos. Verificación SQL: sección 9 de
 `sql/consultas_calificacion.sql`.
 
