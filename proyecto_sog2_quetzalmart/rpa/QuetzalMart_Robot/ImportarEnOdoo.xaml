@@ -35,8 +35,8 @@
             <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
           </ActivityAction.Argument>
           <Sequence DisplayName="Pasos en Odoo">
-            <ui:ElementExists DisplayName="¿Odoo pide iniciar sesión?" Exists="[pideInicioSesion]">
-              <ui:ElementExists.Target>
+            <ui:UiElementExists DisplayName="¿Odoo pide iniciar sesión?" Exists="[pideInicioSesion]">
+              <ui:UiElementExists.Target>
                 <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="&lt;webctrl tag='INPUT' name='login' /&gt;">
                   <ui:Target.TimeoutMS>
                     <InArgument x:TypeArguments="x:Int32">[5000]</InArgument>
@@ -45,8 +45,8 @@
                     <InArgument x:TypeArguments="ui:WaitForReady" />
                   </ui:Target.WaitForReady>
                 </ui:Target>
-              </ui:ElementExists.Target>
-            </ui:ElementExists>
+              </ui:UiElementExists.Target>
+            </ui:UiElementExists>
             <If Condition="[pideInicioSesion]" DisplayName="Iniciar sesión si hace falta">
               <If.Then>
                 <Sequence DisplayName="Iniciar sesión">
@@ -135,8 +135,8 @@
                 </ui:Target>
               </ui:Click.Target>
             </ui:Click>
-            <ui:ElementExists DisplayName="¿Odoo dice 'Todo parece correcto'?" Exists="[pruebaCorrecta]">
-              <ui:ElementExists.Target>
+            <ui:UiElementExists DisplayName="¿Odoo dice 'Todo parece correcto'?" Exists="[pruebaCorrecta]">
+              <ui:UiElementExists.Target>
                 <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="&lt;webctrl tag='B' aaname='Todo parece correcto*' /&gt;">
                   <ui:Target.TimeoutMS>
                     <InArgument x:TypeArguments="x:Int32">[30000]</InArgument>
@@ -145,8 +145,8 @@
                     <InArgument x:TypeArguments="ui:WaitForReady" />
                   </ui:Target.WaitForReady>
                 </ui:Target>
-              </ui:ElementExists.Target>
-            </ui:ElementExists>
+              </ui:UiElementExists.Target>
+            </ui:UiElementExists>
             <If Condition="[Not pruebaCorrecta]" DisplayName="Si la prueba no pasó, detener">
               <If.Then>
                 <Throw DisplayName="Detener: Odoo reportó errores" Exception="[New BusinessRuleException(&quot;Odoo encontró errores al probar &quot; + Path.GetFileName(in_Archivo) + &quot;. Revise los mensajes en la pantalla de importación.&quot;)]" />
