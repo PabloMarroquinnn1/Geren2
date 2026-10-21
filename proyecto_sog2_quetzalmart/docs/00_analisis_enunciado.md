@@ -53,6 +53,6 @@ tienda en línea, analítica, gestión documental, RPA y marketing digital.
       audiencias (`docs/03_google_analytics.md`).
 - [ ] Cargar los datos (`cargar_quetzalmart.py`).
 - [ ] Abrir el robot en UiPath Studio, cambiar `urlOdoo` y probarlo (`rpa/README.md`).
-- [ ] Completar `manuales/datos_grupo.json`, tomar capturas (`manuales/tomar_capturas.py`, más
-      las de la nube, UiPath y GA4), poner las cifras reales en `manual_3/datos_ga4.json` y
-      generar los PDF.
+- [x] Datos de los integrantes en `manuales/datos_grupo.json` (portada de los manuales).
+- [ ] Tomar capturas (`manuales/tomar_capturas.py`, más las de la nube, UiPath y GA4), poner las
+      cifras reales en `manual_3/datos_ga4.json` y generar los PDF.

@@ -220,12 +220,14 @@ def validar_albaran(odoo, picking_ids):
         if estado in ("done", "cancel"):
             continue
         odoo.ejecutar("stock.picking", "action_assign", [picking])
-        accion = odoo.ejecutar("stock.picking", "button_validate", [picking])
+        # skip_sms: sin esto Odoo abre el aviso de SMS al cliente y la entrega queda sin validar.
+        accion = odoo.ejecutar("stock.picking", "button_validate", [picking], context={"skip_sms": True})
         if isinstance(accion, dict) and accion.get("res_model") == "stock.backorder.confirmation":
+            contexto = dict(accion.get("context") or {}, skip_sms=True)
             asistente = odoo.crear("stock.backorder.confirmation", {
-                "pick_ids": [(6, 0, [picking])]}, contexto=accion.get("context"))
+                "pick_ids": [(6, 0, [picking])]}, contexto=contexto)
             odoo.ejecutar("stock.backorder.confirmation", "process_cancel_backorder", [asistente],
-                          context=accion.get("context"))
+                          context=contexto)
 
 
 def pagar(odoo, factura_id, fecha):
@@ -335,6 +337,12 @@ def transacciones(odoo, args):
             print(f"  compras: {numero}/100")
 
     # --- 150 ventas confirmadas, entregadas y facturadas ---------------------
+    # Entregas de ventas ya creadas que quedaron sin validar (cargas anteriores).
+    pendientes = odoo.buscar("stock.picking", [("sale_id.client_order_ref", "like", "VTA-"),
+                                               ("state", "not in", ("done", "cancel"))])
+    if pendientes:
+        print(f"  validando {len(pendientes)} entregas pendientes")
+        validar_albaran(odoo, pendientes)
     hechas = odoo.contar("sale.order", [("client_order_ref", "like", "VTA-")])
     for numero in range(hechas + 1, 151):
         fecha = fecha_aleatoria(inicio, fin)
@@ -464,6 +472,10 @@ def verificar(odoo, args):
         ("Cotizaciones de venta", "sale.order", [("state", "in", ("draft", "sent"))], 20),
         ("Cotizaciones de compra", "purchase.order", [("state", "in", ("draft", "sent"))], 20),
         ("Compras confirmadas", "purchase.order", [("state", "in", ("purchase", "done"))], 100),
+        ("Entregas de ventas realizadas", "stock.picking",
+         [("sale_id.client_order_ref", "like", "VTA-"), ("state", "=", "done")], 150),
+        ("Recepciones de compras realizadas", "stock.picking",
+         [("purchase_id", "!=", False), ("state", "=", "done")], 100),
         ("Facturas de proveedor publicadas", "account.move",
          [("move_type", "=", "in_invoice"), ("state", "=", "posted")], 100),
         ("Facturas de cliente publicadas", "account.move",

@@ -15,7 +15,7 @@ El análisis del enunciado, la matriz de cumplimiento y la lista de lo que falta
 | `odoo_addons/` | Módulos propios: `qm_implementacion` (empresa, sucursales, almacenes, sitio web, envíos), `qm_puente_rpa` (campos que llena el robot), `qm_gestion_documental` (archivo automático de facturas en Documentos), `qm_ga4_ecommerce` (embudo GA4 completo), `qm_crm_postventa` (CRM, correo de compra y campaña con QUETZAL10) |
 | `carga_masiva/` | Catálogo de datos, plantillas Excel de importación, imágenes de productos y `cargar_quetzalmart.py` (carga y transacciones por JSON-RPC) |
 | `gestion_documental/` | Generador de facturas de proveedor, contratos de outsourcing y contratos laborales en PDF |
-| `rpa/` | Robot de UiPath (`QuetzalMart_Robot/`), código VB.NET con sus pruebas, carpeta de prueba y guía |
+| `rpa/` | Robot de UiPath (`QuetzalMart_Robot/`), carpeta de prueba y guía |
 | `sql/` | `consultas_calificacion.sql`: una consulta por requisito para mostrar en la calificación |
 | `analytics/` | `simular_trafico.py`: visitas y compras con distintos orígenes UTM para GA4 |
 | `marca/` | Generador del logotipo, íconos, portada y empaques de los productos |
@@ -52,8 +52,9 @@ El análisis del enunciado, la matriz de cumplimiento y la lista de lo que falta
    ([`docs/04_correo_y_marketing.md`](docs/04_correo_y_marketing.md)).
 4. **RPA** ([`rpa/README.md`](rpa/README.md)): abrir `rpa/QuetzalMart_Robot/project.json` en
    UiPath Studio, ajustar `urlOdoo` y ejecutar con `rpa/carpeta_prueba`.
-5. **Manuales**: completar `manuales/datos_grupo.json` y `manuales/manual_3/datos_ga4.json`, y
-   ejecutar `python manuales/construir_manuales.py`.
+5. **Manuales**: poner las cifras reales de GA4 en `manuales/manual_3/datos_ga4.json` y ejecutar
+   `python manuales/construir_manuales.py` (la portada toma los integrantes de
+   `manuales/datos_grupo.json`).
 
 ## Requisitos de la calificación
 

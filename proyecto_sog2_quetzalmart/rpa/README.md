@@ -19,10 +19,6 @@ carpeta del auxiliar ──► buscar .xlsx (todas las subcarpetas) ──► li
 | `QuetzalMart_Robot/` | Proyecto de UiPath Studio (abrir `project.json`). |
 | `QuetzalMart_Robot/Main.xaml` | Flujo principal: carpeta, búsqueda, hojas, normalización, consolidado, reporte. |
 | `QuetzalMart_Robot/ImportarEnOdoo.xaml` | Importa un consolidado con la interfaz de Odoo (Chrome). |
-| `codigo_vb/` | Código VB.NET de las actividades "Invocar código" (fuente única). |
-| `plantillas_xaml/` | Plantillas de los XAML; `construir.py` les inserta el código de `codigo_vb/`. |
-| `pruebas_vb/` | Arnés que compila y ejecuta el mismo código fuera de UiPath (con .NET 8). |
-| `generar_carpeta_prueba.py` | Crea `carpeta_prueba/` con la jerarquía que pide el enunciado. |
 | `carpeta_prueba/` | Carpeta de práctica: libros de 6 hojas, encabezados en inglés y español, duplicados, señuelos. |
 
 ## Requisitos en la PC de la calificación
@@ -41,7 +37,7 @@ carpeta del auxiliar ──► buscar .xlsx (todas las subcarpetas) ──► li
 2. En `Main.xaml`, panel **Variables**, cambiar el valor por defecto de `urlOdoo` por la URL de
    su Odoo (por ejemplo `https://quetzalmart.20-55-10-7.sslip.io`, sin `/` al final).
 3. Abrir Chrome e iniciar sesión en Odoo (si no, el robot pedirá usuario y clave).
-4. Probar con `carpeta_prueba/` (o con `python rpa/generar_carpeta_prueba.py` para regenerarla).
+4. Probar con `carpeta_prueba/`.
 
 ## Ejecución en la calificación
 
@@ -100,17 +96,9 @@ Si en su PC alguno no se encuentra (otro idioma de Windows u Odoo, Edge en lugar
 haga clic en la actividad ► **Indicar en pantalla** sobre el elemento real y guarde. Si usa Edge,
 cambie `BrowserType` de *Abrir navegador* a `Edge` y en el selector de la ventana use `msedge.exe`.
 
-## Probar la lógica sin UiPath (opcional)
+## Resultado esperado
 
-El mismo código VB.NET se compila y ejecuta con .NET 8 (por ejemplo, con Docker):
-
-```bash
-python rpa/construir.py                      # regenera Fragmentos.vb y los XAML
-docker run --rm -v "$PWD/rpa":/rpa -w /rpa/pruebas_vb mcr.microsoft.com/dotnet/sdk:8.0 \
-  sh -c "dotnet run -- /rpa/carpeta_prueba /rpa/pruebas_vb/salida"
-```
-
-Resultado esperado con `carpeta_prueba/`: 10 Excel encontrados, 7 hojas útiles (6 en la 5.ª
+Con `carpeta_prueba/`: 10 Excel encontrados, 7 hojas útiles (6 en la 5.ª
 posición y 1 libro de una sola hoja), 6 clientes y 5 productos consolidados, 1 fila vacía y
 1 cliente duplicado omitidos. Con los archivos de ejemplo del auxiliar: 4 clientes y 7 productos.
 

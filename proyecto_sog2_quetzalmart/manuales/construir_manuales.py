@@ -6,7 +6,7 @@
     python manuales/construir_manuales.py 3          # solo el Manual 3
 
 * Portada con los datos de datos_grupo.json.
-* Diagramas: diagramas/*.mmd -> .svg y .png (requiere mermaid en node_modules; si no
+* Diagramas: diagramas/*.mmd -> .svg (requiere mermaid en node_modules; si no
   está, se usan los .svg ya generados).
 * Manual 3: gráficas y cifras desde manual_3/datos_ga4.json. Mientras ese archivo tenga
   "ejemplo": true, el PDF sale marcado como BORRADOR.
@@ -96,7 +96,11 @@ def datos_grupo():
 
 
 def portada(numero, titulo, subtitulo, grupo):
-    filas = "".join(f"<tr><td>{p['nombre']}</td><td>{p['carne']}</td></tr>" for p in grupo["integrantes"])
+    filas = "".join(f"<tr><td>{p['carne']}</td><td>{p['nombre']}</td></tr>" for p in grupo["integrantes"])
+    # "grupo" y "auxiliar" son opcionales: si no están en el JSON no se muestran.
+    nombre_grupo = f"<p><b>{grupo['grupo']}</b></p>" if grupo.get("grupo") else ""
+    auxiliar = f"Auxiliar: {grupo['auxiliar']}<br>" if grupo.get("auxiliar") else ""
+    fecha = grupo.get("fecha") or date.today().strftime("%d/%m/%Y")
     return f"""
 <section class="portada">
   <div><img src="{LOGO.as_uri()}" style="width:300px;border:none"></div>
@@ -108,9 +112,9 @@ def portada(numero, titulo, subtitulo, grupo):
   <div>
     <p><b>Universidad de San Carlos de Guatemala</b> · Facultad de Ingeniería · Ingeniería en Ciencias y Sistemas<br>
     Sistemas Organizacionales y Gerenciales 2 · Proyecto único · Segundo semestre 2026</p>
-    <p><b>{grupo['grupo']}</b></p>
-    <table>{filas}</table>
-    <p>Auxiliar: {grupo.get('auxiliar', '')}<br>Fecha: {grupo.get('fecha') or date.today().strftime('%d/%m/%Y')}</p>
+    {nombre_grupo}
+    <table><tr><th>Carné</th><th>Nombre</th></tr>{filas}</table>
+    <p>{auxiliar}Fecha: {fecha}</p>
   </div>
 </section>"""
 
@@ -128,8 +132,6 @@ def renderizar_diagramas(navegador):
             "async ([id, codigo]) => (await mermaid.render(id, codigo)).svg",
             ["diagrama" + fuente.stem.replace("_", ""), fuente.read_text(encoding="utf-8")])
         fuente.with_suffix(".svg").write_text(svg, encoding="utf-8")
-        pagina.evaluate("svg => { document.getElementById('d').innerHTML = svg; }", svg)
-        pagina.locator("#d svg").screenshot(path=str(fuente.with_suffix(".png")))
         print("  diagrama", fuente.stem)
     pagina.close()
 
