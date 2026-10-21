@@ -36,7 +36,7 @@
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="QuetzalMart - Robot de carga de clientes y productos">
     <Sequence.Variables>
-      <Variable x:TypeArguments="x:String" Default="https://CAMBIAR-POR-EL-DOMINIO-DE-ODOO" Name="urlOdoo" />
+      <Variable x:TypeArguments="x:String" Default="https://quetzalmart.3-132-57-160.sslip.io" Name="urlOdoo" />
       <Variable x:TypeArguments="x:String" Name="carpetaRaiz" />
       <Variable x:TypeArguments="x:String" Name="carpetaSalida" />
       <Variable x:TypeArguments="s:String[]" Name="archivos" />
