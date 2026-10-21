@@ -88,7 +88,7 @@ Los selectores se probaron contra Odoo 18 en español con un navegador automatiz
 | Subir archivo de datos | `<webctrl css-selector='button.o_import_file' tag='BUTTON' />` |
 | Ventana *Abrir* de Windows | `<wnd app='chrome.exe' cls='#32770' /><wnd ctrlid='1148' />` |
 | Probar | `<webctrl tag='BUTTON' aaname='Probar' />` |
-| Resultado correcto | `<webctrl tag='B' aaname='Todo parece correcto*' />` |
+| Resultado correcto | `<webctrl aaname='Todo parece correcto*' />` (tras esperar 6 s) |
 | Importar | `<webctrl tag='BUTTON' aaname='Importar' class='btn btn-primary' />` |
 | Inicio de sesión | `<webctrl tag='INPUT' name='login' />` y `name='password'` |
 

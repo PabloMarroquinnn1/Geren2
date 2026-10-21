@@ -143,9 +143,10 @@
                 </ui:Target>
               </ui:Click.Target>
             </ui:Click>
+            <Delay DisplayName="Esperar a que Odoo termine de probar el archivo" Duration="00:00:06" />
             <ui:UiElementExists DisplayName="¿Odoo dice 'Todo parece correcto'?" Exists="[pruebaCorrecta]">
               <ui:UiElementExists.Target>
-                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="&lt;webctrl tag='B' aaname='Todo parece correcto*' /&gt;">
+                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="&lt;webctrl aaname='Todo parece correcto*' /&gt;">
                   <ui:Target.TimeoutMS>
                     <InArgument x:TypeArguments="x:Int32">[30000]</InArgument>
                   </ui:Target.TimeoutMS>
