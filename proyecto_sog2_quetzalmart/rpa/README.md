@@ -77,7 +77,8 @@ carpeta del auxiliar ──► buscar .xlsx (todas las subcarpetas) ──► li
 * **Trazabilidad.** Cada contacto y producto guarda en *Archivo de origen (RPA)* la ruta del Excel
   de donde salió (visible en Odoo y en SQL).
 * **Robustez.** Si un archivo está dañado, el robot lo anota en el reporte y sigue con el siguiente.
-  Si Odoo no da "Todo parece correcto" al probar, el robot se detiene antes de importar.
+  Después de Probar busca "Todo parece correcto"; si no logra leerlo, lo anota como aviso y
+  sigue con Importar (si el archivo tuviera errores, Odoo no importa nada y los muestra).
 
 ## Si un selector no funciona
 
