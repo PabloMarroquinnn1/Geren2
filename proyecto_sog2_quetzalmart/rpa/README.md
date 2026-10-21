@@ -77,7 +77,8 @@ carpeta del auxiliar ──► buscar .xlsx (todas las subcarpetas) ──► li
 * **Trazabilidad.** Cada contacto y producto guarda en *Archivo de origen (RPA)* la ruta del Excel
   de donde salió (visible en Odoo y en SQL).
 * **Robustez.** Si un archivo está dañado, el robot lo anota en el reporte y sigue con el siguiente.
-  Si Odoo no da "Todo parece correcto" al probar, el robot se detiene antes de importar.
+  Después de Probar busca "Todo parece correcto"; si no logra leerlo, lo anota como aviso y
+  sigue con Importar (si el archivo tuviera errores, Odoo no importa nada y los muestra).
 
 ## Si un selector no funciona
 
@@ -88,7 +89,7 @@ Los selectores se probaron contra Odoo 18 en español con un navegador automatiz
 | Subir archivo de datos | `<webctrl css-selector='button.o_import_file' tag='BUTTON' />` |
 | Ventana *Abrir* de Windows | `<wnd app='chrome.exe' cls='#32770' /><wnd ctrlid='1148' />` |
 | Probar | `<webctrl tag='BUTTON' aaname='Probar' />` |
-| Resultado correcto | `<webctrl tag='B' aaname='Todo parece correcto*' />` |
+| Resultado correcto | `<webctrl aaname='Todo parece correcto*' />` (tras esperar 6 s) |
 | Importar | `<webctrl tag='BUTTON' aaname='Importar' class='btn btn-primary' />` |
 | Inicio de sesión | `<webctrl tag='INPUT' name='login' />` y `name='password'` |
 
