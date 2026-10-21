@@ -121,6 +121,10 @@ pantalla de segmentos y la lista de audiencias.</div>
 
 # 8. Cómo se obtuvieron los datos
 
+![Tiempo real](../capturas/60_ga4_tiempo_real.png)
+<p class="pie">GA4 ► Resumen en tiempo real durante la generación de tráfico: usuarios activos,
+audiencias y eventos de comercio electrónico.</p>
+
 * Propiedad GA4 conectada a Odoo (Sitio web ► Ajustes ► Google Analytics) y módulo
   `qm_ga4_ecommerce` para el embudo completo.
 * Interacciones generadas navegando la tienda en computadora y teléfono, desde los correos de
