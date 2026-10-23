@@ -10,83 +10,106 @@ de cada visita mediante parámetros UTM.
 
 | Indicador | Valor |
 |---|---|
-| Usuarios | {{resumen.usuarios}} ({{resumen.usuarios_nuevos}} nuevos) |
-| Sesiones | {{resumen.sesiones}} |
-| Vistas de página | {{resumen.vistas_de_pagina}} |
-| Compras | {{resumen.compras}} |
-| **Ingresos totales** | **{{calculado.ingresos}}** |
-| Ticket promedio | {{calculado.ticket_promedio}} |
-| **Tasa de conversión** (sesiones con compra) | **{{resumen.tasa_conversion}} %** |
-| **Abandono de carrito** (agregaron y no compraron) | **{{calculado.abandono_carrito}}** |
-| Tasa de rebote | {{resumen.tasa_rebote}} % |
+| Usuarios activos | {{resumen.usuarios}} ({{resumen.usuarios_nuevos}} nuevos) |
+| Sesiones | {{resumen.sesiones}} ({{resumen.sesiones_interaccion}} con interacción: {{calculado.tasa_interaccion}}) |
+| Eventos registrados | {{resumen.eventos}} |
+| Usuarios que compraron | {{resumen.compradores}} |
+| **Tasa de conversión** (usuarios que compran) | **{{calculado.conversion_usuarios}}** |
+| Artículos comprados | {{resumen.articulos_comprados}} |
+| **Ingresos por artículos** | **{{calculado.ingresos}}** (sin envío) |
+| Ingreso promedio por comprador | {{calculado.ingreso_por_comprador}} |
+| **Abandono de carrito** (embudo) | **{{calculado.abandono_carrito}}** |
+
+![Inicio de GA4](../capturas/61_ga4_inicio.png)
+<p class="pie">GA4 ► Inicio: usuarios activos, eventos y eventos clave de la semana.</p>
 
 **Conclusiones principales**
 
-* El canal que más ingresos genera es **{{calculado.canal_ingresos}}** ({{calculado.canal_ingresos_monto}})
-  y el que mejor convierte es **{{calculado.canal_conversion}}** ({{calculado.canal_conversion_pct}} de
-  las sesiones terminan en compra); el que más usuarios trae es **{{calculado.canal_usuarios}}**.
-* El producto más vendido es **{{calculado.producto_top}}** ({{calculado.producto_top_unidades}} unidades).
-* La mayor pérdida del embudo ocurre en **{{calculado.peor_paso}}** ({{calculado.peor_paso_pct}} de los
-  usuarios no continúa).
-* **{{calculado.dispositivo_top}}** concentra el {{calculado.dispositivo_top_pct}} de los usuarios.
+* {{calculado.canal_resumen}}; **{{calculado.canal_debil}}** es el
+  único canal con sesiones sin interacción ({{calculado.canal_debil_pct}} de interacción).
+* **{{calculado.producto_top}}** es el producto que más ingresos genera ({{calculado.producto_top_ingresos}})
+  y **{{calculado.producto_unidades}}** el que más unidades vende.
+* La mayor pérdida del embudo ocurre en **{{calculado.peor_paso}}** ({{calculado.peor_paso_pct}} no continúa).
+* {{calculado.productos_sin_venta}} se agregan al carrito pero no se compran.
 
 # 2. Adquisición de usuarios
 
 ¿De dónde llegan los clientes? (Informes ► Adquisición ► Adquisición de usuarios y de tráfico.)
+Los enlaces de las publicaciones y de los correos llevan `utm_source`, `utm_medium` y
+`utm_campaign`, así GA4 atribuye cada visita a su canal: redes sociales (*Organic Social*),
+correos de campaña (*Email*), anuncios de búsqueda (*Paid Search*) y visitas directas.
 
-![Usuarios por canal](graficos/01_usuarios_por_canal.png)
+![Sesiones por canal](graficos/01_sesiones_por_canal.png)
 
-![Ingresos por canal](graficos/02_ingresos_por_canal.png)
+![Eventos por sesión](graficos/02_eventos_por_sesion.png)
 
 {{tablas.adquisicion}}
 
-## Campañas de marketing
+![Adquisición de usuarios](../capturas/63_ga4_adquisicion_usuarios.png)
+<p class="pie">GA4 ► Adquisición de usuarios por primer grupo de canales.</p>
 
-Los enlaces de las publicaciones y de los correos llevan `utm_source`, `utm_medium` y
-`utm_campaign`; así GA4 atribuye cada visita y compra a su campaña (Informes ► Adquisición ►
-Adquisición de tráfico ► Campaña de la sesión).
+![Adquisición de tráfico](../capturas/64_ga4_adquisicion_trafico.png)
+<p class="pie">GA4 ► Adquisición de tráfico: sesiones, interacción y eventos por sesión por canal.</p>
 
-![Ingresos por campaña](graficos/06_ingresos_por_campana.png)
+**Lectura.** Las redes sociales traen el mayor volumen de visitas y el correo casi lo iguala con
+una interacción del 100 %: los clientes que ya compraron vuelven cuando reciben la campaña con
+QUETZAL10. El tráfico directo es el único con sesiones sin interacción, por lo que la portada debe
+llevar al catálogo y a las promociones de forma más visible.
 
-{{tablas.campanas}}
+## Páginas y países
 
-**Lectura.** El correo postcompra llega a clientes que ya compraron, por eso convierte mejor: el
-código QUETZAL10 les da un motivo para volver. Las redes sociales atraen más usuarios nuevos pero
-con menor conversión, por lo que conviene dirigir esa inversión a la audiencia de carritos
-abandonados en lugar de al público general.
+![Páginas más vistas](graficos/06_paginas_mas_vistas.png)
+
+{{tablas.paginas}}
+
+![Usuarios por país](graficos/07_usuarios_por_pais.png)
+
+![Países, páginas y canales](../capturas/62_ga4_paises_paginas_canales.png)
+<p class="pie">GA4 ► Inicio: usuarios por país, páginas más vistas y sesiones por canal.</p>
+
+La mayoría de visitas aparece en Estados Unidos porque el tráfico de prueba se generó desde el
+servidor de AWS en Ohio; las visitas hechas desde Guatemala aparecen con su país real.
 
 # 3. Embudo de compra y abandono de carrito
 
-(Explorar ► Exploración de embudo; Informes ► Monetización ► Recorrido de compra.)
+(Explorar ► Exploración de embudo *Embudo de compra QuetzalMart*, segmentos *Usuarios
+compradores* y *Abandonaron el carrito*.)
 
 ![Embudo de compra](graficos/03_embudo.png)
 
 {{tablas.embudo}}
 
-* **Tasa de conversión del carrito:** {{calculado.conversion_carrito}} de quienes agregan un producto
-  terminan comprando; el **abandono de carrito** es {{calculado.abandono_carrito}}.
-* **Punto de fricción:** {{calculado.peor_paso}} ({{calculado.peor_paso_pct}} de pérdida).
+![Exploración de embudo](../capturas/66_ga4_exploracion_embudo.png)
+<p class="pie">GA4 ► Exploración de embudo con los dos segmentos de usuarios comparados.</p>
+
+* **Abandono de carrito:** {{calculado.abandono_carrito}} de quienes agregan un producto no llega a
+  comprar.
+* **Punto de fricción:** {{calculado.peor_paso}} ({{calculado.peor_paso_pct}} de pérdida): el
+  cliente agrega productos pero se detiene al llegar a la dirección y al costo de envío.
 
 # 4. Productos más vendidos
 
-(Informes ► Monetización ► Compras de comercio electrónico.)
+(Explorar ► Formato libre *Productos por segmento*: filas *Nombre del artículo*; segmentos
+`view_item`, `add_to_cart`, `purchase` y *Llegaron por correo*.)
 
-![Productos más vendidos](graficos/04_productos_mas_vendidos.png)
+![Ingresos por producto](graficos/04_ingresos_por_producto.png)
 
 ![Vistos, carrito y compras](graficos/05_productos_embudo.png)
 
 {{tablas.productos}}
 
-**Lectura.** **{{calculado.producto_top}}** lidera las compras. **{{calculado.producto_oportunidad}}**
-se ve mucho pero se compra poco: es candidato a promoción, mejor foto o descripción, o a un precio
-de combo.
+![Exploración de productos](../capturas/67_ga4_exploracion_productos.png)
+<p class="pie">GA4 ► Exploración de formato libre con los segmentos de eventos.</p>
+
+**Lectura.** **{{calculado.producto_top}}** y **{{calculado.producto_unidades}}** concentran las
+ventas. {{calculado.productos_sin_venta}} llegan al carrito pero no se compran: son candidatos a una
+promoción o a un combo con los productos más vendidos.
 
 # 5. Dispositivos
 
-![Usuarios por dispositivo](graficos/07_dispositivos.png)
-
-La mayoría compra desde **{{calculado.dispositivo_top}}**: el proceso de pago debe revisarse
-primero en ese tipo de pantalla.
+Todas las sesiones del periodo se registraron desde **computadora** (*desktop*); el proceso de
+pago debe probarse también en teléfono antes de lanzar campañas en redes sociales, que se abren
+mayormente desde el celular.
 
 # 6. Segmentos, exploraciones y audiencias
 
@@ -102,29 +125,34 @@ primero en ese tipo de pantalla.
 
 {{tablas.exploraciones}}
 
-<div class="pendiente">Agregar capturas de GA4: las dos exploraciones con sus segmentos, la
-pantalla de segmentos y la lista de audiencias.</div>
-
-## Audiencias (3, una personalizada de remarketing)
+## Audiencias (3 propias, una personalizada de remarketing)
 
 {{tablas.audiencias}}
+
+![Audiencias](../capturas/65_ga4_audiencias.png)
+<p class="pie">GA4 ► Administrar ► Audiencias. Las audiencias propias acumulan usuarios desde su
+creación; GA4 muestra «Menos de 10» mientras no superan ese umbral.</p>
 
 # 7. Decisiones recomendadas
 
 | Hallazgo | Acción | Indicador para medirla |
 |---|---|---|
-| El canal {{calculado.canal_conversion}} convierte más | Enviar la campaña de temporada a toda la lista de clientes cada quince días | Ingresos del canal Email |
-| Abandono de carrito de {{calculado.abandono_carrito}} | Usar la audiencia *Carrito abandonado (7 días)* para anuncios con QUETZAL10 y activar el recordatorio de carrito de Odoo | Tasa de conversión del carrito |
-| Mayor pérdida en {{calculado.peor_paso}} | Simplificar ese paso: mostrar el costo de envío antes y destacar *Recoger en sucursal* gratis | % que pasa al siguiente paso |
-| {{calculado.producto_oportunidad}} se ve y no se compra | Promoción o combo con el producto más vendido | Compra / vista del producto |
-| Predomina {{calculado.dispositivo_top}} | Revisar la tienda y el pago en ese dispositivo | Tasa de rebote por dispositivo |
+| El correo trae casi tantas sesiones como redes sociales y con 100 % de interacción | Enviar la campaña de temporada a toda la lista de clientes cada quince días | Sesiones y compras del canal Email |
+| Abandono de carrito de {{calculado.abandono_carrito}} | Usar la audiencia *Carrito abandonado* para anuncios con QUETZAL10 y activar el recordatorio de carrito de Odoo | Tasa de conversión del carrito |
+| Mayor pérdida en {{calculado.peor_paso}} | Mostrar el costo de envío desde el carrito y destacar *Recoger en sucursal* gratis | % que pasa al siguiente paso |
+| {{calculado.productos_sin_venta}} se agregan y no se compran | Promoción o combo con {{calculado.producto_top}} | Comprados / agregados del producto |
+| {{calculado.canal_debil}} tiene sesiones sin interacción | Portada con accesos directos a ofertas y categorías | Tasa de interacción del canal |
 
 # 8. Cómo se obtuvieron los datos
 
+![Tiempo real](../capturas/60_ga4_tiempo_real.png)
+<p class="pie">GA4 ► Resumen en tiempo real durante la generación de tráfico: usuarios activos,
+audiencias y eventos de comercio electrónico.</p>
+
 * Propiedad GA4 conectada a Odoo (Sitio web ► Ajustes ► Google Analytics) y módulo
   `qm_ga4_ecommerce` para el embudo completo.
-* Interacciones generadas navegando la tienda en computadora y teléfono, desde los correos de
-  campaña y con `analytics/simular_trafico.py` (visitas con distintos orígenes UTM, abandonos y
-  compras con el pago de prueba).
-* Cifras tomadas de los informes de GA4 y registradas en `manuales/manual_3/datos_ga4.json`;
-  las gráficas se generan con `python manuales/construir_manuales.py 3`.
+* Interacciones generadas navegando la tienda y con `analytics/simular_trafico.py` (visitas con
+  distintos orígenes UTM, abandonos y compras con el pago de prueba).
+* Cifras tomadas de los informes y exploraciones de GA4 del {{periodo}} y registradas en
+  `manuales/manual_3/datos_ga4.json`; las gráficas se generan con
+  `python manuales/construir_manuales.py 3`.
