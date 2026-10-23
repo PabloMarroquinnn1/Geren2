@@ -49,10 +49,11 @@ def generar(datos, carpeta):
     plt.rcParams["font.family"] = ["Inter", "DejaVu Sans"]
 
     canales = datos["adquisicion"]
-    _barras_horizontales(carpeta, "01_usuarios_por_canal", "Usuarios por canal de adquisición",
-                         [c["canal"] for c in canales], [c["usuarios"] for c in canales], VERDE)
-    _barras_horizontales(carpeta, "02_ingresos_por_canal", "Ingresos por canal (GTQ)",
-                         [c["canal"] for c in canales], [c["ingresos"] for c in canales], DORADO, "Q {:,.2f}")
+    _barras_horizontales(carpeta, "01_sesiones_por_canal", "Sesiones por canal de adquisición",
+                         [c["canal"] for c in canales], [c["sesiones"] for c in canales], VERDE)
+    _barras_horizontales(carpeta, "02_eventos_por_sesion", "Eventos por sesión según el canal",
+                         [c["canal"] for c in canales], [c["eventos_por_sesion"] for c in canales], DORADO,
+                         "{:,.2f}")
 
     # Embudo de compra: barras proporcionales y, a la derecha, usuarios y % del paso anterior.
     pasos = datos["embudo"]
@@ -69,16 +70,16 @@ def generar(datos, carpeta):
     ejes.set_yticks([len(pasos) - i for i in range(len(pasos))], [p["paso"] for p in pasos])
     ejes.set_xlim(0, 1.55)
     ejes.set_xticks([])
-    _estilo(ejes, "Embudo de compra (usuarios)")
+    _estilo(ejes, "Embudo de compra (usuarios, segmento Usuarios compradores)")
     ejes.spines["bottom"].set_visible(False)
     _guardar(figura, carpeta, "03_embudo")
 
-    productos = sorted(datos["productos"], key=lambda p: p["comprados"], reverse=True)
-    _barras_horizontales(carpeta, "04_productos_mas_vendidos", "Productos más vendidos (unidades compradas)",
-                         [p["producto"] for p in productos], [p["comprados"] for p in productos], ROJO)
+    productos = sorted(datos["productos"], key=lambda p: (p["ingresos"], p["comprados"]), reverse=True)
+    _barras_horizontales(carpeta, "04_ingresos_por_producto", "Ingresos por producto (GTQ)",
+                         [p["producto"] for p in productos], [p["ingresos"] for p in productos], ROJO, "Q {:,.2f}")
 
     figura, ejes = plt.subplots(figsize=(8, 3.6))
-    nombres = [p["producto"].split(" ")[0] + " " + p["producto"].split(" ")[1] for p in productos]
+    nombres = [" ".join(p["producto"].split(" ")[:2]) for p in productos]
     x = range(len(productos))
     ejes.bar([i - 0.27 for i in x], [p["vistos"] for p in productos], width=0.27, label="Vistos", color="#9fc9b4")
     ejes.bar(list(x), [p["agregados"] for p in productos], width=0.27, label="Al carrito", color=DORADO)
@@ -88,20 +89,14 @@ def generar(datos, carpeta):
     _estilo(ejes, "Vistos, agregados al carrito y comprados por producto")
     _guardar(figura, carpeta, "05_productos_embudo")
 
-    campanas = datos["campanas"]
-    _barras_horizontales(carpeta, "06_ingresos_por_campana", "Ingresos por campaña (fuente / medio)",
-                         [c["fuente_medio"] for c in campanas], [c["ingresos"] for c in campanas], VERDE_OSCURO,
-                         "Q {:,.2f}")
+    paginas = datos["paginas"]
+    _barras_horizontales(carpeta, "06_paginas_mas_vistas", "Páginas más vistas",
+                         [p["pagina"] for p in paginas], [p["vistas"] for p in paginas], VERDE_OSCURO)
+    paises = datos["paises"]
+    _barras_horizontales(carpeta, "07_usuarios_por_pais", "Usuarios activos por país",
+                         [p["pais"] for p in paises], [p["usuarios"] for p in paises], "#2E86C1")
 
-    dispositivos = datos["dispositivos"]
-    figura, ejes = plt.subplots(figsize=(5, 3.4))
-    ejes.pie([d["usuarios"] for d in dispositivos], labels=[d["dispositivo"] for d in dispositivos],
-             colors=PALETA, autopct="%1.0f%%", startangle=90, wedgeprops={"width": 0.42},
-             textprops={"fontsize": 9, "color": VERDE_OSCURO})
-    ejes.set_title("Usuarios por dispositivo", loc="left", fontsize=12, fontweight="bold", color=VERDE_OSCURO)
-    _guardar(figura, carpeta, "07_dispositivos")
-
-    _calcular(datos, canales, pasos, productos, campanas, dispositivos)
+    _calcular(datos, canales, pasos, productos)
 
 
 def _tabla(encabezados, filas):
@@ -110,55 +105,58 @@ def _tabla(encabezados, filas):
     return "\n".join(lineas)
 
 
-def _calcular(datos, canales, pasos, productos, campanas, dispositivos):
+def _pct(valor):
+    return f"{valor:.1%}".replace(".", ",")
+
+
+def _calcular(datos, canales, pasos, productos):
     resumen = datos["resumen"]
-    carrito = next((p for p in pasos if "add_to_cart" in p["paso"]), pasos[1])
-    compra = pasos[-1]
     caidas = [(pasos[i]["paso"], pasos[i + 1]["paso"],
                1 - pasos[i + 1]["usuarios"] / (pasos[i]["usuarios"] or 1)) for i in range(len(pasos) - 1)]
     peor = max(caidas, key=lambda c: c[2])
-    canal_ingresos = max(canales, key=lambda c: c["ingresos"])
-    canal_usuarios = max(canales, key=lambda c: c["usuarios"])
-    canal_conversion = max(canales, key=lambda c: c["compras"] / (c["sesiones"] or 1))
-    mas_visto_poco_comprado = max(productos, key=lambda p: p["vistos"] - 4 * p["comprados"])
-    dispositivo = max(dispositivos, key=lambda d: d["usuarios"])
-    total_disp = sum(d["usuarios"] for d in dispositivos) or 1
+    carrito = next(p for p in pasos if "add_to_cart" in p["paso"])
+    canal_sesiones = max(canales, key=lambda c: c["sesiones"])
+    canal_eventos = max(canales, key=lambda c: c["eventos_por_sesion"])
+    canal_debil = min(canales, key=lambda c: c["tasa_interaccion"])
+    sin_venta = [p["producto"] for p in productos if p["agregados"] and not p["comprados"]]
     datos["calculado"] = {
         "ingresos": quetzales(resumen["ingresos"]),
-        "ticket_promedio": quetzales(resumen["ingresos"] / (resumen["compras"] or 1)),
-        "abandono_carrito": f"{1 - compra['usuarios'] / (carrito['usuarios'] or 1):.0%}",
-        "conversion_carrito": f"{compra['usuarios'] / (carrito['usuarios'] or 1):.0%}",
+        "ingreso_por_comprador": quetzales(resumen["ingresos"] / (resumen["compradores"] or 1)),
+        "conversion_usuarios": _pct(resumen["compradores"] / (resumen["usuarios"] or 1)),
+        "tasa_interaccion": _pct(resumen["sesiones_interaccion"] / (resumen["sesiones"] or 1)),
+        "abandono_carrito": _pct(1 - pasos[-1]["usuarios"] / (carrito["usuarios"] or 1)),
         "peor_paso": f"{peor[0]} → {peor[1]}",
-        "peor_paso_pct": f"{peor[2]:.0%}",
-        "canal_ingresos": canal_ingresos["canal"],
-        "canal_ingresos_monto": quetzales(canal_ingresos["ingresos"]),
-        "canal_usuarios": canal_usuarios["canal"],
-        "canal_conversion": canal_conversion["canal"],
-        "canal_conversion_pct": f"{canal_conversion['compras'] / (canal_conversion['sesiones'] or 1):.1%}",
+        "peor_paso_pct": _pct(peor[2]),
+        "canal_sesiones": canal_sesiones["canal"],
+        "canal_sesiones_n": canal_sesiones["sesiones"],
+        "canal_eventos": canal_eventos["canal"],
+        "canal_resumen": (f"**{canal_sesiones['canal']}** es el canal que más sesiones trae ({canal_sesiones['sesiones']}) "
+                          + ("y también el de más interacción por sesión" if canal_eventos is canal_sesiones
+                             else f"y **{canal_eventos['canal']}** el de más interacción por sesión")),
+        "canal_debil": canal_debil["canal"],
+        "canal_debil_pct": f"{canal_debil['tasa_interaccion']} %",
         "producto_top": productos[0]["producto"],
-        "producto_top_unidades": productos[0]["comprados"],
-        "producto_oportunidad": mas_visto_poco_comprado["producto"],
-        "dispositivo_top": dispositivo["dispositivo"],
-        "dispositivo_top_pct": f"{dispositivo['usuarios'] / total_disp:.0%}",
+        "producto_top_ingresos": quetzales(productos[0]["ingresos"]),
+        "producto_unidades": max(productos, key=lambda p: p["comprados"])["producto"],
+        "productos_sin_venta": " y ".join(sin_venta) if sin_venta else "ninguno",
     }
     datos["tablas"] = {
-        "adquisicion": _tabla(["Canal", "Usuarios", "Sesiones", "Compras", "Ingresos", "Conversión"],
-                              [[c["canal"], c["usuarios"], c["sesiones"], c["compras"], quetzales(c["ingresos"]),
-                                f"{c['compras'] / (c['sesiones'] or 1):.1%}"] for c in canales]),
-        "campanas": _tabla(["Campaña", "Fuente / medio", "Sesiones", "Compras", "Ingresos"],
-                           [[c["campana"], c["fuente_medio"], c["sesiones"], c["compras"], quetzales(c["ingresos"])]
-                            for c in campanas]),
+        "adquisicion": _tabla(["Canal", "Sesiones", "Con interacción", "Tasa de interacción", "Eventos por sesión",
+                               "Tiempo medio"],
+                              [[c["canal"], c["sesiones"], c["sesiones_interaccion"], f"{c['tasa_interaccion']} %",
+                                f"{c['eventos_por_sesion']:.2f}".replace(".", ","), c["tiempo_medio"]] for c in canales]),
+        "paginas": _tabla(["Página", "Vistas"], [[p["pagina"], p["vistas"]] for p in datos["paginas"]]),
         "embudo": _tabla(["Paso", "Usuarios", "% del paso anterior", "% del inicio"],
                          [[p["paso"], p["usuarios"],
                            "—" if i == 0 else f"{p['usuarios'] / (pasos[i - 1]['usuarios'] or 1):.0%}",
                            f"{p['usuarios'] / (pasos[0]['usuarios'] or 1):.0%}"] for i, p in enumerate(pasos)]),
-        "productos": _tabla(["Producto", "Vistos", "Al carrito", "Comprados", "Ingresos", "Compra / vista"],
-                            [[p["producto"], p["vistos"], p["agregados"], p["comprados"], quetzales(p["ingresos"]),
-                              f"{p['comprados'] / (p['vistos'] or 1):.0%}"] for p in productos]),
-        "segmentos_usuarios": _tabla(["Segmento de usuarios", "Condición", "Usuarios"],
-                                     [[s["nombre"], s["condicion"], s["usuarios"]] for s in datos["segmentos_usuarios"]]),
-        "segmentos_eventos": _tabla(["Segmento de eventos", "Evento", "Eventos"],
-                                    [[s["nombre"], f"`{s['evento']}`", s["eventos"]] for s in datos["segmentos_eventos"]]),
+        "productos": _tabla(["Producto", "Vistos", "Al carrito", "Comprados", "Ingresos"],
+                            [[p["producto"], p["vistos"], p["agregados"], p["comprados"], quetzales(p["ingresos"])]
+                             for p in productos]),
+        "segmentos_usuarios": _tabla(["Segmento de usuarios", "Condición"],
+                                     [[s["nombre"], s["condicion"]] for s in datos["segmentos_usuarios"]]),
+        "segmentos_eventos": _tabla(["Segmento de eventos", "Evento"],
+                                    [[s["nombre"], f"`{s['evento']}`"] for s in datos["segmentos_eventos"]]),
         "exploraciones": _tabla(["Exploración", "Técnica", "Segmentos", "Hallazgo"],
                                 [[e["nombre"], e["tecnica"], e["segmentos"], e["hallazgo"]] for e in datos["exploraciones"]]),
         "audiencias": _tabla(["Audiencia", "Condición", "Usuarios"],
