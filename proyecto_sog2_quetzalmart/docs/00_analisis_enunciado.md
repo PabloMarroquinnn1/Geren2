@@ -45,13 +45,12 @@ tienda en línea, analítica, gestión documental, RPA y marketing digital.
 4. **Pago de prueba** (proveedor Demo de Odoo): no se cobran tarjetas reales.
 5. **Datos ficticios:** personas, empresas y correos (`.example`) inventados.
 
-## Lo que falta hacer al grupo
+## Estado
 
-- [x] Crear la instancia EC2, ejecutar `nube/instalar.sh` y cargar los datos.
-- [ ] Crear el correo de la empresa y la clave de aplicación (`docs/04_correo_y_marketing.md`).
-- [ ] Crear la propiedad GA4, conectarla, generar tráfico y configurar segmentos, exploraciones y
-      audiencias (`docs/03_google_analytics.md`).
-- [ ] Abrir el robot en UiPath Studio, cambiar `urlOdoo` y probarlo (`rpa/README.md`).
-- [x] Datos de los integrantes en `manuales/datos_grupo.json` (portada de los manuales).
-- [ ] Tomar capturas (`manuales/tomar_capturas.py`, más las de la nube, UiPath y GA4), poner las
-      cifras reales en `manual_3/datos_ga4.json` y generar los PDF.
+- [x] Instancia EC2 en AWS, `nube/instalar.sh` y datos cargados y verificados.
+- [x] Correo de la empresa conectado; compra de prueba con comprobante y campaña.
+- [x] GA4 conectado, tráfico generado, eventos clave, segmentos, 2 exploraciones y audiencias.
+- [x] Robot de UiPath ejecutado con `rpa/carpeta_prueba` (6 clientes y 5 productos).
+- [x] Manuales 1, 2 y 3 con capturas reales y cifras de GA4.
+- [ ] Fusionar la rama en `main`, entregar los 3 PDF en UEDI y seguir `docs/05_guion_calificacion.md`
+      el día de la calificación.

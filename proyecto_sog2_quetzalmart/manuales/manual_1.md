@@ -49,8 +49,21 @@ En la consola de AWS (región Ohio) ► EC2 ► **Lanzar instancia**:
 El dominio público es `quetzalmart.3-132-57-160.sslip.io` (sslip.io resuelve la IP sin comprar
 un dominio) y Caddy obtiene el certificado HTTPS de Let's Encrypt.
 
-<div class="pendiente">Agregar aquí las capturas de la consola de la nube: creación de la VM,
-tamaño, reglas de red y la IP pública estática.</div>
+![Tipo de instancia c7i-flex.large (2 vCPU, 4 GiB), apto para la capa gratuita.](capturas/40_aws_tipo_instancia.png)
+<p class="pie">Figura 1. Tipo de instancia c7i-flex.large (2 vCPU, 4 GiB), apto para la capa gratuita.</p>
+
+![Par de claves Geren2 y red con IP pública.](capturas/41_aws_par_claves_red.png)
+<p class="pie">Figura 2. Par de claves Geren2 y red con IP pública.</p>
+
+![Grupo de seguridad: SSH (22), HTTP (80) y HTTPS (443).](capturas/42_aws_grupo_seguridad.png)
+<p class="pie">Figura 3. Grupo de seguridad: SSH (22), HTTP (80) y HTTPS (443).</p>
+
+![Instancia en ejecución con Ubuntu 24.04 e IP elástica 3.132.57.160.](capturas/43_aws_instancia.png)
+<p class="pie">Figura 4. Instancia en ejecución con Ubuntu 24.04 e IP elástica 3.132.57.160.</p>
+
+![Conexión a la instancia desde la consola de AWS (usuario ubuntu).](capturas/44_aws_conectar.png)
+<p class="pie">Figura 5. Conexión a la instancia desde la consola de AWS (usuario ubuntu).</p>
+
 
 ## 1.4 Instalar QuetzalMart con un solo comando
 
@@ -89,7 +102,6 @@ PostgreSQL (túnel SSH, puerto 5432 de la VM):
   usuario consulta / ********   (solo lectura)
 ```
 
-<div class="pendiente">Agregar la captura de la terminal al terminar instalar.sh en la VM.</div>
 
 ## 1.5 Qué deja configurado el módulo `qm_implementacion`
 
@@ -107,7 +119,7 @@ PostgreSQL (túnel SSH, puerto 5432 de la VM):
   descuento **QUETZAL10**.
 
 ![Aplicaciones instaladas](capturas/01_aplicaciones.png)
-<p class="pie">Figura 1. Aplicaciones de Odoo instaladas para QuetzalMart.</p>
+<p class="pie">Figura 6. Aplicaciones de Odoo instaladas para QuetzalMart.</p>
 
 ## 1.6 Cargar los datos, el correo y Google Analytics
 
@@ -144,10 +156,10 @@ el almacén que entrega y el equipo de ventas (sucursal). Al confirmar una cotiz
 inventario; desde el pedido se crea la factura. **Menús:** Ventas ► Órdenes ► Cotizaciones / Órdenes.
 
 ![Pedidos de venta](capturas/02_ventas_pedidos.png)
-<p class="pie">Figura 2. Listado de pedidos de venta.</p>
+<p class="pie">Figura 7. Listado de pedidos de venta.</p>
 
 ![Detalle de un pedido](capturas/03_venta_detalle.png)
-<p class="pie">Figura 3. Pedido de venta con productos, IVA, envío, entrega y factura.</p>
+<p class="pie">Figura 8. Pedido de venta con productos, IVA, envío, entrega y factura.</p>
 
 ## 2.2 Compras
 
@@ -155,7 +167,7 @@ Solicitudes de cotización a proveedores, órdenes de compra (con aprobación so
 recepciones en la sucursal y facturas del proveedor. **Menús:** Compras ► Pedidos.
 
 ![Órdenes de compra](capturas/05_compras_ordenes.png)
-<p class="pie">Figura 4. Solicitudes de cotización y órdenes de compra.</p>
+<p class="pie">Figura 9. Solicitudes de cotización y órdenes de compra.</p>
 
 ## 2.3 Inventario
 
@@ -163,10 +175,10 @@ Tres almacenes con seis sectores cada uno. Las reglas de ubicación envían cada
 sector al recibir mercadería; los conteos se registran en *Inventario físico*.
 
 ![Existencias por ubicación](capturas/19_inventario_por_ubicacion.png)
-<p class="pie">Figura 5. Existencias por sucursal y sector.</p>
+<p class="pie">Figura 10. Existencias por sucursal y sector.</p>
 
 ![Almacenes](capturas/20_almacenes.png)
-<p class="pie">Figura 6. Las tres sucursales como almacenes de una sola compañía.</p>
+<p class="pie">Figura 11. Las tres sucursales como almacenes de una sola compañía.</p>
 
 ## 2.4 Facturación y contabilidad
 
@@ -174,7 +186,7 @@ Facturas de cliente y de proveedor con el IVA de Guatemala, pagos y estado de co
 de cliente publicada guarda su PDF en el gestor documental de forma automática.
 
 ![Facturas de clientes](capturas/07_facturas_clientes.png)
-<p class="pie">Figura 7. Facturas de clientes con su estado de pago.</p>
+<p class="pie">Figura 12. Facturas de clientes con su estado de pago.</p>
 
 ## 2.5 Empleados y contratos
 
@@ -182,7 +194,7 @@ Cinco departamentos, siete puestos y 35 empleados con su sucursal (ubicación de
 inmediato, DPI y contrato vigente. **Menús:** Empleados ► Empleados / Departamentos / Contratos.
 
 ![Empleados](capturas/10_empleados.png)
-<p class="pie">Figura 8. Directorio de empleados.</p>
+<p class="pie">Figura 13. Directorio de empleados.</p>
 
 ## 2.6 CRM
 
@@ -190,7 +202,7 @@ Embudo de oportunidades por etapa y equipo, leads de los registros en la tienda 
 ganadas generadas por cada compra en línea.
 
 ![Flujo del CRM](capturas/15_crm_flujo.png)
-<p class="pie">Figura 9. Embudo del CRM con las oportunidades de clientes empresariales.</p>
+<p class="pie">Figura 14. Embudo del CRM con las oportunidades de clientes empresariales.</p>
 
 ## 2.7 Sitio web y comercio electrónico
 
@@ -199,10 +211,10 @@ conectado al ERP (pedidos, inventario y facturas) y al CRM (leads y oportunidade
 eventos de comercio electrónico a Google Analytics 4.
 
 ![Portada de la tienda](capturas/30_tienda_inicio.png)
-<p class="pie">Figura 10. Página de inicio de la tienda en línea.</p>
+<p class="pie">Figura 15. Página de inicio de la tienda en línea.</p>
 
 ![Carrito](capturas/33_tienda_carrito.png)
-<p class="pie">Figura 11. Carrito con subtotal, impuestos y total.</p>
+<p class="pie">Figura 16. Carrito con subtotal, impuestos y total.</p>
 
 ## 2.8 Marketing por correo
 
@@ -210,7 +222,15 @@ Listas de correo (*Clientes QuetzalMart*, *Clientes tienda en línea*, *Registro
 masiva de temporada y las plantillas del comprobante y de la campaña postcompra.
 
 ![Campaña de correo](capturas/24_marketing_campana_detalle.png)
-<p class="pie">Figura 12. Campaña masiva lista para enviarse a la lista de clientes.</p>
+<p class="pie">Figura 17. Campaña masiva lista para enviarse a la lista de clientes.</p>
+
+Al comprar en la tienda el cliente recibe, desde `ventasquetzalmart@gmail.com`, primero la
+confirmación del pedido y el **comprobante de compra** con la factura en PDF, y menos de un minuto
+después el correo de la **campaña** con el código QUETZAL10 y productos recomendados; cada uno con
+un asunto distinto.
+
+![Correos recibidos por el cliente](capturas/25_correos_recibidos.png)
+<p class="pie">Figura 18. Bandeja del cliente, confirmación del pedido (con IVA y envío) y correo de la campaña QUETZAL10.</p>
 
 ## 2.9 Documentos (gestión documental)
 
@@ -218,7 +238,7 @@ Repositorio centralizado con carpetas, categorías y etiquetas: facturas de vent
 facturas de proveedores, contratos de outsourcing, contratos de empleados y reportes.
 
 ![Archivos del gestor documental](capturas/22_documentos_archivos.png)
-<p class="pie">Figura 13. Documentos con categoría y etiquetas para filtrarlos.</p>
+<p class="pie">Figura 19. Documentos con categoría y etiquetas para filtrarlos.</p>
 
 ## 2.10 Módulos propios
 
@@ -240,13 +260,13 @@ facturas de proveedores, contratos de outsourcing, contratos de empleados y repo
 4. **Probar**. Si dice *Todo parece correcto*, pulsar **Importar**.
 
 ![Importar registros](capturas/25_importar_inicio.png)
-<p class="pie">Figura 14. Pantalla de importación.</p>
+<p class="pie">Figura 20. Pantalla de importación.</p>
 
 ![Columnas relacionadas](capturas/26_importar_columnas.png)
-<p class="pie">Figura 15. Cada columna de la plantilla relacionada con su campo de Odoo.</p>
+<p class="pie">Figura 21. Cada columna de la plantilla relacionada con su campo de Odoo.</p>
 
 ![Resultado de la prueba](capturas/27_importar_prueba.png)
-<p class="pie">Figura 16. Resultado de Probar antes de importar.</p>
+<p class="pie">Figura 22. Resultado de Probar antes de importar.</p>
 
 ## 3.2 Plantillas por módulo
 
@@ -269,13 +289,13 @@ recepción y factura, 150 ventas con entrega, factura y pago) se generan con
 a continuación.
 
 ![Departamentos](capturas/12_departamentos.png)
-<p class="pie">Figura 17. Departamentos cargados.</p>
+<p class="pie">Figura 23. Departamentos cargados.</p>
 
 ![Puestos](capturas/13_puestos.png)
-<p class="pie">Figura 18. Puestos de trabajo.</p>
+<p class="pie">Figura 24. Puestos de trabajo.</p>
 
 ![Productos](capturas/17_productos.png)
-<p class="pie">Figura 19. Productos con imagen, precio y categoría.</p>
+<p class="pie">Figura 25. Productos con imagen, precio y categoría.</p>
 
 ## 3.3 Órdenes de compra
 
@@ -286,10 +306,10 @@ a continuación.
 5. **Crear factura** ► fecha de factura y número FEL del proveedor ► **Confirmar** ► **Registrar pago**.
 
 ![Detalle de compra](capturas/06_compra_detalle.png)
-<p class="pie">Figura 20. Orden de compra confirmada con su recepción y factura.</p>
+<p class="pie">Figura 26. Orden de compra confirmada con su recepción y factura.</p>
 
 ![Facturas de proveedor](capturas/09_facturas_proveedor.png)
-<p class="pie">Figura 21. Facturas de proveedor publicadas.</p>
+<p class="pie">Figura 27. Facturas de proveedor publicadas.</p>
 
 ## 3.4 Ventas y cotizaciones
 
@@ -299,7 +319,7 @@ a continuación.
 4. **Crear factura** ► **Confirmar** ► **Registrar pago**.
 
 ![Cotizaciones](capturas/04_ventas_cotizaciones.png)
-<p class="pie">Figura 22. Cotizaciones de venta (borrador y enviadas).</p>
+<p class="pie">Figura 28. Cotizaciones de venta (borrador y enviadas).</p>
 
 ## 3.5 Clientes en el CRM
 
@@ -308,7 +328,7 @@ se siguen en el embudo del CRM: *Nuevo ► Calificado ► Propuesta ► Ganado*.
 crea automáticamente una oportunidad ganada ligada al pedido.
 
 ![Contactos](capturas/16_contactos.png)
-<p class="pie">Figura 23. Contactos de clientes y proveedores.</p>
+<p class="pie">Figura 29. Contactos de clientes y proveedores.</p>
 
 ## 3.6 Administración de empleados
 
@@ -316,10 +336,10 @@ Cada empleado tiene puesto, departamento, ubicación de trabajo (sucursal), jefe
 correo y contrato. Los contratos vigentes se consultan en *Empleados ► Contratos*.
 
 ![Ficha de empleado](capturas/11_empleado_detalle.png)
-<p class="pie">Figura 24. Ficha de un empleado.</p>
+<p class="pie">Figura 30. Ficha de un empleado.</p>
 
 ![Contratos](capturas/14_contratos.png)
-<p class="pie">Figura 25. Contratos de trabajo vigentes.</p>
+<p class="pie">Figura 31. Contratos de trabajo vigentes.</p>
 
 ## 3.7 Generación de facturas
 
@@ -329,10 +349,10 @@ y lo guarda en *Documentos ► Archivo QuetzalMart ► Facturas de venta* con la
 sucursal; las facturas de la calificación aparecen allí al momento.
 
 ![Factura de cliente](capturas/08_factura_detalle.png)
-<p class="pie">Figura 26. Factura de cliente publicada con el botón «PDF en Documentos».</p>
+<p class="pie">Figura 32. Factura de cliente publicada con el botón «PDF en Documentos».</p>
 
 ![Carpetas del gestor documental](capturas/21_documentos_carpetas.png)
-<p class="pie">Figura 27. Carpetas del archivo de QuetzalMart.</p>
+<p class="pie">Figura 33. Carpetas del archivo de QuetzalMart.</p>
 
 # 4. RPA con UiPath
 
@@ -372,12 +392,23 @@ El proyecto está en `rpa/QuetzalMart_Robot`. Las actividades de **Main.xaml**:
 **ImportarEnOdoo.xaml:** *Abrir navegador* (Chrome) en la URL de importación ► *El elemento
 existe* (pide inicio de sesión) ► *Hacer clic* en «Subir archivo de datos» ► *Escribir en* la
 ventana Abrir con la ruta y Enter ► *Hacer clic* en «Probar» ► *El elemento existe* «Todo parece
-correcto» (si no, *Lanzar* y detenerse) ► *Hacer clic* en «Importar».
+correcto» (si no lo lee, deja un aviso en el registro) ► *Hacer clic* en «Importar». Si el archivo
+tuviera errores, Odoo no importa nada y los muestra en la misma pantalla.
 
-<div class="pendiente">Agregar capturas de UiPath Studio: proyecto abierto, Main.xaml completo,
-cada actividad de la tabla, ImportarEnOdoo.xaml y el panel de salida de una ejecución.</div>
+![UiPath Studio Community 2026 listo para abrir el proyecto local.](capturas/50_uipath_studio.png)
+<p class="pie">Figura 34. UiPath Studio Community 2026 listo para abrir el proyecto local.</p>
+
+![Main.xaml en ejecución: inicio, selección de la carpeta raíz y búsqueda de los Excel.](capturas/51_uipath_ejecucion.png)
+<p class="pie">Figura 35. Main.xaml en ejecución: inicio, selección de la carpeta raíz y búsqueda de los Excel.</p>
+
 
 ## 4.4 Ejecución y resultado
+
+![El robot sube consolidado_clientes.xlsx a Odoo y pulsa Probar: «Todo parece correcto».](capturas/52_uipath_odoo_probar.png)
+<p class="pie">Figura 36. El robot sube consolidado_clientes.xlsx a Odoo y pulsa Probar: «Todo parece correcto».</p>
+
+![Resumen final del robot: 10 archivos, 7 hojas, 6 clientes y 5 productos importados.](capturas/53_uipath_resumen.png)
+<p class="pie">Figura 37. Resumen final del robot: 10 archivos, 7 hojas, 6 clientes y 5 productos importados.</p>
 
 Con la carpeta de prueba `rpa/carpeta_prueba` (10 libros en 5 carpetas de primer nivel y una
 subcarpeta) el resultado fue:
@@ -395,6 +426,12 @@ subcarpeta) el resultado fue:
 
 En Odoo quedaron 6 clientes (con país, estado, empresa relacionada y etiquetas resueltos) y 5
 productos (4 bienes con su cantidad a la mano registrada y publicados en la tienda, y 1 servicio).
+![Clientes cargados por el RPA](capturas/54_rpa_contactos.png)
+<p class="pie">Figura 38. Contactos con el filtro «Cargados por el RPA»: país, estado, empresa y etiquetas resueltos.</p>
+
+![Productos cargados por el RPA](capturas/55_rpa_productos.png)
+<p class="pie">Figura 39. Productos con el filtro «Cargados por el RPA», con precio y cantidad a la mano.</p>
+
 Con los archivos de ejemplo del auxiliar: 4 clientes y 7 productos. Verificación SQL: sección 9 de
 `sql/consultas_calificacion.sql`.
 
@@ -403,7 +440,7 @@ Con los archivos de ejemplo del auxiliar: 4 clientes y 7 productos. Verificació
 * **Ahorro de tiempo:** lo que a mano toma horas (abrir cada carpeta, buscar la hoja, copiar,
   corregir formatos e importar) el robot lo hace en minutos.
 * **Calidad y consistencia:** aplica siempre las mismas reglas de formato, evita duplicados y se
-  detiene si Odoo detecta un error, así la base centralizada no recibe datos incompletos.
+  Odoo valida cada archivo antes de importarlo, así la base centralizada no recibe datos incompletos.
 * **Trazabilidad:** cada registro guarda el archivo de origen y cada ejecución deja un reporte.
 * **Escalabilidad:** con nuevas sucursales solo crecen las carpetas; el robot no cambia.
 * **Mejor uso del personal:** ventas deja de copiar datos y se dedica a atender clientes.

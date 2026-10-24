@@ -1,72 +1,80 @@
 {
-  "ejemplo": true,
-  "_instrucciones": "Reemplace TODAS las cifras con las de su propiedad GA4 (docs/03_google_analytics.md, sección 5) y cambie ejemplo a false. Con ejemplo=true el PDF sale marcado como BORRADOR.",
-  "periodo": "1 al 31 de octubre de 2026",
-  "propiedad": "Tienda QuetzalMart (G-XXXXXXXXXX)",
+  "ejemplo": false,
+  "_fuente": "Cifras reales de la propiedad GA4 QuetzalMart Tienda, periodo 15-21 oct 2026: Inicio, Adquisición de usuarios y de tráfico, Audiencias y las exploraciones 'Embudo de compra QuetzalMart' y 'Productos por segmento'.",
+  "periodo": "15 al 21 de octubre de 2026",
+  "propiedad": "QuetzalMart Tienda (G-N7WR4F9TVN)",
   "resumen": {
-    "usuarios": 412,
-    "usuarios_nuevos": 389,
-    "sesiones": 598,
-    "vistas_de_pagina": 3127,
-    "compras": 47,
-    "ingresos": 6215.40,
-    "tasa_conversion": 7.9,
-    "tasa_rebote": 38.2
+    "usuarios": 92,
+    "usuarios_nuevos": 92,
+    "sesiones": 94,
+    "sesiones_interaccion": 89,
+    "eventos": "1,8 mil",
+    "compradores": 23,
+    "articulos_comprados": 49,
+    "ingresos": 1038.34
   },
   "adquisicion": [
-    {"canal": "Organic Social", "usuarios": 151, "sesiones": 214, "compras": 14, "ingresos": 1786.20},
-    {"canal": "Email", "usuarios": 82, "sesiones": 131, "compras": 16, "ingresos": 2240.80},
-    {"canal": "Paid Search", "usuarios": 74, "sesiones": 96, "compras": 7, "ingresos": 905.10},
-    {"canal": "Direct", "usuarios": 105, "sesiones": 157, "compras": 10, "ingresos": 1283.30}
+    {"canal": "Organic Social", "sesiones": 30, "sesiones_interaccion": 30, "tasa_interaccion": 100, "eventos_por_sesion": 22.60, "tiempo_medio": "2 s"},
+    {"canal": "Email", "sesiones": 27, "sesiones_interaccion": 27, "tasa_interaccion": 100, "eventos_por_sesion": 19.74, "tiempo_medio": "1 s"},
+    {"canal": "Direct", "sesiones": 25, "sesiones_interaccion": 20, "tasa_interaccion": 80, "eventos_por_sesion": 16.20, "tiempo_medio": "4 s"},
+    {"canal": "Paid Search", "sesiones": 12, "sesiones_interaccion": 12, "tasa_interaccion": 100, "eventos_por_sesion": 17.42, "tiempo_medio": "1 s"}
   ],
-  "campanas": [
-    {"campana": "temporada_quetzalmart", "fuente_medio": "facebook / social", "sesiones": 132, "compras": 9, "ingresos": 1120.50},
-    {"campana": "temporada_quetzalmart", "fuente_medio": "instagram / social", "sesiones": 82, "compras": 5, "ingresos": 665.70},
-    {"campana": "temporada_quetzalmart", "fuente_medio": "correo_postcompra / email", "sesiones": 79, "compras": 11, "ingresos": 1534.60},
-    {"campana": "temporada_quetzalmart", "fuente_medio": "campana_correo / email", "sesiones": 52, "compras": 5, "ingresos": 706.20},
-    {"campana": "busqueda_supermercado", "fuente_medio": "google / cpc", "sesiones": 96, "compras": 7, "ingresos": 905.10}
+  "paginas": [
+    {"pagina": "Products | QuetzalMart", "vistas": 206},
+    {"pagina": "Home | QuetzalMart", "vistas": 91},
+    {"pagina": "Tienda - Confirmado", "vistas": 46},
+    {"pagina": "Address Management", "vistas": 39},
+    {"pagina": "Comprar - Selección", "vistas": 39},
+    {"pagina": "Tienda - Proceso de pago", "vistas": 39},
+    {"pagina": "Shopping Cart | QuetzalMart", "vistas": 38}
+  ],
+  "paises": [
+    {"pais": "Estados Unidos", "usuarios": 88},
+    {"pais": "Guatemala", "usuarios": 2},
+    {"pais": "Dinamarca", "usuarios": 1}
   ],
   "embudo": [
-    {"paso": "Vista de producto (view_item)", "usuarios": 356},
-    {"paso": "Agregar al carrito (add_to_cart)", "usuarios": 171},
-    {"paso": "Inicio de pago (begin_checkout)", "usuarios": 96},
-    {"paso": "Datos de envío (add_shipping_info)", "usuarios": 71},
-    {"paso": "Compra (purchase)", "usuarios": 47}
+    {"paso": "Vista de producto (view_item)", "usuarios": 13},
+    {"paso": "Agregar al carrito (add_to_cart)", "usuarios": 13},
+    {"paso": "Datos de envío (add_shipping_info)", "usuarios": 3},
+    {"paso": "Compra (purchase)", "usuarios": 3}
   ],
   "productos": [
-    {"producto": "Café molido de altura Huehuetenango 400 g", "vistos": 118, "agregados": 41, "comprados": 19, "ingresos": 832.20},
-    {"producto": "Leche entera UHT 946 ml", "vistos": 96, "agregados": 37, "comprados": 26, "ingresos": 291.20},
-    {"producto": "Detergente líquido para ropa 3 L", "vistos": 71, "agregados": 22, "comprados": 11, "ingresos": 585.20},
-    {"producto": "Chocolate oscuro 70 % cacao 100 g", "vistos": 88, "agregados": 25, "comprados": 9, "ingresos": 170.10},
-    {"producto": "Jugo de naranja 100 % 1.75 L", "vistos": 64, "agregados": 19, "comprados": 10, "ingresos": 267.00},
-    {"producto": "Champú de sábila 400 ml", "vistos": 52, "agregados": 14, "comprados": 7, "ingresos": 176.40},
-    {"producto": "Aceite de girasol 900 ml", "vistos": 49, "agregados": 15, "comprados": 8, "ingresos": 196.00},
-    {"producto": "Huevos rojos cartón 30 unidades", "vistos": 58, "agregados": 18, "comprados": 9, "ingresos": 342.00}
+    {"producto": "Café molido de altura Huehuetenango 400 g", "vistos": 3, "agregados": 7, "comprados": 3, "ingresos": 117.33},
+    {"producto": "Cepillos de dientes suaves 2 unidades", "vistos": 5, "agregados": 10, "comprados": 7, "ingresos": 110.62},
+    {"producto": "Cloro desinfectante 3.8 L", "vistos": 6, "agregados": 8, "comprados": 2, "ingresos": 41.26},
+    {"producto": "Chocolate oscuro 70 % cacao 100 g", "vistos": 3, "agregados": 5, "comprados": 2, "ingresos": 33.76},
+    {"producto": "Crema corporal humectante 400 ml", "vistos": 2, "agregados": 1, "comprados": 1, "ingresos": 28.04},
+    {"producto": "Bolsas para basura de 30 galones 10 unidades", "vistos": 1, "agregados": 1, "comprados": 2, "ingresos": 24.10},
+    {"producto": "Acondicionador nutritivo 400 ml", "vistos": 2, "agregados": 3, "comprados": 1, "ingresos": 23.30},
+    {"producto": "Desengrasante para cocina 650 ml", "vistos": 2, "agregados": 2, "comprados": 1, "ingresos": 17.77},
+    {"producto": "Champú de sábila 400 ml", "vistos": 3, "agregados": 4, "comprados": 0, "ingresos": 0.00},
+    {"producto": "Aceite de girasol 900 ml", "vistos": 3, "agregados": 3, "comprados": 0, "ingresos": 0.00}
   ],
   "dispositivos": [
-    {"dispositivo": "Móvil", "usuarios": 238},
-    {"dispositivo": "Computadora", "usuarios": 161},
-    {"dispositivo": "Tableta", "usuarios": 13}
+    {"dispositivo": "Computadora (desktop)", "usuarios": 92}
   ],
   "segmentos_usuarios": [
-    {"nombre": "Usuarios compradores", "condicion": "Evento purchase", "usuarios": 45},
-    {"nombre": "Abandonaron el carrito", "condicion": "add_to_cart y no purchase", "usuarios": 124},
-    {"nombre": "Llegaron por correo", "condicion": "Medio del primer usuario = email", "usuarios": 82}
+    {"nombre": "Usuarios compradores", "condicion": "Incluye usuarios con el evento purchase"},
+    {"nombre": "Abandonaron el carrito", "condicion": "Evento add_to_cart, excluye purchase"},
+    {"nombre": "Llegaron por correo", "condicion": "Primer medio del usuario = email"}
   ],
   "segmentos_eventos": [
-    {"nombre": "Evento - vista de producto", "evento": "view_item", "eventos": 1254},
-    {"nombre": "Evento - agregar al carrito", "evento": "add_to_cart", "eventos": 389},
-    {"nombre": "Evento - inicio de pago", "evento": "begin_checkout", "eventos": 112},
-    {"nombre": "Evento - compra", "evento": "purchase", "eventos": 47},
-    {"nombre": "Evento - eliminar del carrito", "evento": "remove_from_cart", "eventos": 58}
+    {"nombre": "view_item", "evento": "view_item"},
+    {"nombre": "add_to_cart", "evento": "add_to_cart"},
+    {"nombre": "begin_checkout", "evento": "begin_checkout"},
+    {"nombre": "purchase", "evento": "purchase"},
+    {"nombre": "remove_from_cart", "evento": "remove_from_cart"}
   ],
   "exploraciones": [
-    {"nombre": "Embudo de compra QuetzalMart", "tecnica": "Exploración de embudo", "segmentos": "Usuarios compradores vs. Abandonaron el carrito", "hallazgo": "La mayor pérdida está entre ver el producto y agregarlo al carrito."},
-    {"nombre": "Productos por segmento", "tecnica": "Formato libre", "segmentos": "Eventos de vista, carrito y compra", "hallazgo": "El café y la leche concentran las compras; el chocolate se ve mucho y se compra poco."}
+    {"nombre": "Embudo de compra QuetzalMart", "tecnica": "Exploración de embudo", "segmentos": "Usuarios compradores vs. Abandonaron el carrito", "hallazgo": "El 76,9 % abandona entre agregar al carrito y los datos de envío."},
+    {"nombre": "Productos por segmento", "tecnica": "Formato libre", "segmentos": "view_item, add_to_cart, purchase y Llegaron por correo", "hallazgo": "Café y cepillos de dientes concentran los ingresos; champú y aceite se agregan al carrito pero no se compran."}
   ],
   "audiencias": [
-    {"nombre": "Compradores QuetzalMart", "condicion": "Evento purchase · 540 días", "usuarios": 45},
-    {"nombre": "Carrito abandonado (7 días)", "condicion": "add_to_cart, excluye purchase · 7 días (personalizada)", "usuarios": 61},
-    {"nombre": "Interesados por campañas de correo", "condicion": "Medio de la sesión = email y view_item · 30 días", "usuarios": 74}
+    {"nombre": "Compradores QuetzalMart", "condicion": "Evento purchase · 540 días", "usuarios": "Menos de 10 (desde su creación)"},
+    {"nombre": "Carrito abandonado", "condicion": "add_to_cart y excluye purchase · 7 días (personalizada, remarketing)", "usuarios": "Menos de 10 (desde su creación)"},
+    {"nombre": "Interesados por campañas de correo", "condicion": "Medio de la sesión = email y view_item · 30 días", "usuarios": "Menos de 10 (desde su creación)"},
+    {"nombre": "Purchasers (predefinida de GA4)", "condicion": "Usuarios que compraron", "usuarios": 23},
+    {"nombre": "All Users (predefinida de GA4)", "condicion": "Todos los usuarios", "usuarios": 92}
   ]
 }
